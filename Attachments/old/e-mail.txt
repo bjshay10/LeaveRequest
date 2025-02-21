@@ -1,0 +1,118 @@
+                                                                                                                                                                                                                                                               
+Delivered-To: tobyfarley@gmail.com
+Received: by 10.60.3.166 with SMTP id d6csp111012oed;
+        Fri, 24 Jan 2014 08:21:06 -0800 (PST)
+X-Received: by 10.66.228.201 with SMTP id sk9mr15122325pac.134.1390580466491;
+        Fri, 24 Jan 2014 08:21:06 -0800 (PST)
+Return-Path: <chelsea.burtis@mesacounty.us>
+Received: from na3sys009aog137.obsmtp.com ([74.125.149.18])
+        by mx.google.com with SMTP id n8si1657286pax.247.2014.01.24.08.21.05
+        for <tobyfarley@gmail.com>;
+        Fri, 24 Jan 2014 08:21:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of chelsea.burtis@mesacounty.us designates 74.125.149.18 as permitted sender) client-ip=74.125.149.18;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of chelsea.burtis@mesacounty.us designates 74.125.149.18 as permitted sender) smtp.mail=chelsea.burtis@mesacounty.us
+Received: from mail-qa0-f51.google.com ([209.85.216.51]) (using TLSv1) by na3sys009aob137.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUuKS8e990KirPZ/M1ceIYkZqQODRTY/d@postini.com; Fri, 24 Jan 2014 08:21:06 PST
+Received: by mail-qa0-f51.google.com with SMTP id f11so4212194qae.10
+        for <tobyfarley@gmail.com>; Fri, 24 Jan 2014 08:21:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=xG+RCM2fg3bdPrOew7ocrfAoXxBP4PmyFVLIysgdE50=;
+        b=DvT02VqV8LCqRPub4JLKkfsxHHg6duyjNQFNT/zEEKd32A14vp1SJLe7jH8YhddFMa
+         PMc8pN22tGiBOYYrqg8aL8lXvFeQYVl5+30mYbxoPlG/4+5IlXnmLneE7qI5Ys3MgnNG
+         n9i3FczWIM8vpNB6ee4lufXcISslkBhKjxmuru8OKQKq3HZF4newx4L3ilkPVzD8erFJ
+         TWiYATt/DmARGCbcwkMbTWp0qnwNst58zWZ+LcQ4epSynhw6dDV2LzAX3vcWYsvWgUqH
+         ClIL+oyNbhRCEnC1YApQcNW2ePCiVhRGGlzZyIQeBL78LYnDCJ3+FwWbKC90T2CEXxZL
+         bwzg==
+X-Gm-Message-State: ALoCoQmflGKDHl+uxvKH9pPweXIcZvMRxsOyMPli52gwnX4XKX8TyDkN0hIyyvqULQhTsSpqKLO3mWHIopA5mJhKnPUROQ8X9NAJTG9npXbnQvIN+WFbwEjQF4CtlaN7RHbR8fbaN5ABx9DnO5PMq7h01v77mnWGWA==
+X-Received: by 10.140.87.54 with SMTP id q51mr20385583qgd.101.1390580464617;
+        Fri, 24 Jan 2014 08:21:04 -0800 (PST)
+MIME-Version: 1.0
+X-Received: by 10.140.87.54 with SMTP id q51mr20385568qgd.101.1390580464531;
+ Fri, 24 Jan 2014 08:21:04 -0800 (PST)
+Received: by 10.224.170.72 with HTTP; Fri, 24 Jan 2014 08:21:04 -0800 (PST)
+In-Reply-To: <CANeq6tj=6oNqjW3yHv0uanbiBDbk-0cxNmiKv1S54bZqhU-xZQ@mail.gmail.com>
+References: <CANeq6tj=6oNqjW3yHv0uanbiBDbk-0cxNmiKv1S54bZqhU-xZQ@mail.gmail.com>
+Date: Fri, 24 Jan 2014 09:21:04 -0700
+Message-ID: <CALxwt=oxbXaocX5KamSQ7sWc6iDAE4QVtzv3PDq-d=soAKavAw@mail.gmail.com>
+Subject: Re: Travis Micheal Williams
+From: Chelsea Burtis <chelsea.burtis@mesacounty.us>
+To: Toby Farley <tobyfarley@gmail.com>
+Content-Type: multipart/alternative; boundary=001a113a54d69eeb7704f0b9be88
+
+--001a113a54d69eeb7704f0b9be88
+Content-Type: text/plain; charset=UTF-8
+
+yes sir! I was planning on calling you this afternoon. The jury deliberated
+until 7pm last night.
+
+Guilty on DUI, careless driving, reckless driving, hit and run, leaving the
+scene of an accident. Not guilty of reckless driving.
+
+Mr. Williams was remanded into custody after trial and is going to be
+sentenced on 02/03/2013 at 11:30 am. If you would like to be present at
+sentencing and talk to the judge, you are more than welcome. He is looking
+at at least 60 days in jail for the DUI alone since it is his third
+conviction.
+
+Thank you so much for your testimony Mr. Farley. We wouldn't have been able
+to get the conviction without it. Feel free to contact me in teh future for
+any questions.
+
+Chelsea Burtis
+
+
+On Fri, Jan 24, 2014 at 9:10 AM, Toby Farley <tobyfarley@gmail.com> wrote:
+
+> Can you tell me the outcome of the trial?
+>
+
+
+
+-- 
+Chelsea Burtis
+Deputy District Attorney, County
+21st Judicial District, Mesa County
+970-244-1730
+chelsea.burtis@mesacounty.us
+
+--001a113a54d69eeb7704f0b9be88
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">yes sir! I was planning on calling you this afternoon. The=
+ jury deliberated until 7pm last night.<div><br></div><div>Guilty on DUI, c=
+areless driving, reckless driving, hit and run, leaving the scene of an acc=
+ident. Not guilty of reckless driving.</div>
+<div><br></div><div>Mr. Williams was remanded into custody after trial and =
+is going to be sentenced on 02/03/2013 at 11:30 am. If you would like to be=
+ present at sentencing and talk to the judge, you are more than welcome. He=
+ is looking at at least 60 days in jail for the DUI alone since it is his t=
+hird conviction.</div>
+<div><br></div><div>Thank you so much for your testimony Mr. Farley. We wou=
+ldn&#39;t have been able to get the conviction without it. Feel free to con=
+tact me in teh future for any questions.</div><div><br></div><div>Chelsea B=
+urtis</div>
+</div><div class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">On Fri,=
+ Jan 24, 2014 at 9:10 AM, Toby Farley <span dir=3D"ltr">&lt;<a href=3D"mail=
+to:tobyfarley@gmail.com" target=3D"_blank">tobyfarley@gmail.com</a>&gt;</sp=
+an> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"ltr">Can you tell me the outcome=
+ of the trial?</div>
+</blockquote></div><br><br clear=3D"all"><div><br></div>-- <br><div dir=3D"=
+ltr"><div style=3D"color:rgb(136,136,136)">Chelsea Burtis</div><div style=
+=3D"color:rgb(136,136,136)">Deputy District Attorney, County</div><div styl=
+e=3D"color:rgb(136,136,136)">
+21st Judicial District, Mesa County</div><div style=3D"color:rgb(136,136,13=
+6)"><a value=3D"+19702441730" style=3D"color:rgb(17,85,204)">970-244-1730</=
+a></div><div style=3D"color:rgb(136,136,136)"><a href=3D"mailto:chelsea.bur=
+tis@mesacounty.us" style=3D"color:rgb(17,85,204)" target=3D"_blank">chelsea=
+.burtis@mesacounty.us</a></div>
+</div>
+</div>
+
+--001a113a54d69eeb7704f0b9be88--
