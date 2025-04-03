@@ -514,11 +514,11 @@
                 Your request for <cfoutput>#GetReqInfo.NumDays#</cfoutput> days off from <cfoutput>#LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')#</cfoutput> to <cfoutput>#LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#</cfoutput> has been <b>approved</b>.  If applicable, please ensure that you have made arrangements for substitute coverage during your absence.<br /><br />
             <cfelse>
                 Your request for <cfoutput>#GetReqInfo.NumDays#</cfoutput> days off from <cfoutput>#LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')#</cfoutput> to <cfoutput>#LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#</cfoutput> has been <b>approved with modifications</b>.<br /><br />
-                <cfoutput>#GetReqInfo.comments#</cfoutput>
+                <cfoutput><b>#GetReqInfo.comments#</b></cfoutput>
             </cfif>
         <cfelseif #GetReqInfo.approved# eq 'D'>
             Unfortunately, we are unable to approve your request for <cfoutput>#GetReqInfo.NumDays#</cfoutput> days off from <cfoutput>#LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')#</cfoutput> to <cfoutput>#LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#</cfoutput>.<br /><br />
-            <cfoutput>#GetReqInfo.comments#</cfoutput><br /><br />
+            <cfoutput><b>#GetReqInfo.comments#</b></cfoutput><br /><br />
             We understand that this may be disappointing, and we apologize for any inconvenience it may cause.<br /><br />
             If you would like to appeal this decision, please complete the following <a href="https://resources.finalsite.net/images/v1728911194/mesak12cous/fv0qwpzabq6scr9ezacg/DayLeaveAppealRequestFormLicensedStaff.pdf">form</a> and follow the instructions provided.
         </cfif>
