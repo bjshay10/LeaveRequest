@@ -1,7 +1,10 @@
 <cfapplication name="EmployeeLeaveRequest" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,8,0,0)#">
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<!--- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
+ --->
+<!DOCTYPE html> 
+<html lang="en">
+ <head>
+<!--- 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
   <link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="stylesheet" type="text/css"  href="/css/text.css" />
    <link rel="stylesheet" type="text/css"  href="/css/main.css" />
@@ -10,18 +13,20 @@
 	<link rel="stylesheet" type="text/css"  href="/css/print.css" media="print" />
  <script src="/scripts/main.js" type="text/javascript"></script>
 	<script src="/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
-	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
+	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" /> --->
 	
 	<!-- InstanceBeginEditable name="doctitle" -->
-		<title></title>
+		<title>Leave Request Admin</title>
 	<!-- InstanceEndEditable -->
 	<!-- InstanceBeginEditable name="head" -->
 	<!-- InstanceEndEditable -->
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.css" />
 </head>
 
 <body>
 <div id="wrapper">
-	<div id="headercontainer">
+<!--- <div id="headercontainer">
   	<div id="headerimages"><a href="http://www.mesa.k12.co.us"><img src="/images/logo.jpg" align="left" alt="Mesa County Valley School District 51" /></a>
   	  <cfinclude template="/templates/components/rotatingphotos.cfm" />
 		</div>
@@ -33,12 +38,9 @@
 		<cfinclude template="/templates/components/searchbar.cfm" />	
    </div>
 	<div id="maincontainer">
-  	<div id="maincontentfull">
-    		<span class="heading">
-					<!-- InstanceBeginEditable name="PageTitle" -->
-				<center>Request and Approval for Leave</center>
-			<!-- InstanceEndEditable -->
-   	  	</span><br />
+  	<div id="maincontentfull"> --->
+    		<h1 class="text-center display-5 fw-bold my-4">Leave Request - Admin Page</h1>
+				 <!-- InstanceBeginEditable name="Content" -->
 				 <!-- InstanceBeginEditable name="Content" -->
 <!--- begin Steps --->
 <!--- Steps
@@ -54,11 +56,11 @@
 		20 = View Approved and Denied Requests
 		999 = Logout --->
         
-<cfif (cgi.https eq "off") and 
+<!--- <cfif (cgi.https eq "off") and 
 	(cgi.SERVER_NAME does not contain "intranet")>
 	<cflocation url="https://www.mesa.k12.co.us/apps/LeaveRequest/Admin.cfm" addtoken="no">
 	<cfabort>
-</cfif>
+</cfif> --->
 
 <cfif not isdefined('StepNum')>
 	<cfset StepNum=0>
@@ -70,7 +72,7 @@
 	</cfif>
 
 <!--- User Login --->
-<cfif not isdefined ('username') and not isdefined ('submitform')>
+<!--- <cfif not isdefined ('username') and not isdefined ('submitform')>
 	<p>&nbsp; </p>
 	<cfif isdefined('tryagain')>
 		<pan class="red">Invalid Username or Password or you are unauthorized- - Try again</span>
@@ -85,7 +87,43 @@
     	<cfinput type="submit" name="Submituser" value="Submit">
         </td></tr></table>
    	</cfform>
-</cfif>
+</cfif> --->
+
+    <!--- User Login --->
+    <cfif not isdefined ('username') and not isdefined ('submitform')>
+        <p>&nbsp; </p>
+        <div class="centered-section">
+            <cfif isdefined('tryagain')>
+                <pan class="red">Invalid Username or Password or you are unauthorized- - Try again</span>
+                </div>
+            </cfif>
+            <!--- <cfform name="form2" method="post" action="" width="500" height="550">
+                <!---<cfformgroup type="panel" label="Leave Request Form">--->
+                <table align="center"><tr><td align="center">
+                    <label for="username">Username:</label> <cfinput name="username" id="username" type="text" size="20" label="Username:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
+
+                    <label for="password">Password:</label> <cfinput name="password" type="password" id="password" size="20" label="Password:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
+                <cfinput type="submit" name="Submituser" value="Submit">
+                </td></tr></table>
+            </cfform> --->
+
+            <div class="login-container">
+                <cfform class="login-form" action="" method="post">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <cfinput name="username" id="username" type="text" size="20" required="yes" message="Username is required.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <cfinput name="password" type="password" id="password" size="20" required="yes" message="Password is required.">
+                    </div>
+
+                    <cfinput type="submit" name="Submituser" value="Submit">
+                </cfform>
+            </div>
+        </div>
+    </cfif>
 
 <!--- Check Username and Password --->
 	<cfif isdefined ("submituser")>
@@ -126,28 +164,48 @@
     
     </cfif>
 <cfelseif StepNum eq 1>
-	<!--- Logged in Select View Approved / Denied Requests or View Pending --->
-    <cfform name="viewaction" method="post" action="admin.cfm?StepNum=2" >
-        <table border="0" width="100%">
-            <tr>
-                <td align="center">Choose Action</td>
-            </tr>
-            <tr>
-            	<td align="center"><cfinput type="radio" name="view" value="1">View Requests</td>
-            </tr>
-            <tr>
-            	<td align="center"><cfinput type="radio" name="view" value="2">View Approved </td>
-            </tr>
-            <tr>
-            	<td align="center"><cfinput type="radio" name="view" value="3">View Denied Requests</td>
-            </tr>
-            <tr>
-            	<td align="center"><cfinput type="submit" name="submit" value="Continue"></td>
-            </tr>
-        </table>
-    </cfform>
-    
-    <cfinclude template="Logout_admin.cfm">
+	<cfif isDefined('session.username')>
+        <div class="container mt-4">
+            <div class="row justify-content-center bg-light">
+                <div class="col-md-6 col-lg-5 bg-light">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white text-center">
+                            <h2 class="h4 mb-0" id="chooseActionHeading">Choose Action</h2>
+                        </div>
+                        <div class="card-body">
+                            <cfform name="viewaction" method="post" action="admin.cfm?StepNum=2" aria-labelledby="chooseActionHeading">
+                                <fieldset class="mb-3">
+                                    <legend class="visually-hidden">Select an action to view leave requests</legend>
+                                    <p class="mb-3">Select the type of leave requests you'd like to view:</p>
+
+                                    <div class="form-check mb-2">
+                                        <cfinput type="radio" name="view" value="1" id="viewAllRequests" class="form-check-input" checked>
+                                        <label for="viewAllRequests" class="form-check-label">View All Requests (Pending, Approved, Denied)</label>
+                                    </div>
+
+                                    <div class="form-check mb-2">
+                                        <cfinput type="radio" name="view" value="2" id="viewApprovedRequests" class="form-check-input">
+                                        <label for="viewApprovedRequests" class="form-check-label">View Approved Requests</label>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <cfinput type="radio" name="view" value="3" id="viewDeniedRequests" class="form-check-input">
+                                        <label for="viewDeniedRequests" class="form-check-label">View Denied Requests</label>
+                                    </div>
+                                </fieldset>
+
+                                <div class="d-grid">
+                                    <cfinput type="submit" name="submit" value="Continue" class="btn btn-primary btn-lg">
+                                </div>
+                            </cfform>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <cfinclude template="Logout_admin.cfm">
+    </cfif>
 <!--- Stepnum eq 2 - Redirect to Appropriate Area --->    
 <cfelseif StepNum eq 2>
 	<cfif isdefined('form.view')>
@@ -163,22 +221,47 @@
     		<cflocation url="admin.cfm?StepNum=10">
         </cfif>
     </cfif>
-    
+
 <!--- Stepnum eq 10 - View Pending --->
 <cfelseif StepNum eq 10>
 	<cfset GoToStepNum = 1>
 	<!--- Get LIst of Pending Requests --->
+    <cfset currentRequestYear = "2024-2025">
+
     <cfquery name="GetRequests" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	Approved IS NULL and yearofrequest = '2024-2025'
-        <cfif #Session.Username# eq 'kubersox'>
-        	AND emptype = 2
-        <cfelseif #Session.Username# eq 'oldmwilcox'>
-        	AND emptype = 1
-        </cfif>
-        ORDER BY emptype, Userid, dateentered
+        SELECT
+            requestid,
+            dateentered,
+            requesteddates,
+            requesttype,
+            supviewed,
+            supvieweddate,
+            UserID,
+            supervisor2,
+            sup2viewed,
+            sup2vieweddate,
+            dtFrom,
+            dtTo,
+            NumDays,
+            emptype,
+            commentstohr, approved 
+        FROM
+            LeaveReq_tblRequest
+        WHERE
+            Approved IS NULL
+            AND yearofrequest = <cfqueryparam value="#currentRequestYear#" cfsqltype="cf_sql_varchar">
+            <cfif structKeyExists(session, 'username')>
+                <cfif session.Username eq 'kubersox'>
+                    AND emptype = 2
+                <cfelseif session.Username eq 'oldmwilcox'>
+                    AND emptype = 1
+                </cfif>
+            </cfif>
+        ORDER BY
+            emptype, Userid, dateentered
     </cfquery>
+
+    
     
     <cfquery name="GetID" datasource="accounts">
         SELECT EmpID, Full_Name, Username
@@ -203,250 +286,357 @@
         ORDER BY	GetID.Full_Name, GetRequests.requesteddates, GetRequests.dateentered
     </cfquery>
     
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="7">Pending Requests - Certified</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-            <td>Supervisor 2 Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetPending_Cert.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=11&requestid=#GetPending_Cert.requestid[i]#&userid=#GetPending_Cert.userid[i]#">#GetPending_Cert.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetPending_Cert.userid[i]#'
-                    </cfquery>
-                    <td>#GetPending_Cert.Full_name[i]#, #GetPending_Cert.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetPending_Cert.dateentered[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPEnding_Cert.RequestedDates[i]#<br />#LSDateFormat(GetPending_Cert.dtFrom[i],'mm/dd/yyyy')# - #LSDateFormat(GetPending_Cert.dtTo[i],'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetPending_Cert.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetPending_Cert.supviewed[i]# / #LSDateFormat(GetPending_Cert.supvieweddate[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPending_Cert.sup2viewed[i]# / #LSDateFormat(GetPending_Cert.sup2vieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>
+    <div class="container mt-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white fw-bold">
+                <h2 class="mb-0 fs-5">Pending Requests - Certified</h2>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered mb-0" aria-describedby="certifiedPendingRequestsHeading">
+                        <caption class="visually-hidden" id="certifiedPendingRequestsHeading">List of pending leave requests for certified employees.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Request ID</th>
+                                <th scope="col">Employee Name (ID)</th>
+                                <th scope="col">Date Entered</th>
+                                <th scope="col">Requested Date(s)</th>
+                                <th scope="col">Request Type</th>
+                                <th scope="col">Supervisor Viewed / Date</th>
+                                <th scope="col">Supervisor 2 Viewed / Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <cfif GetPending_Cert.RecordCount GT 0>
+                                <cfloop query="GetPending_Cert">
+                                    <tr>
+                                        <td><cfoutput><a href="Admin.cfm?StepNum=11&requestid=#URLEncodedFormat(requestid)#&userid=#URLEncodedFormat(UserID)#" aria-label="View details for request ID #requestid#">#requestid#</a></cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(Full_Name)# (#HtmlEditFormat(EmpID)#)</cfoutput></td>
+                                        <td><cfoutput>#LSDateFormat(dateentered,'mm/dd/yyyy')#</cfoutput></td>
+                                        <td>
+                                            <cfoutput>#HtmlEditFormat(RequestedDates)#<br>
+                                            <span class="small text-muted">(#LSDateFormat(dtFrom,'mm/dd/yyyy')# - #LSDateFormat(dtTo,'mm/dd/yyyy')#)</cfoutput></span>
+                                        </td>
+
+                                        <!--- get leavetype --->
+                                        <cfquery name="GetLeaveType" datasource="mesa_web">
+                                            SELECT LeaveType
+                                            FROM LeaveReq_tblLeaveType
+                                            WHERE code = #requesttype#                                            
+                                        </cfquery>
+
+                                        <td><cfoutput>#HtmlEditFormat(GetLeaveType.LeaveType)#</cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(supviewed)# / #LSDateFormat(supvieweddate,'mm/dd/yyyy')#</cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(sup2viewed)# / #LSDateFormat(sup2vieweddate,'mm/dd/yyyy')#</cfoutput></td>
+                                    </tr>
+                                </cfloop>
+                            <cfelse>
+                                <tr>
+                                    <td colspan="7" class="text-center p-3">
+                                        <cfoutput>
+                                            No pending certified requests found for <cfoutput>#currentRequestYear#</cfoutput>.
+                                        </cfoutput>
+                                    </td>
+                                </tr>
+                            </cfif>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     
-     <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="7">Pending Requests - Classified</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-            <td>Supervisor 2 Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetPending_Class.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=11&requestid=#GetPending_Class.requestid[i]#&userid=#GetPending_Class.userid[i]#">#GetPending_Class.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetPending_Class.userid[i]#'
-                    </cfquery>
-                    <td>#GetPending_Class.Full_name[i]#, #GetPending_Class.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetPending_Class.dateentered[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPEnding_Class.RequestedDates[i]#<br />#LSDateFormat(GetPending_Class.dtFrom[i],'mm/dd/yyyy')# - #LSDateFormat(GetPending_Class.dtTo[i],'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetPending_Class.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetPending_Class.supviewed[i]# / #LSDateFormat(GetPending_Class.supvieweddate[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPending_Class.sup2viewed[i]# / #LSDateFormat(GetPending_Class.sup2vieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>
+    <div class="container mt-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white fw-bold"> <h2 class="mb-0 fs-5">Pending Requests - Classified</h2>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered mb-0" aria-describedby="classifiedPendingRequestsHeading">
+                        <caption class="visually-hidden" id="classifiedPendingRequestsHeading">List of pending leave requests for classified employees.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Request ID</th>
+                                <th scope="col">Employee Name (ID)</th>
+                                <th scope="col">Date Entered</th>
+                                <th scope="col">Requested Date(s)</th>
+                                <th scope="col">Request Type</th>
+                                <th scope="col">Supervisor Viewed / Date</th>
+                                <th scope="col">Supervisor 2 Viewed / Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <cfif GetPending_Class.RecordCount GT 0>
+                                <cfloop query="GetPending_Class">
+                                    <tr>
+                                        <td><cfoutput><a href="Admin.cfm?StepNum=11&requestid=#URLEncodedFormat(requestid)#&userid=#URLEncodedFormat(UserID)#" aria-label="View details for request ID #requestid#">#requestid#</a></cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(Full_Name)# (#HtmlEditFormat(EmpID)#)</cfoutput></td> <td><cfoutput>#LSDateFormat(dateentered,'mm/dd/yyyy')#</cfoutput></td>
+                                        <td>
+                                            <cfoutput>#HtmlEditFormat(RequestedDates)#<br>
+                                            <span class="small text-muted">(#LSDateFormat(dtFrom,'mm/dd/yyyy')# - #LSDateFormat(dtTo,'mm/dd/yyyy')#)</span></cfoutput>
+                                        </td>
+
+                                        <!--- get leavetype --->
+                                        <cfquery name="GetLeaveType" datasource="mesa_web">
+                                            SELECT LeaveType
+                                            FROM LeaveReq_tblLeaveType
+                                            WHERE code = #requesttype#                                            
+                                        </cfquery>
+
+                                        <td><cfoutput>#HtmlEditFormat(GetLeaveType.LeaveType)#</cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(supviewed)# / #LSDateFormat(supvieweddate,'mm/dd/yyyy')#</cfoutput></td>
+                                        <td><cfoutput>#HtmlEditFormat(sup2viewed)# / #LSDateFormat(sup2vieweddate,'mm/dd/yyyy')#</cfoutput></td>
+                                    </tr>
+                                </cfloop>
+                            <cfelse>
+                                <tr>
+                                    <td colspan="7" class="text-center p-3">
+                                        <cfoutput>
+                                            No pending classified requests found.
+                                        </cfoutput>
+                                    </td>
+                                </tr>
+                            </cfif>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <cfinclude template="Back_Admin.cfm">
-    <cfinclude template="Logout_admin.cfm">
+    <!--- <cfinclude template="Back_Admin.cfm">
+    <cfinclude template="Logout_admin.cfm"> --->
+
+    <div class="container mt-4 d-flex justify-content-between align-items-center">
+        <cfform name="back" method="post" action="Admin.cfm?StepNum=#GoToStepNum#">
+            <cfinput type="submit" name="back" value="Back" class="btn btn-secondary">
+        </cfform>
+
+        <cfform name="adminlogout" method="post" action="admin.cfm?StepNum=999">
+            <cfinput type="submit" name="logout" value="Logout" class="btn btn-danger">
+        </cfform>
+    </div>
 <!--- StepNum eq 11 - View and Approve Individual Request --->
 <cfelseif StepNum eq 11>
 	<cfform name="AppDenyReq" method="post" action="Admin.cfm?StepNum=12">
-	<cfset Session.RequestID = '#requestid#'>
-    <cfset Session.userid = '#userid#'>
-    <cfset GoToStepNum = 10>
-    <!--- Query to Get Request Information --->
-    <cfquery name="GetReqData" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	RequestID = '#SEssion.RequestID#' AND userid = '#Session.userid#'
-    </cfquery>
-    <!--- Get and Display Employee Information --->
-    <cfquery name="GetEmpInfo" datasource="accounts">
-    	SELECT	Full_name, EmpID, Building
-        FROM	accounts
-        WHERE	Username = '#Session.userid#'
-    </cfquery>
-    <cfoutput>
-    <!--- Get Number of Days approved so far --->
-    <cfquery name="GetDaysApp" datasource="mesa_web">
-    	SELECT	SUM(numdaysapproved) as DaysApp
-        FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
-    </cfquery>
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center">Number of Days Approved this year: #GetDaysApp.DaysApp#</td>
-  		</tr>
-    </table>
-        <table width="100%" border="1">
-            <tr><th>Pending Request for: #GetEmpInfo.Full_Name#</th>
-            <!--- Emp Information --->
-            </tr><tr>
-            	<td>
-                	<table border="1" width="100%">
-                    	<tr>
-                        	<td>Name:</td>
-                            <td>Emp ID: </td>
-                            <td>Building</td>
-                        </tr>
-                        <tr>
-                        	<td>#GetEmpInfo.Full_Name#</td>
-                            <td>#GetEmpInfo.EmpID#</td>
-                            <td><cfif #GetEmpInfo.Building# eq 'columbus'>New Emerson<cfelse>#GetEmpInfo.Building#</cfif></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!--- Request Information --->
-            <tr>
-            	<td>
-                	<table border="1" width="100%">
-                    	<tr>
-                        	<td>RequestID: #GetReqData.RequestID#</td>
-                            <td>Date Entered: #LSDateFormat(GetReqData.dateentered,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">
-                            	Date(s) Requested: #GetReqData.RequestedDates#<br />#LSDateFormat(GetReqData.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqData.dtTo,'mm/dd/yyyy')#<br />
-                                Number of Days: #GetReqData.NumDays#
-                            </td>
-                        </tr>
-                        <!--- Get Leave Type --->
-                        <cfquery name="GetLeaveType" datasource="mesa_web">
-                        	SELECT	LeaveType
-                            FROM	LeaveReq_tblLeaveType
-                            WHERE	code = '#GetReqData.requesttype#'
-                        </cfquery>
-                        <tr>
-                        	<td colspan="2">
-                            	Request Type: #GetLeaveType.LeaveType#
-                                <cfif #GetReqData.requesttype# eq 1>
-                                	- #GetReqData.bereavementrelate#
-                                <cfelseif #GetReqData.requesttype# eq 9>
-                                	Reason: #GetReqData.dayleavereason#
-                                <cfelseif #GetReqData.requesttype# eq 2>
-                                	- Attachment: 	<cfif #GetReqData.Attachment# eq 'Mailing'>
-                                    					Mailing Form
-                                                    <cfelse>
-                                                    	<a href="./Attachments/#GetReqData.Attachment#", target="_blank">#GetReqData.Attachment#</a>
-                                                    </cfif>
-                                <cfelseif #GetReqData.Requesttype# eq 4>
-                                	- Attachment: 	<cfif #GetReqData.Attachment# eq 'Mailing'>
-                                    					Mailing Form
-                                                    <cfelse>
-                                                    	<a href="./Attachments/#GetReqData.Attachment#", target="_blank">#GetReqData.Attachment#</a>
-                                                    </cfif>
-                                </cfif>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">
-                            	<cfif #GetReqData.subfinderNum# gt 0>
-                                	Subfinder Number: #GetReqData.subfindernum#
-                                <cfelse>
-                                	Sub Needed: #GetReqData.subrequested#
-                                </cfif>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td>Employee Signature: #GetReqData.signature#</td>
-                            <td>Date: #LSDateFormat(GetReqData.signaturedate,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td>Principal/Supervisor: #GetReqData.supervisor#</td>
-                            <td>
-                            	Supported/Reviewed: #GetReqData.supviewed# on Date: #LSDateFormat(GetReqData.supvieweddate,'mm/dd/yyyy')#<br />
-                                Comment: #GetReqData.supcomments#
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td>Principal/Supervisor 2: #GetReqData.supervisor2#</td>
-                            <td>Supported/Reviewed: #GetReqData.sup2viewed# on Date: #LSDateFormat(GetReqData.sup2vieweddate,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">Comments To HR: #GetReqData.commentstohr#</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!--- Approve / Deny section --->
-            <tr>
-            	<td>
-                	<table border="1" width="100%">
-                    	<tr>
-                        	<td><cfinput type="radio" name="app_deny" value="A" checked="yes">Approved</td>
-                            <td><cfinput type="radio" name="app_deny" value="P">Pending</td>
-                            <td><cfinput type="radio" name="app_deny" value="D">Denied</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="3">If Approved, number of days approved for:<cfinput type="text" name="appdays" value="0"></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="3">
-                            	Comments: <cftextarea name="comments" rows="4" cols="70"></cftextarea>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td>Approved/Denied By: #Session.FullName#</td>
-                            <td>Date: #LSDateFormat(NOW(),'mm/dd/yyyy')#</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-            	<td>
-                	<cfif #GetReqData.EmpType# eq 2><cfinput type="checkbox" name="emailPayroll" value="true">Send Email to Payroll</cfif>
-                </td>
-            </tr>
-            <tr>
-            	<td align="center">
-                	<cfinput type="submit" name="submit" value="Submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                	<cfinput type="submit" name="Delete" value="Delete Request">
-                </td>
-            </tr>
-        </table>
-    </cfoutput>
-    </cfform>
-    <cfinclude template="Back_Admin.cfm">
-    <cfinclude template="Logout_admin.cfm">
+        <cfset Session.RequestID = '#requestid#'>
+        <cfset Session.userid = '#userid#'>
+        <cfset GoToStepNum = 10>
+        <!--- Query to Get Request Information --->
+        <cfquery name="GetReqData" datasource="mesa_web">
+            SELECT	*
+            FROM	LeaveReq_tblRequest
+            WHERE	RequestID = '#SEssion.RequestID#' AND userid = '#Session.userid#'
+        </cfquery>
+        <!--- Get and Display Employee Information --->
+        <cfquery name="GetEmpInfo" datasource="accounts">
+            SELECT	Full_name, EmpID, Building
+            FROM	accounts
+            WHERE	Username = '#Session.userid#'
+        </cfquery>
+        <cfoutput>
+        <!--- Get Number of Days approved so far --->
+        <cfquery name="GetDaysApp" datasource="mesa_web">
+            SELECT	SUM(numdaysapproved) as DaysApp
+            FROM	LeaveReq_tblRequest
+            WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
+        </cfquery>
+        
+        
+        <div class="card mb-3 shadow-sm mx-auto" style="max-width: 800px;">
+            <div class="card-header bg-info text-dark fw-bold">
+                <h2 class="mb-0 fs-5">Approved Days This Year: <span class="fw-bold">#HtmlEditFormat(GetDaysApp.DaysApp)#</span></h2>
+            </div>
+            <div class="card-body text-center py-3">
+                <h3 class="fs-4 mb-0">Number of Days Approved this year: <span class="fw-bold">#HtmlEditFormat(GetDaysApp.DaysApp)#</span></h5>
+            </div>
+        </div>
+
+
+        <div class="container mt-4">
+            <div class="card-header bg-success text-white fw-bold">
+                <h2 class="mb-0 fs-5">Pending Request for: #HtmlEditFormat(GetEmpInfo.Full_Name)#</h2>
+            </div>
+            
+            <div class="card-body">
+                <h3 class="fs-6 mb-2 text-success">Employee Information</h3>
+                <div class="row mb-3 bg-light">
+                    <div class="col-md-4">
+                        <strong>Name:</strong> <span class="d-block">#HtmlEditFormat(GetEmpInfo.Full_Name)#</span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>Emp ID:</strong> <span class="d-block">#HtmlEditFormat(GetEmpInfo.EmpID)#</span>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <strong>Building:</strong> <span class="d-block">
+                            <cfif GetEmpInfo.Building eq 'columbus'>New Emerson<cfelse>#HtmlEditFormat(GetEmpInfo.Building)#</cfif>
+                        </span>
+                    </div>
+
+                </div>
+
+                <hr class="mt-4">
+            </div>
+            
+                <!--- Request Information --->
+        
+            <h3 class="fs-6 mb-2 text-success">Request Details</h3>
+            <div class="row mb-2 bg-light">
+                <div class="col-md-6">
+                    <strong>Request ID:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.RequestID)#</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Date Entered:</strong> <span class="d-block">#LSDateFormat(GetReqData.dateentered,'mm/dd/yyyy')#</span>
+                </div>
+            </div>
+            <div class="row mb-3 bg-light">
+                <div class="col-12">
+                    <strong>Date(s) Requested:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.RequestedDates)#</span>
+                    <span class="d-block small text-muted">(#LSDateFormat(GetReqData.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqData.dtTo,'mm/dd/yyyy')#)</span>
+                    <strong>Number of Days:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.NumDays)#</span>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-12">
+                    <cfquery name="GetLeaveType" datasource="mesa_web">
+                        SELECT LeaveType
+                        FROM LeaveReq_tblLeaveType
+                        WHERE code = <cfqueryparam value="#GetReqData.requesttype#" cfsqltype="CF_SQL_VARCHAR">
+                    </cfquery>
+                    <strong>Request Type:</strong> <span class="d-block">#HtmlEditFormat(GetLeaveType.LeaveType)#</span>
+                    <cfif GetReqData.requesttype eq 1>
+                        - <span class="d-block">#HtmlEditFormat(GetReqData.bereavementrelate)#</span>
+                    <cfelseif GetReqData.requesttype eq 9>
+                        Reason: <span class="d-block">#HtmlEditFormat(GetReqData.dayleavereason)#</span>
+                    <cfelseif GetReqData.requesttype eq 2 OR GetReqData.Requesttype eq 4>
+                        Attachment:
+                        <cfif GetReqData.Attachment eq 'Mailing'>
+                            Mailing Form
+                        <cfelse>
+                            <a href="./Attachments/#URLEncodedFormat(GetReqData.Attachment)#" target="_blank" aria-label="View attachment #HtmlEditFormat(GetReqData.Attachment)#">#HtmlEditFormat(GetReqData.Attachment)#</a>
+                        </cfif>
+                    </cfif>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-12">
+                    <cfif GetReqData.subfinderNum gt 0>
+                        <strong>Subfinder Number:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.subfinderNum)#</span>
+                    <cfelse>
+                        <strong>Sub Needed:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.subrequested)#</span>
+                    </cfif>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-md-6">
+                    <strong>Employee Signature:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.signature)#</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Date:</strong> <span class="d-block">#LSDateFormat(GetReqData.signaturedate,'mm/dd/yyyy')#</span>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-md-6">
+                    <strong>Principal/Supervisor:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.supervisor)#</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Supported/Reviewed:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.supviewed)# on Date: #LSDateFormat(GetReqData.supvieweddate,'mm/dd/yyyy')#</span>
+                    <strong>Comment:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.supcomments)#</span>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-md-6">
+                    <strong>Principal/Supervisor 2:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.supervisor2)#</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Supported/Reviewed:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.sup2viewed)# on Date: #LSDateFormat(GetReqData.sup2vieweddate,'mm/dd/yyyy')#</span>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light">
+                <div class="col-12">
+                    <strong>Comments To HR:</strong> <span class="d-block">#HtmlEditFormat(GetReqData.commentstohr)#</span>
+                </div>
+            </div>
+            
+                    <!--- Approve / Deny section --->
+            <fieldset class="mb-3"> 
+                <legend class="fs-6 mb-3 text-success">Approve / Deny Request</legend> 
+                <div class="row mb-3 bg-light py-2">
+                    <div class="col-12">
+                        <div class="form-check form-check-inline">
+                            <cfinput type="radio" name="app_deny" value="A" id="app_deny_A" checked="yes" class="form-check-input">
+                            <label class="form-check-label" for="app_deny_A">Approved</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <cfinput type="radio" name="app_deny" value="P" id="app_deny_P" class="form-check-input">
+                            <label class="form-check-label" for="app_deny_P">Pending</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <cfinput type="radio" name="app_deny" value="D" id="app_deny_D" class="form-check-input">
+                            <label class="form-check-label" for="app_deny_D">Denied</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row mb-3 bg-light py-2"> 
+                <div class="col-12">
+                    <label for="appdays" class="form-label">If Approved, number of days approved for:</label>
+                    <cfinput type="text" name="appdays" value="0" id="appdays" class="form-control" style="max-width: 150px;">
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light py-2"> 
+                <div class="col-12">
+                    <label for="comments" class="form-label">Comments:</label>
+                    <cftextarea name="comments" rows="4" cols="70" id="comments" class="form-control"></cftextarea>
+                </div>
+            </div>
+
+            <div class="row mb-3 bg-light py-2"> 
+                <div class="col-md-6">
+                    <strong>Approved/Denied By:</strong> <span class="d-block">#HtmlEditFormat(Session.FullName)#</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Date:</strong> <span class="d-block">#LSDateFormat(NOW(),'mm/dd/yyyy')#</span>
+                </div>
+            </div>
+
+
+            <div class="row mb-3 bg-light py-2"> <div class="col-12">
+                <cfif IsDefined("GetReqData.EmpType") AND GetReqData.RecordCount GT 0 AND GetReqData.EmpType eq 2>
+                    <div class="form-check">
+                        <cfinput type="checkbox" name="emailPayroll" value="true" id="emailPayroll" class="form-check-input">
+                        <label class="form-check-label" for="emailPayroll">Send Email to Payroll</label>
+                    </div>
+                </cfif>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <cfinput type="submit" name="submit" value="Submit" class="btn btn-success">
+            <cfinput type="submit" name="Delete" value="Delete Request" class="btn btn-outline-danger">
+        </div>
+            </cfoutput>
+        </cfform>
+        <div class="container mt-4 d-flex justify-content-between align-items-center">
+            <cfform name="back" method="post" action="Admin.cfm?StepNum=#GoToStepNum#">
+                <cfinput type="submit" name="back" value="Back" class="btn btn-secondary">
+            </cfform>
+
+            <cfform name="adminlogout" method="post" action="admin.cfm?StepNum=999">
+                <cfinput type="submit" name="logout" value="Logout" class="btn btn-danger">
+            </cfform>
+        </div>
+    </div>
 <!--- StepNum = 12 Set Session Variables for Approveing / Denying Request --->
 <cfelseif StepNum eq 12>
 	<cfset Session.AppDeny = '#Form.app_deny#'>
@@ -526,78 +716,7 @@
     </cfmail>
 
 
-    <!---<cfmail to="#trim(session.userid)#@d51schools.org" from="hr@d51schools.org" subject="Request for Leave" type="html">
-#GetEmpInfo.Full_Name#,<br /><br />
-
-<cfif #GetReqInfo.requesttype# eq 9>
-
-Your request for leave on the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending you have time available. Please refer to the upper right corner of your most recent Leave and Earnings Statement for your Sick Leave Balance and Personal Time used. <br /><br /><cfelseif #GetReqInfo.approved# eq 'D'>has been denied.<br /><br /></cfif>
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 6>
-Your request for leave without pay on the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />  
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 1>
-Your request for Bereavement Leave <cfif #GetReqInfo.approved# eq 'A'>has been approved.  Make sure your absence is documented in SubFinder or on your time card as Bereavement.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 3 or #GetReqInfo.requesttype# eq 4>
-Your leave request for the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending receipt of proper documentation.   If you have not already done so, please submit documentation via email or interdepartmental mail to the Department of Human Resources prior to the last working day of the month.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 2>
-Your leave request for the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending receipt of proper documentation.   If you have not already done so, please provide a copy of either the  subpoena or juror certificate via email or interdepartmental mail to the Department of Human Resources office prior to the last working day of the month.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 7 or #GetReqInfo.requesttype# eq 8 or #GetReqinfo.requesttype# eq 11 or #GetReqInfo.requesttype# eq 12>
-Additional information is required.  FMLA leaves are required after an employee has missed 11 or more consecutive days for a serious health condition including:  Their own health issue, family health issue, maternity leave, or military caregiver leave.  Please contact the Human Resources Department (970-254-5120) if you have not requested FMLA paperwork.  A packet will be sent out to your home address.<br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 5>
-Your request for leave on the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending you have time available and the Human Resources Department receives the proper documentation. Please refer to the upper right corner of your most recent Leave and Earnings Statement for your Sick Leave Balance and Personal Time used.   Please provide documentation to the Department of Human Resources office prior to the last working day of the month.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 10>
-Your request for vacation leave on the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending you have time available.  Please refer to the upper right corner of your most recent Leave and Earnings Statement for your Vacation Leave balance.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-
-<cfelseif #GetReqinfo.requesttype# eq 13>
-Your request for sick leave on the following day(s): #LSDateFormat(GetReqInfo.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetReqInfo.dtTo,'mm/dd/yyyy')#, <cfif #GetReqInfo.approved# eq 'A'>has been approved and will be paid for, pending you have time available. Please refer to the upper right corner of your most recent Leave and Earnings Statement for your Sick Leave Balance.<cfelseif #GetReqInfo.approved# eq 'D'>has been denied.</cfif><br /><br />
-
-Comments: #GetReqinfo.comments#<br /><br />
-
-Approved/Denied By: <a href="mailto:#GetAppDenEmail.Email#">#GetAppDenEmail.Full_Name#</a> 
-<cfelse>
-</cfif>
-
-
-
-    </cfmail>--->
+    
        
 <cfif #GetReqInfo.supervisor2# gt ''>
 	<cfmail to="#GetReqInfo.supervisor2#" from="hr@d51schools.org" subject="Request for Leave" type="html">
@@ -724,6 +843,9 @@ Comments: #GetReqInfo.Comments#
 <cfloop from="#Start#" to="#End#" index="a">
 	<cfset GoToStepNum = 1>
 	<!--- View Approved Requests --->
+
+
+
     <!--- Get LIst of Approved Requests --->
     <cfquery name="GetAppRequests" datasource="mesa_web">
     	SELECT	*
@@ -731,6 +853,10 @@ Comments: #GetReqInfo.Comments#
         WHERE	Approved = 'A' and yearofrequest = '2024-2025'  and EmpType = #a#
         ORDER BY userid, dateentered
     </cfquery>
+
+    <cfparam name="URL.currentPage" default="1">
+    <cfparam name="recordsPerPage" default="20">
+    <cfset startRow = ((URL.currentPage - 1) * recordsPerPage) + 1>
     
     <cfquery name="GetID" datasource="accounts">
         SELECT EmpID, Full_Name, Username, fname, lname
@@ -738,169 +864,76 @@ Comments: #GetReqInfo.Comments#
     </cfquery>
     
     <cfquery name="GetApproved" dbtype="query" timeout="600">
-    	SELECT	GetAppRequests.requestid, GetAppRequests.dateentered, GetAppRequests.requesteddates, GetAppRequests.requesttype, GetAppRequests.supviewed, GetAppRequests.supvieweddate,
-        		GetID.EmpID, GetID.Full_Name, GetID.Username, GetAppRequests.UserID, GetID.fname, GetID.lname, GetAppRequests.dtFrom, GetAppRequests.dtTo
-        FROM	GetAppRequests, GetID
-        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
-        ORDER BY	GetID.Lname, GetID.fname, GetAppRequests.dateentered, GetAppRequests.requesteddates
+        SELECT
+            requestid, dateentered, requesteddates, requesttype, supviewed, supvieweddate,
+            EmpID, Full_Name, Username, UserID, fname, lname, dtFrom, dtTo
+        FROM GetAppRequests, GetID
+        WHERE GetAppRequests.UserID = GetID.Username
+        AND yearofrequest = '2024-2025'
+        ORDER BY lname, fname, dateentered, requesteddates
     </cfquery>
-    
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="6"><cfif #a# eq 1>Certified<cfelse>Classified</cfif> Approved Requests</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetApproved.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=21&requestid=#GetApproved.requestid[i]#&userid=#GetApproved.userid[i]#">#GetApproved.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetApproved.userid[i]#'
-                    </cfquery>
-                    <td>#GetApproved.Full_Name[i]#, #GetApproved.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetApproved.dateentered[i],'mm/dd/yy')#</td>
-                    <td>#GetApproved.requesteddates[i]#<br />From: #LSDateFormat(getApproved.dtFrom,'mm/dd/yyyy')# - #lsDateFormat(getApproved.dtTo,'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetApproved.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetApproved.supviewed[i]# / #LSDateFormat(GetApproved.supvieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>
-    <!--- View Approved Requests --->
-    <!--- Get LIst of Approved Requests --->
-    <!---
-    <cfquery name="GetPenRequests" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'P' and yearofrequest = '2024-2025' and EmpType = #a#
-    </cfquery>
-    
-    <cfquery name="GetID" datasource="accounts">
-        SELECT EmpID, Full_Name, Username, fname, lname
-        FROM	accounts
-    </cfquery>
-    
-    <cfquery name="GetPending" dbtype="query">
-    	SELECT	GetPenRequests.requestid, GetPenRequests.dateentered, GetPenRequests.requesteddates, GetPenRequests.requesttype, GetPenRequests.supviewed, GetPenRequests.supvieweddate,
-        		GetID.EmpID, GetID.Full_Name, GetID.Username, GetPenRequests.UserID, GetID.fname, GetID.lname, GetPenRequests.dtFrom, getPenRequests.dtTo
-        FROM	GetPenRequests, GetID
-        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
-        ORDER BY	GetID.Lname, GetID.fname, GetPenRequests.dateentered, GetPenRequests.requesteddates
-    </cfquery>
-    
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="6"><cfif #a# eq 1>Certified<cfelse>Classified</cfif> Pending Days Used Requests</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetPending.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=21&requestid=#GetPending.requestid[i]#&userid=#GetPending.userid[i]#">#GetPending.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetPending.userid[i]#'
-                    </cfquery>
-                    <td>#GetPending.Full_Name[i]#, #GetPending.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetPending.dateentered[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPending.requesteddates[i]#<br />From: #LSDateFormat(GetPending.dtFrom,'mm/dd/yyyy')# - #lsDateFormat(GetPending.dtTo,'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetPending.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetPending.supviewed[i]# / #LSDateFormat(GetPending.supvieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>
-	--->
-    <!--- View Denied Requests 
-    <cfquery name="GetDenRequests" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'D' and yearofrequest = '2024-2025' and EmpType = #a#
-    </cfquery>
-    
-    <cfquery name="GetID" datasource="accounts">
-        SELECT EmpID, Full_Name, Username, fname, lname
-        FROM	accounts
-    </cfquery>
-    
-    
-    <cfquery name="GetDenied" dbtype="query" timeout="600">
-    	SELECT	GetDenRequests.requestid, GetDenRequests.dateentered, GetDenRequests.requesteddates, GetDenRequests.requesttype, GetDenRequests.supviewed, GetDenRequests.supvieweddate,
-        		GetID.EmpID, GetID.Full_Name, GetID.Username, GetDenRequests.UserID, GetID.fname, GetID.lname, GetDenRequests.dtFrom, GetDenRequests.dtTo
-        FROM	GetDenRequests, GetID
-        WHERE	GetDenRequests.UserID = GetID.Username and yearofrequest = '2024-2025'
-        ORDER BY	GetID.Lname, GetID.fname, GetDenRequests.dateentered, GetDenRequests.requesteddates
-    </cfquery>
-    
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="6"><cfif #a# eq 1>Certified<cfelse>Classified</cfif> Denied Requests</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetDenied.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=21&requestid=#GetDenied.requestid[i]#&userid=#GetDenied.userid[i]#">#GetDenied.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetDenied.userid[i]#'
-                    </cfquery>
-                    <td>#GetDenied.Full_Name[i]#, #GetDenied.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetDenied.dateentered[i],'mm/dd/yyyy')#</td>
-                    <td>#GetDenied.requesteddates[i]#<br />From: #LSDateFormat(GetDenied.dtFrom,'mm/dd/yyyy')# - #lsDateFormat(GetDenied.dtTo,'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetDenied.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetDenied.supviewed[i]# / #LSDateFormat(GetDenied.supvieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>--->
-	
+
+    <!---- NEW QUERY TEST --->
+    <cfset totalRecords = GetApproved.RecordCount>
+    <cfset totalPages = Ceiling(totalRecords / recordsPerPage)>
+    <cfset startRow = ((URL.currentPage - 1) * recordsPerPage) + 1>
+    <cfset endRow = Min(startRow + recordsPerPage - 1, totalRecords)>
+
+    <!--- END OF NEW QUERY --->
+
+    <div class="card mb-3 shadow-sm mx-auto" style="max-width: 1200px;">
+        <div class="card-header bg-success text-white fw-bold text-center">
+            <h2 class="mb-0 fs-5">
+                <cfif isDefined('a') AND a eq 1>Certified<cfelse>Classified</cfif> Approved Requests
+            </h2>
+        </div>
+        <div class="card-body p-0"> 
+            <div class="table-responsive"> 
+                <table class="table table-striped table-hover table-bordered mb-0"> 
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Request ID</th>
+                            <th scope="col">User & Emp ID</th>
+                            <th scope="col">Date Entered</th>
+                            <th scope="col">Requested Date(s)</th>
+                            <th scope="col">Request Type</th>
+                            <th scope="col">Supervisor Viewed / Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <cfoutput query="GetApproved">
+                            <cfquery name="GetID" datasource="accounts">
+                                SELECT EmpID
+                                FROM accounts
+                                WHERE Username = <cfqueryparam value="#GetApproved.userid#" cfsqltype="CF_SQL_VARCHAR">
+                            </cfquery>
+                            <cfquery name="GetLeaveType" datasource="mesa_web">
+                                SELECT LeaveType
+                                FROM LeaveReq_tblLeaveType
+                                WHERE code = <cfqueryparam value="#GetApproved.requesttype#" cfsqltype="CF_SQL_VARCHAR">
+                            </cfquery>
+
+                            <tr>
+                                <td>
+                                    <a href="Admin.cfm?StepNum=21&requestid=#HtmlEditFormat(GetApproved.requestid)#&userid=#HtmlEditFormat(GetApproved.userid)#">
+                                        #HtmlEditFormat(GetApproved.Requestid)#
+                                    </a>
+                                </td>
+                                <td>#HtmlEditFormat(GetApproved.Full_Name)#, #HtmlEditFormat(GetID.EmpID)#</td>
+                                <td>#LSDateFormat(GetApproved.dateentered,'mm/dd/yy')#</td>
+                                <td>
+                                    #HtmlEditFormat(GetApproved.requesteddates)#<br />
+                                    <span class="small text-muted">From: #LSDateFormat(GetApproved.dtFrom,'mm/dd/yyyy')# - #LSDateFormat(GetApproved.dtTo,'mm/dd/yyyy')#</span>
+                                </td>
+                                <td>#HtmlEditFormat(GetLeaveType.LeaveType)#</td>
+                                <td>#HtmlEditFormat(GetApproved.supviewed)# / #LSDateFormat(GetApproved.supvieweddate,'mm/dd/yyyy')#</td>
+                            </tr>
+                        </cfoutput>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>	
     <br /><br />
     </cfloop>
 	
@@ -930,94 +963,141 @@ Comments: #GetReqInfo.Comments#
         FROM	LeaveReq_tblRequest
         WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
     </cfquery>
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center">Number of Days Approved this year: #GetDaysApp.DaysApp#</td>
-  		</tr>
-    </table>
-        <table width="100%" border="1">
-            <tr><th>Pending Request for: #GetEmpInfo.Full_Name#</th>
-            <!--- Emp Information --->
-            </tr><tr>
-            	<td>
-                	<table border="1" width="100%">
-                    	<tr>
-                        	<td>Name:</td>
-                            <td>Emp ID: </td>
-                            <td>Building</td>
-                        </tr>
-                        <tr>
-                        	<td>#GetEmpInfo.Full_Name#</td>
-                            <td>#GetEmpInfo.EmpID#</td>
-                            <td><cfif #GetEmpInfo.Building# eq 'columbus'>New Emerson<cfelse>#GetEmpInfo.Building#</cfif></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+    
+    <div class="card mb-3 shadow-sm mx-auto" style="max-width: 800px;">
+        <div class="card-header bg-info text-dark fw-bold text-center">
+            <h2 class="mb-0 fs-5">Approved Days This Year</h2>
+        </div>
+        <div class="card-body text-center py-3">
+            <p class="mb-0 fs-4 fw-bold">Number of Days Approved this year: #HtmlEditFormat(GetDaysApp.DaysApp)#</p>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm mx-auto" style="max-width: 800px;"> 
+        <div class="card-header bg-primary text-white fw-bold">
+            <h2 class="mb-0 fs-5">Pending Request for: #HtmlEditFormat(GetEmpInfo.Full_Name)#</h2>
+        </div>
+        <div class="card-body">
+            <h3 class="fs-6 mb-3 text-secondary">Employee Information</h3>
+            <div class="row g-2 mb-0 bg-light py-2 px-3 border rounded">
+                <div class="col-md-4">
+                    <p class="mb-0"><strong>Name:</strong><br> #HtmlEditFormat(GetEmpInfo.Full_Name)#</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0"><strong>Emp ID:</strong><br> #HtmlEditFormat(GetEmpInfo.EmpID)#</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0"><strong>Building:</strong><br>
+                        <cfif GetEmpInfo.Building eq 'columbus'>New Emerson<cfelse>#HtmlEditFormat(GetEmpInfo.Building)#</cfif>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
             <!--- Request Information --->
-            <tr>
-            	<td>
-                	<table border="1" width="100%">
-                    	<tr>
-                        	<td>RequestID: #GetReqData.RequestID#</td>
-                            <td>Date Entered: #LSDateFormat(GetReqData.dateentered,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">Date(s) Requested: #GetReqData.requesteddates#<br />From: #LSDateFormat(GetReqData.dtFrom,'mm/dd/yyyy')# - To: #LSDateFormat(GetReqData.dtTo,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <!--- Get Leave Type --->
-                        <cfquery name="GetLeaveType" datasource="mesa_web">
-                        	SELECT	LeaveType
-                            FROM	LeaveReq_tblLeaveType
-                            WHERE	code = '#GetReqData.requesttype#'
-                        </cfquery>
-                        <tr>
-                        	<td colspan="2">
-                            	Request Type: #GetLeaveType.LeaveType#
-                                <cfif #GetReqData.requesttype# eq 1>
-                                	- #GetReqData.bereavementrelate#
-                                </cfif>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">
-                            	<cfif #GetReqData.subfinderNum# gt 0>
-                                	Subfinder Number: #GetReqData.subfindernum#
-                                <cfelse>
-                                	Sub Needed: #GetReqData.subrequested#
-                                </cfif>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td>Employee Signature: #GetReqData.signature#</td>
-                            <td>Date: #LSDateFormat(GetReqData.signaturedate,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td>Principal/Supervisor: #GetReqData.supervisor#</td>
-                            <td>Reviewed: #GetReqData.supviewed# Date Reviewed: #LSDateFormat(GetReqData.supvieweddate,'mm/dd/yyyy')#</td>
-                        </tr>
-                        <tr>
-                        	<td colspan="2">
-                            	Comments to HR: #GetReqData.Commentstohr#
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!--- Approve / Deny section --->
-            <tr>
-            	<td align="center">Approved / Pending / Denied: <cfif #GetReqData.Approved# eq 'A'>Approved<cfelseif #GetReqData.Approved# eq 'P'>Pending<cfelse>Denied</cfif></td>
-            </tr>
-            <tr>
-            	<td>Approved By: #GetReqData.ApprovedUser# ON: #LSDateFormat(GetReqData.approvedDate,'mm/dd/yyyy')#</td>
-            </tr>
-            <tr>
-            	<td>Comments: #GetReqData.Comments#</td>
-            </tr>
-        </table>
+    <div class="card mb-4 shadow-sm mx-auto" style="max-width: 800px;"> 
+        <h3 class="fs-6 mb-3 text-secondary">Request Details</h3>
+        <div class="row g-2 mb-4 bg-light py-2 px-3 border rounded">
+            <div class="col-md-6">
+                <p class="mb-0"><strong>Request ID:</strong> #HtmlEditFormat(GetReqData.RequestID)#</p>
+            </div>
+            <div class="col-md-6">
+                <p class="mb-0"><strong>Date Entered:</strong> #LSDateFormat(GetReqData.dateentered,'mm/dd/yyyy')#</p>
+            </div>
+            <div class="col-12 mt-3"> <p class="mb-0"><strong>Date(s) Requested:</strong> #HtmlEditFormat(GetReqData.requesteddates)#</p>
+                <p class="mb-0 small text-muted">From: #LSDateFormat(GetReqData.dtFrom,'mm/dd/yyyy')# - To: #LSDateFormat(GetReqData.dtTo,'mm/dd/yyyy')#</p>
+            </div>
+        </div>
+    </div>
+
+    <!--- Get Leave Type --->
+    <cfquery name="GetLeaveType" datasource="mesa_web">
+        SELECT	LeaveType
+        FROM	LeaveReq_tblLeaveType
+        WHERE	code = '#GetReqData.requesttype#'
+    </cfquery>
+
+    <div class="card mb-4 shadow-sm mx-auto" style="max-width: 800px;"> 
+        <div class="col-12 mt-3">
+            <p class="mb-0">
+                <strong>Request Type:</strong> #HtmlEditFormat(GetLeaveType.LeaveType)#
+                <cfif GetReqData.requesttype eq 1>
+                    - #HtmlEditFormat(GetReqData.bereavementrelate)#
+                </cfif>
+            </p>
+        </div>
+    
+
+        <div class="col-12 mt-3">
+            <p class="mb-0">
+                <cfif GetReqData.subfinderNum gt 0>
+                    <strong>Subfinder Number:</strong> #HtmlEditFormat(GetReqData.subfinderNum)#
+                <cfelse>
+                    <strong>Sub Needed:</strong> #HtmlEditFormat(GetReqData.subrequested)#
+                </cfif>
+            </p>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <p class="mb-0"><strong>Employee Signature:</strong> #HtmlEditFormat(GetReqData.signature)#</p>
+        </div>
+        <div class="col-md-6 mt-3">
+            <p class="mb-0"><strong>Date:</strong> #LSDateFormat(GetReqData.signaturedate,'mm/dd/yyyy')#</p>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <p class="mb-0"><strong>Principal/Supervisor:</strong> #HtmlEditFormat(GetReqData.supervisor)#</p>
+        </div>
+        <div class="col-md-6 mt-3">
+            <p class="mb-0"><strong>Reviewed:</strong> #HtmlEditFormat(GetReqData.supviewed)#<br>
+            <span class="small text-muted">Date Reviewed: #LSDateFormat(GetReqData.supvieweddate,'mm/dd/yyyy')#</span></p>
+        </div>
+
+        <div class="col-12 mt-3">
+            <p class="mb-0"><strong>Comments to HR:</strong> #HtmlEditFormat(GetReqData.Commentstohr)#</p>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm mx-auto" style="max-width: 800px;"> 
+        <h3 class="fs-6 mb-3 text-secondary">Approval Status</h3>
+        <div class="row g-2 mb-4 bg-light py-2 px-3 border rounded">
+            <div class="col-12">
+                <p class="mb-0">
+                    <strong>Status:</strong>
+                    <cfif GetReqData.Approved eq 'A'>
+                        <span class="badge bg-success fs-6">Approved</span>
+                    <cfelseif GetReqData.Approved eq 'P'>
+                        <span class="badge bg-warning text-dark fs-6">Pending</span>
+                    <cfelse>
+                        <span class="badge bg-danger fs-6">Denied</span>
+                    </cfif>
+                </p>
+            </div>
+            <div class="col-md-6 mt-3">
+                <p class="mb-0"><strong>Approved By:</strong> #HtmlEditFormat(GetReqData.ApprovedUser)#</p>
+            </div>
+            <div class="col-md-6 mt-3">
+                <p class="mb-0"><strong>On:</strong> #LSDateFormat(GetReqData.approvedDate,'mm/dd/yyyy')#</p>
+            </div>
+            <div class="col-12 mt-3">
+                <p class="mb-0"><strong>Comments:</strong> #HtmlEditFormat(GetReqData.Comments)#</p>
+            </div>
+        </div>
+    </div>
+
     </cfoutput>
-    <cfinclude template="Back_Admin.cfm">
-    <cfinclude template="Logout_admin.cfm">
+    <div class="card mb-4 shadow-sm mx-auto t" style="max-width: 800px;">
+        <div class="card-body"> 
+            <div class="row g-2 bg-light"> 
+                <div class="col-md-6">
+                    <cfinclude template="Back_Admin.cfm">
+                </div>
+                <div class="col-md-6 text-end"> 
+                    <cfinclude template="Logout_admin.cfm">
+                </div>
+            </div>
+        </div> 
+    </div>
 <!--- Stepnum eq 30 - Denied Requests --->
 <cfelseif StepNum eq 30>
 <cfif #Session.Username# eq 'oldmwilcox'>
@@ -1034,125 +1114,7 @@ Comments: #GetReqInfo.Comments#
 	
 <cfloop from="#Start#" to="#End#" index="a">
 	<cfset GoToStepNum = 1>
-	<!--- View Approved Requests --->
-    <!--- Get LIst of Approved Requests 
-    <cfquery name="GetAppRequests" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'A' and yearofrequest = '2024-2025'  and EmpType = #a#
-        ORDER BY userid, dateentered
-    </cfquery>
-    
-    <cfquery name="GetID" datasource="accounts">
-        SELECT EmpID, Full_Name, Username, fname, lname
-        FROM	accounts
-    </cfquery>
-    
-    <cfquery name="GetApproved" dbtype="query" timeout="600">
-    	SELECT	GetAppRequests.requestid, GetAppRequests.dateentered, GetAppRequests.requesteddates, GetAppRequests.requesttype, GetAppRequests.supviewed, GetAppRequests.supvieweddate,
-        		GetID.EmpID, GetID.Full_Name, GetID.Username, GetAppRequests.UserID, GetID.fname, GetID.lname, GetAppRequests.dtFrom, GetAppRequests.dtTo
-        FROM	GetAppRequests, GetID
-        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
-        ORDER BY	GetID.Lname, GetID.fname, GetAppRequests.dateentered, GetAppRequests.requesteddates
-    </cfquery>
-    
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="6"><cfif #a# eq 1>Certified<cfelse>Classified</cfif> Approved Requests</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetApproved.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=21&requestid=#GetApproved.requestid[i]#&userid=#GetApproved.userid[i]#">#GetApproved.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetApproved.userid[i]#'
-                    </cfquery>
-                    <td>#GetApproved.Full_Name[i]#, #GetApproved.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetApproved.dateentered[i],'mm/dd/yy')#</td>
-                    <td>#GetApproved.requesteddates[i]#<br />From: #LSDateFormat(getApproved.dtFrom,'mm/dd/yyyy')# - #lsDateFormat(getApproved.dtTo,'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetApproved.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetApproved.supviewed[i]# / #LSDateFormat(GetApproved.supvieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>--->
-    <!--- View Approved Requests --->
-    <!--- Get LIst of Approved Requests --->
-    <!---
-    <cfquery name="GetPenRequests" datasource="mesa_web">
-    	SELECT	*
-        FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'P' and yearofrequest = '2024-2025' and EmpType = #a#
-    </cfquery>
-    
-    <cfquery name="GetID" datasource="accounts">
-        SELECT EmpID, Full_Name, Username, fname, lname
-        FROM	accounts
-    </cfquery>
-    
-    <cfquery name="GetPending" dbtype="query">
-    	SELECT	GetPenRequests.requestid, GetPenRequests.dateentered, GetPenRequests.requesteddates, GetPenRequests.requesttype, GetPenRequests.supviewed, GetPenRequests.supvieweddate,
-        		GetID.EmpID, GetID.Full_Name, GetID.Username, GetPenRequests.UserID, GetID.fname, GetID.lname, GetPenRequests.dtFrom, getPenRequests.dtTo
-        FROM	GetPenRequests, GetID
-        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
-        ORDER BY	GetID.Lname, GetID.fname, GetPenRequests.dateentered, GetPenRequests.requesteddates
-    </cfquery>
-    
-    <table border="1" width="100%">
-    	<tr>
-        	<td align="center" colspan="6"><cfif #a# eq 1>Certified<cfelse>Classified</cfif> Pending Days Used Requests</td>
-        </tr>
-        <tr>
-        	<td>Request ID</td>
-            <td>User id, Emp Num</td>
-            <td>Date Entered</td>
-            <td>Requested Date(s)</td>
-            <td>Request Type</td>
-            <td>Supervisor Viewed / Viewed Date</td>
-        </tr>
-        <cfoutput>
-            <cfloop from="1" to="#GetPending.RecordCount#" index="i">
-                <tr>
-                    <td><a href="Admin.cfm?StepNum=21&requestid=#GetPending.requestid[i]#&userid=#GetPending.userid[i]#">#GetPending.Requestid[i]#</a></td>
-                    <!--- Query to get ID Number --->
-                    <cfquery name="GetID" datasource="accounts">
-                        SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#GetPending.userid[i]#'
-                    </cfquery>
-                    <td>#GetPending.Full_Name[i]#, #GetPending.EmpID[i]#</td>
-                    <td>#LSDateFormat(GetPending.dateentered[i],'mm/dd/yyyy')#</td>
-                    <td>#GetPending.requesteddates[i]#<br />From: #LSDateFormat(GetPending.dtFrom,'mm/dd/yyyy')# - #lsDateFormat(GetPending.dtTo,'mm/dd/yyyy')#</td>
-                    <!--- Get Leave Type --->
-                    <cfquery name="GetLeaveType" datasource="mesa_web">
-                    	SELECT	*
-                        FROM	LeaveReq_tblLeaveType
-                        WHERE	code = '#GetPending.requesttype[i]#'
-                    </cfquery>
-                    <td>#GetLeaveType.LeaveType#</td>
-                    <td>#GetPending.supviewed[i]# / #LSDateFormat(GetPending.supvieweddate[i],'mm/dd/yyyy')#</td>
-                </tr>
-            </cfloop>
-        </cfoutput>
-    </table>
-	--->
+	
     <!--- View Denied Requests --->
     <cfquery name="GetDenRequests" datasource="mesa_web">
     	SELECT	*
