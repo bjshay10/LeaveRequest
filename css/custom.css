@@ -1,0 +1,361 @@
+/*
+green color: #00673E
+
+*/
+
+
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #fff;
+    color: #555;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+.clearfix {zoom: 1;}
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.navbar {
+	background-color: #00673E;
+	text-align: center;
+}
+
+header {
+	background-size: cover;
+    background-position: center;
+    height: 150px;
+    background-attachment: fixed;
+    background-color: #fff;
+}
+
+.main-nav {
+    float: right;
+    list-style: none;
+    margin-top: 55px;
+}
+
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    padding: 8px 0;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+}
+
+.nav-link li a:link,
+.nav-link li a:visited {
+    padding: 8px 0;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+}
+
+.row {
+    max-width: 1140px;
+    margin: 0 auto;
+    background-color: #00673E;
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+    float: left;
+    margin-top: 20px;
+}
+
+h1,
+h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #00673E;
+    font-size: 240%;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+    
+}
+
+h2 {
+    text-align: center;
+}
+
+th, tr, td {
+	padding: 10px;
+}
+
+.submit {
+	font-size: 120%;
+	padding: 5px;
+	word-spacing: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #00673E;
+    text-transform: uppercase;
+}
+
+.submit-lu {
+	font-size: 90%;
+	padding: 4px;
+	word-spacing: 3px;
+	letter-spacing: 1px;
+	text-align: center;
+	color: #00673E;
+	text-transform: uppercase;
+}
+
+.txt-box {
+	font-size:90%;
+	padding: 10px;
+}
+
+.bg-ltblue {
+  background-color: #d1f4fa !important;
+}
+
+.bg-ltgreen {
+  background-color: #ccffb3 !important;
+}
+
+.bg-ltgold {
+  background-color: #ffdf80 !important;
+}
+
+
+.bg-ltgray {
+  background-color: #cbcbb3 !important;
+}
+
+.bg-ltgray2 {
+  background-color: #d3d3d3 !important;
+}
+
+.bg-highlight {
+	/*background-color: #FFFFE0 !important;*/
+	background-color: #FFFF7D !important;
+}
+.bg-teal {
+	/*background-color: #FFFFE0 !important;*/
+	background-color: #008080 !important;
+}
+
+.greenbar {
+	background-color: #c0dcc0;
+}
+
+.app-title {
+	font-family: "Monotype Corsiva", Times, serif;
+}
+
+.app-header {
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	/*font-family: "Arial, Helvetica, sans-serif;*/
+}
+
+th a {
+	color: #000000;
+}
+
+.bg-RoseWater {
+background: #E55D87;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+
+.bg-Frozen {
+background: #403B4A;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #E7E9BB, #403B4A);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #E7E9BB, #403B4A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-Sunrise {
+background: #FF512F;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F09819, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F09819, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.rpttable {
+    border: 1px solid #CCC;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    /*margin-bottom: 1rem;*/
+    background-color: transparent;
+
+}
+
+/*.rpttable tr:nth-child(even) {background-color: #f2f2f2;}*/
+
+.rpttable td {
+    border: none;
+}
+
+.rpttable th {
+	background-color: #008081;
+	color: white;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0; }
+
+  .visually-hidden,
+  .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    /*text;*/
+  }
+
+  .centered-section {
+            width: 80%; /* Or any specific width you want, e.g., 600px */
+            margin-left: auto;
+            margin-right: auto;
+            /* Optional: Add some padding and a background to see the div clearly */
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            text-align: center; /* This will center inline content like text and images */
+        }
+
+/* General container for the entire requests section */
+.requests-container {
+    max-width: 960px; /* Or a width that suits your design */
+    margin: 0 auto; /* Centers the container horizontally */
+    padding: 20px; /* Add some padding around the content */
+    box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+/* Style for the main title above the requests list */
+.requests-title {
+    text-align: center; /* Centers the text */
+    margin-bottom: 20px; /* Increased margin for better separation */
+    font-weight: bold;
+    font-size: 1.5em; /* Make the title a bit larger */
+    color: #333;
+}
+
+/* Styles for the header row that defines the columns */
+.requests-header {
+    display: flex;
+    justify-content: space-between; /* Distributes items with space between them */
+    padding: 10px 0; /* More vertical padding for headers */
+    border-bottom: 2px solid #ccc; /* Thicker bottom border for header */
+    font-weight: bold;
+    background-color: #f2f2f2; /* Light background for headers */
+    text-align: left; /* Default text alignment for header columns */
+}
+
+/* Styles for individual column headers within the header row */
+.requests-header-column {
+    padding: 0 5px; /* Add some horizontal padding to individual columns */
+    /* text-align: center; /* Uncomment if you want header text centered */
+}
+
+
+/* Styles for the unordered list acting as the container for request items */
+.request-list {
+    list-style: none; /* Removes default bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* Styles for each individual request item (the equivalent of a table row) */
+.request-item {
+    display: flex; /* Enables flexbox layout for columns */
+    justify-content: space-between;
+    padding: 10px 0; /* More vertical padding for data rows */
+    border-bottom: 1px dashed #eee; /* Light separator between rows */
+    text-align: left; /* Default text alignment for data columns */
+}
+
+/* Styles for individual data points within a request item (the equivalent of table cells) */
+.request-data {
+    padding: 0 5px; /* Add horizontal padding to individual data cells */
+    /* text-align: center; /* Uncomment if you want data text centered */
+}
+
+/* Specific flex-grow rules for column widths */
+.requests-header-column.id-col,
+.request-data.id-col {
+    flex: 2; /* e.g., 2 parts of available space */
+}
+
+.requests-header-column.user-col,
+.request-data.user-col {
+    flex: 1; /* e.g., 1 part of available space */
+}
+
+.requests-header-column.dates-col,
+.request-data.dates-col {
+    flex: 2; /* e.g., 2 parts of available space */
+}
+
+.requests-header-column.type-col,
+.request-data.type-col {
+    flex: 1.5; /* e.g., 1.5 parts of available space */
+}
+
+.requests-header-column.status-col,
+.request-data.status-col {
+    flex: 1; /* e.g., 1 part of available space */
+}
+
+.form-check-input[type="radio"] {
+    border: 2px solid #6c757d; /* A slightly darker border */
+    /* You can also use outline if you prefer */
+    /* outline: 2px solid #6c757d; */
+}
+
+.no-border-fieldset {
+    border: none;
+}
