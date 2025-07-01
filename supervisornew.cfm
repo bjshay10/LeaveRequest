@@ -1,5 +1,5 @@
 <cfapplication name="EmployeeLeaveRequest_supervisor" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,0,20,0)#">
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
+<!DOCTYPE html><html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -23,21 +23,21 @@
 <div id="wrapper">
 	<div id="headercontainer">
   	<div id="headerimages"><a href="http://www.mesa.k12.co.us"><img src="/images/logo.jpg" align="left" alt="Mesa County Valley School District 51" /></a>
-  	  <cfinclude template="/templates/components/rotatingphotos.cfm" />
 		</div>
 		<div id="headersprybar">
-  		<cfinclude template="/templates/components/sprybar.cfm" />
+  		<!---<cfinclude template="/templates/components/sprybar.cfm" />--->
 		</div> 
 	</div>
 	<div id="headersearchbar">
-		<cfinclude template="/templates/components/searchbar.cfm" />	
    </div>
 	<div id="maincontainer">
-  	<div id="maincontentfull">
+    <div id="maincontentfull">
+    <main>
+  	
     		<span class="heading">
-					<!-- InstanceBeginEditable name="PageTitle" -->
+				<h1 style="font-size: large;"><!-- InstanceBeginEditable name="PageTitle" -->
 				Leave Request - Supervisor Page
-			<!-- InstanceEndEditable -->
+			<!-- InstanceEndEditable --></h1>
    	  	</span><br />
 				 <!-- InstanceBeginEditable name="Content" -->
 <cfif not isdefined('StepNum')>
@@ -333,16 +333,16 @@
    		StructClear(Session);
 	</cfscript>
 </cfif>
-    <!-- InstanceEndEditable --> 	
+    <!-- InstanceEndEditable -->
+     </main>        	
   	</div>
 	 	<br class="clearfloat" />
-  	<div id="footer" class="noprint">
-  	<cfinclude template="/templates/components/footer.cfm">
-  </div>
 </div>
 </div>
   <!-- end #footer -->
-
+<footer>  
+  		<cfinclude template="/templates/components/footer.cfm">
+</footer>
 <!-- end #container -->
 
 </body>
