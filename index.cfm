@@ -1,44 +1,52 @@
 <cfapplication name="EmployeeLeaveRequest" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,2,0,0)#">
-<!DOCTYPE html><html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-  <link rel="shortcut icon" href="/favicon.ico" />
+  <!--- <link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="stylesheet" type="text/css"  href="/css/text.css" />
-   <link rel="stylesheet" type="text/css"  href="/css/main.css" />
-   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/css/olderIESupport.css" />
-<![endif]-->
-	<link rel="stylesheet" type="text/css"  href="/css/print.css" media="print" />
+   <link rel="stylesheet" type="text/css"  href="/css/main.css" /> --->
+   <!--- <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/css/olderIESupport.css" />
+<![endif]--> --->
+	<!--- <link rel="stylesheet" type="text/css"  href="/css/print.css" media="print" />
  <script src="/scripts/main.js" type="text/javascript"></script>
 	<script src="/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
-	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
+	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" /> --->
 	
 	<!-- InstanceBeginEditable name="doctitle" -->
-		<title></title>
+		<title>Leave Request Page</title>
 	<!-- InstanceEndEditable -->
 	<!-- InstanceBeginEditable name="head" -->
 	<!-- InstanceEndEditable -->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.css">
 </head>
 
 <body>
 <div id="wrapper">
-	<div id="headercontainer">
-  	<div id="headerimages"><a href="http://www.mesa.k12.co.us"><img src="/images/logo.jpg" align="left" alt="Mesa County Valley School District 51" /></a>
-		</div>
-		<div id="headersprybar">
-  		<!---<cfinclude template="/templates/components/sprybar.cfm" />--->
-		</div> 
-	</div>
-	<div id="headersearchbar">
-   </div>
+    <div id="headercontainer" class="container-fluid p-3">
+        <div id="headerimages" class="d-flex align-items-center">
+            <a href="http://www.mesa.k12.co.us">
+                <img src="images/logo.jpg" alt="Mesa County Valley School District 51 logo" class="img-fluid" style="max-height: 80px;">
+            </a>
+        </div>
+
+        <div id="headersprybar">
+            <!--- <cfinclude template="/templates/components/sprybar.cfm" /> --->
+        </div>
+    </div>
+
+    <!-- Green bar at bottom -->
+    <div class="bg-success" style="height: 10px;"></div>
+
 	<div id="maincontainer">
-    <div id="maincontentfull">
+        <div id="maincontentfull">
     <main>
   	
-    		<span class="heading">
-				<h1 style="font-size: large;"><!-- InstanceBeginEditable name="PageTitle" -->
-				<center>Request and Approval for Leave</center>
-			<!-- InstanceEndEditable --></h1>
-   	  	</span><br />
+    <span class="heading">
+	    <h1 style="font-size: large;"><!-- InstanceBeginEditable name="PageTitle" -->
+	        <center>Request and Approval for Leave</center>
+		</h1>
+   	</span><br />
 				 <!-- InstanceBeginEditable name="Content" -->
 <!--- begin Steps --->
 <!--- Steps
@@ -55,11 +63,11 @@
 		998 = Insert request into db
 		999 = Logout --->
         
-<cfif (cgi.https eq "off") and 
+<!--- <cfif (cgi.https eq "off") and 
 	(cgi.SERVER_NAME does not contain "intranet")>
 	<cflocation url="https://www.mesa.k12.co.us/apps/LeaveRequest/index.cfm" addtoken="no">
 	<cfabort>
-</cfif>
+</cfif> --->
 
 <cfif not isdefined('StepNum')>
 	<cfset StepNum=0>
@@ -72,20 +80,41 @@
 
 <!--- User Login --->
 <cfif not isdefined ('username') and not isdefined ('submitform')>
-	<p>&nbsp; </p>
-	<cfif isdefined('tryagain')>
-		<pan class="red">Invalid Username or Password or you are unauthorized- - Try again</span>
-	    </div>
-	</cfif>
-	<cfform name="form2" method="post" action="" width="500" height="550">
-		<!---<cfformgroup type="panel" label="Leave Request Form">--->
-		<table align="center"><tr><td align="center">
-        Username: <cfinput name="username" type="text" size="20" label="Username:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
+	<cfif isDefined('tryagain')>
+        <div class="alert alert-danger text-center" role="alert" aria-live="assertive">
+            Invalid Username or Password or you are unauthorized — Try again.
+        </div>
+    </cfif>
 
- 	 	Password: <cfinput name="password" type="password" size="20" label="Password:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
-    	<cfinput type="submit" name="Submituser" value="Submit">
-        </td></tr></table>
-   	</cfform>
+    <cfform name="form2" method="post" action="">
+        <div class="container mt-4" style="max-width: 400px;">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Login</h2>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <cfinput type="text" name="username" id="username"
+                                class="form-control" size="20"
+                                label="Username" required="yes"
+                                onkeydown="if(event.key === 'Enter') document.querySelector('[name=Submituser]').click();">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <cfinput type="password" name="password" id="password"
+                                class="form-control" size="20"
+                                label="Password" required="yes"
+                                onkeydown="if(event.key === 'Enter') document.querySelector('[name=Submituser]').click();">
+                    </div>
+
+                    <div class="text-center">
+                        <cfinput type="submit" name="Submituser" value="Submit" class="btn btn-primary w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </cfform>
 </cfif>
 
 <!--- Check Username and Password --->
@@ -128,733 +157,854 @@
     </cfif>
 <!--- Staff Member is Logged in and Can choose to see existing or Enter New Request --->
 <cfelseif StepNum eq 1>
-	<cfform name="form2" method="post" action="index.cfm?StepNum=2" width="500" height="550" skin="blue">
-    	<table width="100%" align="center">
-        	<tr align="center">
-            	<td>Select Action: Enter New Request or View Previous Request</td>
-            </tr>
-            <tr align="center">
-            	<td><input type="radio" name="Action" value="New" />Enter New Request</td>
-            </tr>
-            <tr align="center">
-                <td><input type="radio" name="Action" value="View" />View Previous Request</td>
-            </tr>
-            <tr align="center">
-            	<td><input type="submit" name="submitaction" value="Submit" /></td>
-            </tr>
-        </table>
-        <table width="100%">
-        	<tr><td><input type="submit" name="logout" value="Logout" /></td></tr>
-        </table>
+	<cfform name="form2" method="post" action="index.cfm?StepNum=2">
+        <fieldset class="container p-4 border rounded shadow-sm" style="max-width: 500px; margin: auto;">
+            <legend class="h5 mb-3 text-center">Select Action</legend>
+
+            <p class="text-center">Enter New Request or View Previous Request</p>
+
+            <div class="form-check mb-2 text-center">
+                <input class="form-check-input" type="radio" name="Action" id="actionNew" value="New" required>
+                <label class="form-check-label" for="actionNew">Enter New Request</label>
+            </div>
+
+            <div class="form-check mb-3 text-center">
+                <input class="form-check-input" type="radio" name="Action" id="actionView" value="View">
+                <label class="form-check-label" for="actionView">View Previous Request</label>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" name="submitaction" value="Submit" class="btn btn-primary">
+            </div>
+        </fieldset>
+
+        <div class="text-center mt-3">
+            <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
+        </div>
     </cfform>
     
 <!--- Redirect to Appropriate Selection --->
 <cfelseif StepNum eq 2>
 	<cfinclude template="logout.cfm">
-	<cfif #Form.Action# eq "New">
-    	<!--- First Select Classified or Certified --->
-        <cfform name="SelectEmpType" action="index.cfm?StepNum=4&#urlencodedformat(NOW())#" method="post" width="650" height="550" skin="blue">
-            <table width="100%">
-            	<tr align="center">
-                	<td>Select Employee Type</td>
-                </tr>
-                <tr align="Left">
-                	<td >
-                    	<table border="1" width="100%"><tr>
-                    	  <td>
-                    	Teachers, Nurses, Psychologists, Audiologists, Speech Language Pathologists, etc.<br />
-                    	<input type="radio" name="EmpType" value="1" /><strong>Certified Employees:</strong><br /><br />
-                        All Administrators (including Principals), Paraprofessionals, Nutrition Services, Secretaries, Grounds, Maintenance, etc.<br />
-                        <input type="radio" name="EmpType" value="2" />
-                        <strong>Support Staff Employees and Administrators:</strong><br />
-                    	<!---<select name="EmpType">Employee Type
-                        	<option value="1">Certified Employees</option>
-                            <option value="2">Classified Employees and Administrators</option>
-                        </select>--->
-                        </td></tr></table>
-                    </td>
-                </tr>
-                <tr align="center">
-                	<td><input type="submit" name="submitemptype" value="Submit" /></td>
-                </tr>
-            </table>
-            <table width="100%">
-              <tr><td><input type="submit" name="logout" value="Logout" /></td></tr>
-            </table>
+
+    <cfif #Form.Action# eq "New">
+        <!-- First Select Classified or Certified -->
+        <cfform name="SelectEmpType" action="index.cfm?StepNum=4&#urlencodedformat(NOW())#" method="post">
+            <fieldset class="container p-4 border rounded shadow-sm" style="max-width: 700px; margin: auto;">
+                <legend class="h5 mb-3 text-center">Select Employee Type</legend>
+
+                <div class="mb-4">
+                    <p>
+                        Teachers, Nurses, Psychologists, Audiologists, Speech Language Pathologists, etc.
+                    </p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="EmpType" id="certified" value="1" required>
+                        <label class="form-check-label" for="certified">
+                            Certified Employees
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <p>
+                        All Administrators (including Principals), Paraprofessionals, Nutrition Services, Secretaries, Grounds, Maintenance, etc.
+                    </p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="EmpType" id="support" value="2">
+                        <label class="form-check-label" for="support">
+                            Support Staff Employees and Administrators
+                        </label>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" name="submitemptype" value="Submit" class="btn btn-primary">
+                </div>
+            </fieldset>
+
+            <div class="text-center mt-3">
+                <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
+            </div>
         </cfform>
+
     <cfelseif #Form.Action# eq "View">
-    	<cflocation url="index.cfm?StepNum=3&#urlencodedformat(NOW())#">
+        <cflocation url="index.cfm?StepNum=3&#urlencodedformat(NOW())#">
     </cfif>
 <!--- View Existing Requests --->
 <cfelseif StepNum eq 3>
 	<cfinclude template="logout.cfm">
-    
-    <!--- Get a list of Requests the users has entered --->
+
+    <!--- Get a list of Requests the user has entered --->
     <cfquery name="GetRequests" datasource="mesa_web">
-    	SELECT	RequestID, userid, requesteddates, requesttype, approved,dtFrom, dtTo
+        SELECT	RequestID, userid, requesteddates, requesttype, approved, dtFrom, dtTo
         FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.Username#' and yearofrequest = '2024-2025'
+        WHERE	userid = '#Session.Username#' AND yearofrequest = '2024-2025'
         ORDER BY approved, requesteddates
     </cfquery>
-    
-    <table width="100%">
-    	<tr>
-        	<td colspan="5" align="center">Leave Requests Entered Into the System</td>
-        </tr>
-        <tr>
-        	<td>Request ID (click to view request)</td>
-            <td>User Name</td>
-            <td>Dates From-To</td>
-            <td>Leave Type</td>
-            <td>Status</td>
-        </tr>
-        <cfoutput query="GetRequests">
-        	<tr>
-            	<td><a href="index.cfm?StepNum=5&requestID=#GetRequests.RequestID#">#RequestID#</a></td>
-                <td>#userid#</td>
-                <td>#LSDateFormat(dtFrom,'mm/dd/yyyy')#-#LSDateFormat(dtTo,'mm/dd/yyyy')#</td>
-                <cfif #GetRequests.requesttype# eq 1>
-                	<td>Bereavement</td>
-                <cfelseif #GetRequests.requesttype# eq 2>
-                	<td>Jury/Witness</td>
-                <cfelseif #GetRequests.requesttype# eq 3>
-                	<td>Officiating/Judging</td>
-                <cfelseif #GetRequests.requesttype# eq 4>
-                	<td>Community Service</td>
-                <cfelseif #GetRequests.requesttype# eq 5>
-                	<!---<td>Emergency</td>--->
-                <cfelseif #GetRequests.requesttype# eq 6>
-                	<td>Leave without Pay</td>
-                <cfelseif #GetRequests.requesttype# eq 7>
-                	<td>FMLA own serious health condition</td>
-                <cfelseif #GetRequests.requesttype# eq 8>
-                	<td>FMLA care for immediate family member with a serious health condition</td>
-                <cfelseif #GetRequests.requesttype# eq 9>
-                	<td>Day or Personal Leave</td>
-               	<cfelseif #GetRequests.requesttype# eq 10>
-                	<td>Vacation</td>
-                <cfelseif #GetRequests.requesttype# eq 11>
-                	<td>FMLA Military Exigency Leave</td>
-                <cfelseif #GetRequests.requesttype# eq 12>
-                	<td>FMLA Military Caregiver Leave</td>
-                <cfelseif #GetRequests.requesttype# eq 13>
-                	<td>Sick Leave</td>
-                <cfelseif #GetRequests.requesttype# eq 14>
-                	<td>Military Leave</td>
-                </cfif>
-                
-                <cfif #GetRequests.approved# eq 'A'>
-                	<td>Approved</td>
-                <cfelseif #GetRequests.approved# eq 'D'>
-                	<td>Denied</td>
-                <cfelse>
-                	<td>Pending</td>
-                </cfif>
+
+    <table class="table table-bordered table-striped table-hover" style="width: 100%;" summary="Table listing submitted leave requests for the 2024-2025 school year.">
+        <caption class="visually-hidden">Leave Requests Entered Into the System</caption>
+        <thead class="table-success">
+            <tr>
+                <th scope="col">Request ID (click to view)</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Dates From-To</th>
+                <th scope="col">Leave Type</th>
+                <th scope="col">Status</th>
             </tr>
-		</cfoutput>
+        </thead>
+        <tbody>
+            <cfoutput query="GetRequests">
+                <tr>
+                    <td>
+                        <a href="index.cfm?StepNum=5&requestID=#RequestID#"
+                        aria-label="View details for request ID #RequestID#">#RequestID#</a>
+                    </td>
+                    <td>#userid#</td>
+                    <td>#LSDateFormat(dtFrom,'mm/dd/yyyy')# - #LSDateFormat(dtTo,'mm/dd/yyyy')#</td>
+                    <td>
+                        <cfset leaveTypes = [
+                            "", "Bereavement", "Jury/Witness", "Officiating/Judging", "Community Service",
+                            "", "Leave without Pay", "FMLA own serious health condition",
+                            "FMLA care for immediate family member", "Day or Personal Leave",
+                            "Vacation", "FMLA Military Exigency Leave",
+                            "FMLA Military Caregiver Leave", "Sick Leave", "Military Leave"
+                        ]>
+                        #leaveTypes[Val(requesttype)]#
+                    </td>
+                    <td>
+                        <cfif approved eq 'A'>
+                            Approved
+                        <cfelseif approved eq 'D'>
+                            Denied
+                        <cfelse>
+                            Pending
+                        </cfif>
+                    </td>
+                </tr>
+            </cfoutput>
+        </tbody>
     </table>
 
 <!--- Enter New Request --->
 <cfelseif StepNum eq 4>
 	<cfinclude template="logout.cfm">
-	<cfif isdefined('form.submitemptype')>
+	
+    <cfif isdefined('form.submitemptype')>
 		<cfset Session.EmpType = '#Form.EmpType#'>
     </cfif>
+
     <!--- Leave Request Form --->
-    <cfform name="LeaveReqForm" action="index.cfm?StepNum=997&#urlencodedformat(NOW())#" method="post" width="850" height="550">
-        <!--- Name, ID, Building, Requesting Dates is the same for all types of Staff --->
-		<table width="100%">
-        	<tr>
-      			<cfif isdefined('errcode')>
-                	<cfif #errcode# eq 1>
-                    	<td colspan="4"><h3><font color="##FF0000">You Must Enter a Bereavement Relationship</font></h3> make sure to select type of leave                        </td>
-                    </cfif>
-                </cfif>
-            	<td colspan="2">
-                	Name:<cfoutput><cfinput type="text" name="EmpName" value="#Session.FullName#" size="50" required="yes"></cfoutput>
-                </td>
-                <td>
-                	<!--- Query to get ID Number --->
-                	<cfquery name="GetID" datasource="accounts">
-                    	SELECT EmpID
-                        FROM	accounts
-                        WHERE	Username = '#Session.Username#'
-                    </cfquery>
-                	ID#:<cfoutput><cfinput type="text" name="EmpID" value="#GetID.EmpID#" size="10" required="yes"></cfoutput>
-                </td>
-                <td>
-                	School:<cfoutput><cfinput type="text" name="EmpBuilding" value="#Session.Building#" size="50" required="yes"></cfoutput>
-                </td>
-            </tr>
-            <tr>
-            	<td>
-                	Dates Requested:<br />From (use date picker):<br />
-                    <cfif isdefined('Session.ReqDateFrom')>
-                    	<cfinput type="datefield" name="ReqDateFrom" required="yes" message="You must enter the Start date of your leave request" value="#Session.ReqDateFrom#">
-                    <cfelse>
-                    	<cfinput type="datefield" name="ReqDateFrom" required="yes" message="You must enter the Start date of your leave request" readonly="yes">	
-                    </cfif>
-                </td>
-                <td>
-                	<br />To (use date picker):<br />
-                    <cfif isdefined('Session.ReqDateTo')>
-                    	<cfinput type="datefield" name="ReqDateTo" required="yes" message="You must enter the End date of your leave request" value="#Session.ReqDateTo#">
-                    <cfelse>
-                    	<cfinput type="datefield" name="ReqDateTo" required="yes" message="You must enter the End date of your leave request" readonly="yes">	
-                    </cfif>
-                </td>
-                <td colspan="2">
-                	<p><br />
-                	Number of Days Requested: (number only)
-                	<br />(If less than 1 day put hours in comments to HR)
-              	  </p>
-					<cfif isdefined('Session.ReqNumDays')>
-                    	<cfinput type="text" name="ReqNumDays" required="yes" message="Enter the number of days requested" value="#Session.ReqNumDays#">
-                    <cfelse>
-                    	<cfinput type="text" name="ReqNumDays" required="yes" message="Enter the number of days requested">	
-                    </cfif>	
-                </td>
-            </tr>
-            <!---<tr>
-            	<td colspan="4">
-                	Enter Date(s) you are Requesting:<br />
-                    
-                    <br /><br />
-					<cfif isdefined('Session.ReqDates')>
-                    	<cfinput type="text" maxlength="150" name="ReqDates" size="125" required="yes" message="You must enter the Date(s) you are requesting leave for" value="#Session.ReqDates#"><br />
-                    <cfelse>
-                    	<cfinput type="text" maxlength="150" name="ReqDates" size="125" required="yes" message="You must enter the Date(s) you are requesting leave for"><br />
-                    </cfif>
-                </td>
-            </tr>--->
-            <!--- if Certified Employee --->
-            <cfif Session.EmpType eq 1>
-            	<tr>
-                    <td colspan="4">Check Leave Type You Are Requesting:  </td>
-                </tr>
-                <cfif isdefined('Session.LeaveType')>
-                <tr>
-                	<td colspan="2">
-                    	<!--- Day Leave ---><br />
-                        <cfif #Session.LeaveType# eq 9>
-                        	<cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave" checked="yes">
-                        	<strong>Day Leave Section 9.1</strong>: <em><br />&nbsp;&nbsp;&nbsp;&nbsp;This leave may not be used for vacation or job interviews.  Must provide comments to HR if taking 3 or more consecutive days or a blackout day*</em><br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave">
-                        	<strong>Day Leave Section 9.1</strong>: <em><br />&nbsp;&nbsp;&nbsp;&nbsp;This leave may not be used for vacation or job interviews.  Must provide comments to HR if taking 3 or more consecutive days or a blackout day*</em><br />
-                        </cfif>
-                        <cfif isdefined('Sesssion.dayleavereason')>
-                        	<cfinput type="hidden" name="dayleavereason" value="#Session.dayleavereason#"><br />
-                        <cfelse>
-                        	<cfinput type="hidden" name="dayleavereason"><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 14>                       
-                            <cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of leave" checked="yes">
-                            <strong>Military Leave</strong> 8.4<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br />
-                        <cfelse>
-                            <cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of leave">
-                            <strong>Military Leave</strong> 8.4 <br />
-                             &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 6>
-                        	<cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave" checked="yes"><strong>Leave without Pay</strong><br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave"><strong>Leave without Pay</strong><br />
-                        </cfif>
-                    <!---<strong>FMLA</strong> <em>(to rum concurrent with Day Leave)</em><br />
-                        Purpose of Day Leave: if 11 or more consecutive days
-                        <cfif #Session.LeaveType# eq 7>
-                        	<cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave" checked="yes">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# Eq 8>
-                        	<cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave" checked="yes">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 11>
-                        	<cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave" checked="yes">FMLA Military Exigency Leave<br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave">FMLA Military Exigency Leave<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 12>
-                        	<cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave" checked="yes">FMLA Military Caregiver Leave<br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave">FMLA Military Caregiver Leave<br />
-                        </cfif>---></td>
-                    <td colspan="2">
-                    	<cfif #Session.LeaveType# eq 1>
-                        	<cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave"><strong>Bereavement Section </strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>Immediate family members**</em> <input type="text" name="bereavementrelationship" size="20" value="<cfoutput>#Session.bereavementrelationship#</cfoutput>" /><br /><br />
-                        <cfelse>
-                            <cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave"><strong>Bereavement Section </strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>Immediate family members**</em> <cfinput type="text" name="bereavementrelationship" size="20" maxlength="50" /><br /><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 4>
-                        	<cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave" checked="yes"><strong>Community Service Section 9.4</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em> (preapproval and documentation required)</em><br /><br />
-                        <cfelse>
-                            <cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave"><strong>Community Service Section 9.4</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em> (preapproval and documentation required)</em><br /><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 3>
-                        	<cfinput type="radio" name="LeaveType" value="3" required="yes" message="You must select a type of leave" checked="yes"><strong>Officiating/Judging Section 9.5</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br /><br />
-                        <cfelse>
-                            <cfinput type="radio" name="LeaveType" value="3" required="yes" message="You must select a type of leave"><strong>Officiating/Judging Section 9.5</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br /><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 5>
-                        	<!---<cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave" checked="yes"><strong>Emergency Section 9.6</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>--->
-                        <cfelse>
-                            <!---<cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave"><strong>Emergency Section 9.6</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>	 --->                       
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 2>
-                        	<cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave" checked="yes"><strong>Jury/Witness Section 9.7-8</strong><br />
-                    		&nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em>
-                        <cfelse>                      
-                            <cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave">
-                            <strong>Jury/Witness Section 9.8</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em>
-                        </cfif>
-                    </td>
-                </tr>
-                <tr>
-                	<td colspan="2">
-                    	<!--- Leave without pay --->
-                        
-                    </td>
-                    <td colspan="2">
-                    	<!--- Jury/Witness --->  
-                        
-                    </td>
-                </tr>
-                <cfelse>
-                <!--- if session.leavetype not exists begin--->
-                <tr>
-                	<td colspan="2">
-                    	<p>
-                    	<!--- Day Leave ---><br />
-                        <cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave">
-                        <strong>Day Leave Section 9.1</strong>: <em><br />&nbsp;&nbsp;&nbsp;&nbsp;This leave may not be used for vacation or job interviews.  Must provide comments to HR if taking 3 or more consecutive days or a blackout day*</em><br />
-                        <cfinput type="hidden" name="dayleavereason" >
-                    	<br />
-                        <cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of leave">
-                        <strong>Military Leave</strong> 8.4<br />
-                    	&nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br /><br />
-                        <!--- Leave without pay --->
-                        <cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave"><strong>Leave without Pay</strong><br />
-						<!---<strong>FMLA</strong> <em>(to rum concurrent with Day Leave)</em><br />
-                        Purpose of Day Leave: if 11 or more consecutive days
-                        <cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                        <cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        <cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave">FMLA Military Exigency Leave<br />
-                        <cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave">FMLA Military Caregiver Leave<br />--->
-                    </td>
-                    <td colspan="2">
-                    	
-                    	<cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave"><strong>Bereavement Section </strong><br />
-                    	&nbsp;&nbsp;&nbsp;&nbsp;<em>Immediate family members**</em> <input type="text" name="bereavementrelationship" size="20" /><br /><br />
-                        <cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave"><strong>Community Service Section 9.4</strong><br />
-                    	&nbsp;&nbsp;&nbsp;&nbsp;<em> (preapproval and documentation required)</em><br /><br />
-                        <cfinput type="radio" name="LeaveType" value="3" required="yes" message="You must select a type of leave"><strong>Officiating/Judging Section 9.5</strong><br />
-                    	&nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em><br /><br />
-                        <!--- Jury/Witness --->   
-                       <cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave">
-                       <strong>Jury/Witness Section 9.8</strong><br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;<em>(documentation required)</em>
-                        <!---<cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave"><strong>Emergency Section 9.6</strong><br />
-                  		&nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>	--->                        
-                    </td>
-                </tr>
-                <tr>
-                	<td colspan="2">
-                    	
-                    </td>
-                    <td colspan="2">
-                    	
-                    </td>
-                </tr>
-                </cfif>
-                    
-                
-                <!--- if Session.LeaveType not exists end--->
-                <tr>
-                	<td colspan="4">
-                    	&bull;<strong>Reported Aesop/Frontline Job #:</strong>
-                    	<cfif isdefined('Session.subfinderid')><cfinput type="text" name="subfindernum" value="#Session.subfinderid#" required="yes" validate="integer" message="Aesop/Frontline Job number must be entered and it must be numeric"><cfelse><cfinput type="text" name="subfindernum" validate="integer" required="yes" message="Aesop/Frontline Job number must be entered and it must be numeric"></cfif>
-                    </td>
-                </tr>
-                <tr>
-                	<td colspan="2">
-                    </td>
-                    <td colspan="2">
-                    </td>
-                </tr>
-            <!--- Classified Employees or Administrators --->
-            <cfelseif Session.EmpType eq 2>
-            	<cfif not isdefined('Session.LeaveType')>
-                <tr>
-                    <td colspan="4">Check Leave Type You Are Requesting:</td>
-                </tr>
-                	<tr>
-                    <td colspan="2">
-                    	
-                    	<cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave">
-                    	<strong>Personal Leave</strong>***<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;<em>This leave may not be used for vacation or job interviews.  Must provide reason in comments to HR if taking 3 or more consecutive days or a blackout day*</em>
-                        <cfinput type="hidden" name="dayleavereason"><br />
-                   	  <!---<cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                    	<cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        <cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave">FMLA Military Exigency Leave<br />
-                        <cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave">FMLA Military Caregiver Leave--->
-                        <cfinput type="radio" name="LeaveType" value="13" required="yes" message="You must select a type of Leave"><strong>Sick Leave</strong><br /><em>&nbsp;&nbsp;&nbsp;&nbsp;(If applicable FMLA will be followed)</em><br />
-                        <cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave"><strong>Leave without Pay</strong><br />
-                        <cfinput type="radio" name="LeaveType" value="10" required="yes" message="You must select a type of leave">
-                    	<strong>Vacation</strong>
-                    	<strong>(YEAR-ROUND EMPLOYEES ONLY)</strong>
-                    </td>
-                    
-                    <td colspan="2">
-                    
-                    	  <cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave">
-                    	  <strong>Bereavement</strong><br />
-                    	  &nbsp;&nbsp;&nbsp;&nbsp;<em>(Immediate Family Members**)</em> 
-                    	  <input type="text" name="bereavementrelationship" size="20" /><br />
-                    	  <cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave">
-                    	  <strong>Community Service</strong><br />
-                    	  &nbsp;&nbsp;&nbsp;&nbsp;<em> (Preapproval &amp; documentation required)</em><br />
-                    	  <cfinput type="radio" name="LeaveType" value="3"required="yes" message="You must select a type of leave">
-                    	  <strong>Officiating/Judging</strong><br />
-                   	  	  &nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em><br />
-                    	  <cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of Leave">
-                    	  <strong>Military Leave</strong><br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation Required)</em><br />
-                          <cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave"><strong>Jury/Witness</strong><br />
-                   			&nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em>
-                  	  </td>
-                </tr>
-                <tr>
-                	<td colspan="2">                    	 
-                    </td>
-                    <td colspan="2">
-                    	<!--- <cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave"><strong>Emergency</strong><br />
-                  		&nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>--->
-                    </td>
-                </tr>
-                <cfelse>
-                <tr>
-                    <td colspan="4">Check Leave Type You Are Requesting:</td>
-                </tr>
-                	<tr>
-                    <td colspan="2">
-                    	<strong>Personal</strong>***<br />
-                        <cfif #Session.LeaveType# eq 9>
-                        	<cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave" checked="yes">
-                        	<strong>Personal Leave</strong>***<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>This leave may not be used for vacation or job interviews.  Must provide reason in comments to HR if taking 3 or more consecutive days or a blackout day*</em>
-                          <cfinput type="hidden" name="dayleavereason" value="#Session.dayleavereason#"><br />
-                        <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="9" required="yes" message="You must select a type of leave">
-                    		<strong>Personal Leave</strong>***<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>This leave may not be used for vacation or job interviews.  Must provide reason in comments to HR if taking 3 or more consecutive days or a blackout day*</em>
-                            <cfinput type="hidden" name="dayleavereason" ><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 13>
-                        	<cfinput type="radio" name="LeaveType" value="13" required="yes" message="You must select a type of leave" checked="yes"><strong>Sick Leave</strong><br />&nbsp;&nbsp;&nbsp;&nbsp;<em>(If applicable FMLA will be followed)</em><br />	
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="13" required="yes" message="You must select a type of leave"><strong>Sick Leave</strong><br />	
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 6>
-                        	<cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave" checked="yes"><strong>Leave without Pay</strong><br />
-                        <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="6" required="yes" message="You must select a type of leave"><strong>Leave without Pay</strong><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 10>
-                        	<cfinput type="radio" name="LeaveType" value="10" required="yes" message="You must select a type of leave" checked="yes">
-                        	<strong>Vacation (YEAR-ROUND EMPLOYEES ONLY)</strong>
-                            <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="10" required="yes" message="You must select a type of leave">
-                    		<strong>Vacation (YEAR-ROUND EMPLOYEES ONLY)</strong>
-                        </cfif>
-                    	<!---<strong>FMLA</strong> <em>(to run concurrent with Personal Leave)</em><br />
-                    	Purpose of Personal/Sick Leave: <em>if 11 or more consecutive days</em><br />
-                        <cfif #Session.LeaveType# eq 7>
-                        	<cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave" checked="yes">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                        <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="7" required="yes" message="You must select a type of leave">FMLA own serious health condition (if more than 11 consecutive days)<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 8>
-                        	<cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave" checked="yes">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="8" required="yes" message="You must select a type of leave">FMLA care for immediate family member with a serious health condition (if more than 11 consecutive days)<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 11>
-                        	<cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave" checked="yes">FMLA Military Exigency Leave<br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="11" required="yes" message="You must select a type of leave">FMLA Military Exigency Leave<br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 12>
-                        	<cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave" checked="yes">FMLA Military Caregiver Leave
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="12" required="yes" message="You must select a type of leave">FMLA Military Caregiver Leave
-                        </cfif>
-						--->
-                    </td>
-                    <td colspan="2">
-                    	
-                        <cfif #SEssion.LeaveType# eq 1>
-                        	<cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave" checked="yes"><strong>Bereavement</strong><br />
-                    		&nbsp;&nbsp;&nbsp;&nbsp;<em>(Immediate Family Members**)</em> 
-                    		<input type="text" name="bereavementrelationship" size="20" value="<cfoutput>#Session.bereavementrelationship#</cfoutput>" /><br />
-                        <cfelse>
-                    		<cfinput type="radio" name="LeaveType" value="1" required="yes" message="You must select a type of leave"><strong>Bereavement</strong><br />
-                    		&nbsp;&nbsp;&nbsp;&nbsp;<em>(Immediate Family Members**)</em>
-                    		<input type="text" name="bereavementrelationship" size="20" /><br />
-                        </cfif>
-						<cfif #Session.LeaveType# eq 4>
-                        	<cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave" checked="yes"><strong>Community Service</strong><br />
-                    		&nbsp;&nbsp;&nbsp;&nbsp;<em>(Preapproval &amp; documentation required)</em><br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="4" required="yes" message="You must select a type of leave"><strong>Community Service</strong><br />
-                    		&nbsp;&nbsp;&nbsp;&nbsp;<em>(Preapproval &amp; documentation required)</em><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 3>
-                        	<cfinput type="radio" name="LeaveType" value="3"required="yes" message="You must select a type of leave" checked="yes"><strong>Officiating/Judging</strong><br />
-  		                	&nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em><br />
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="3"required="yes" message="You must select a type of leave"><strong>Officiating/Judging</strong><br />
-  		                	&nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em><br />
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 14>
-                        	<cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of leave" checked="yes"><strong>Military Leave</strong> (Documentation Required)<br />	
-                        <cfelse>
-                        	<cfinput type="radio" name="LeaveType" value="14" required="yes" message="You must select a type of leave"><strong>Military Leave</strong> (Documentation Required)<br />	
-                        </cfif>
-                        <cfif #Session.LeaveType# eq 2>
-                            <cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave" checked="yes"><strong>Jury/Witness</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em>
-                            <cfelse>
-                            <cfinput type="radio" name="LeaveType" value="2" required="yes" message="You must select a type of leave"><strong>Jury/Witness</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<em>(Documentation required)</em>
-                    	</cfif>
-                    </td>
-                </tr><tr>
-                </tr><tr>
-                	<td colspan="2">
-                    	
-                    </td>
-                    <td colspan="2">
-                    	
-                    	<cfif #Session.LeaveType# eq 5>
-                        	<!---<cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave" checked="yes"><strong>Emergency</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>--->
-                        <cfelse>
-                            <!---<cfinput type="radio" name="LeaveType" value="5" required="yes" message="You must select a type of leave"><strong>Emergency</strong><br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>MUST</strong> <em>submit documentation</em>--->
-                        </cfif>
-                    </td>
-                </tr>
-                <tr>
-                	<td colspan="2">
-                    	
-                    </td>
-                    <td colspan="2">
-                    	
-                    </td>
-                </tr>
-            	</cfif>
-                <!---<tr>
-                	<cfif isdefined('Session.subrequested_yn')>
-                    	<cfif #Session.subrequested_yn# eq 'Yes'>
-                        	<td colspan="4"><strong>Substitute requested
-                    	<cfinput type="radio" name="subrequested_yn" value="Yes" required="yes" message="You must select if a sub was required or not" checked="yes">Yes  <cfinput type="radio" name="subrequested_yn" value="No" required="yes" message="You must select if a sub was required or not">Not Needed</strong>
-                    </td>
-						<cfelse>
-                        	<td colspan="4">
-                                &bull;<strong>Substitute requested<cfinput type="radio" name="subrequested_yn" value="Yes" required="yes" message="You must select if a sub was required or not">Yes  <cfinput type="radio" name="subrequested_yn" value="No" required="yes" message="You must select if a sub was required or not" checked="Yes">Not Needed</strong>
-                            </td>
-						</cfif>
-                    <cfelse>
-                        <td colspan="4">
-                            &bull;<strong>Substitute requested<cfinput type="radio" name="subrequested_yn" value="Yes" required="yes" message="You must select if a sub was required or not">Yes  <cfinput type="radio" name="subrequested_yn" value="No" required="yes" message="You must select if a sub was required or not">Not Needed</strong>
-                        </td>
-                    </cfif>
-                </tr>--->
-                <tr>
-                	<td colspan="2">
-                    </td>
-                    <td colspan="2">
-                    </td>
-                </tr>
+    <cfform 
+        name="LeaveReqForm" 
+        action="index.cfm?StepNum=997&#urlencodedformat(NOW())#" 
+        method="post" 
+        class="needs-validation" 
+        role="form" 
+        novalidate
+    >
+
+            <!--- Name, ID, Building, Requesting Dates is the same for all types of Staff --->
+            
+            <!--- Display Error Message (if errcode = 1) --->
+            <cfif isdefined('errcode') AND errcode EQ 1>
+                <div class="alert alert-danger" role="alert">
+                    <h3 class="h5">You Must Enter a Bereavement Relationship</h3>
+                    <p>Make sure to select the type of leave.</p>
+                </div>
             </cfif>
-            <tr>
-            	<cfif isdefined('Session.CommentsTo')>
-					<cfif #Session.EmpType# eq 2>
-                        <td colspan="4">Comments to HR:<br /><cftextarea cols="50" rows="4" name="comments" value="#SEssion.CommentsTo#" ></cftextarea></td>
+
+            <!-- Begin Bootstrap Grid -->
+            <!--- <div class="row g-3 mb-4 p-3 rounded">
+                <div>
+                    <label class="form-label fw-bold">Date:</label>
+                    <span><cfoutput>#LSDateFormat(NOW(),'mm/dd/yyyy')#</cfoutput></span>
+                </div>
+            </div> --->
+
+            <div class="row g-3 mb-4 border p-3 rounded">
+                <!-- Name -->
+                <div class="col-md-6">
+                    <label for="EmpName" class="form-label fw-bold">Name</label>
+                    <cfoutput>
+                        <cfinput 
+                            type="text" 
+                            name="EmpName" 
+                            id="EmpName"
+                            class="form-control"
+                            value="#Session.FullName#" 
+                            required="yes">
+                    </cfoutput>
+                </div>
+
+                <!-- ID Number -->
+                <div class="col-md-3">
+                    <label for="EmpID" class="form-label fw-bold">ID#</label>
+                    <cfquery name="GetID" datasource="accounts">
+                        SELECT EmpID
+                        FROM accounts
+                        WHERE Username = '#Session.Username#'
+                    </cfquery>
+                    <cfoutput>
+                        <cfinput 
+                            type="text" 
+                            name="EmpID" 
+                            id="EmpID"
+                            class="form-control"
+                            value="#GetID.EmpID#" 
+                            required="yes">
+                    </cfoutput>
+                </div>
+
+                <!-- School -->
+                <div class="col-md-3">
+                    <label for="EmpBuilding" class="form-label fw-bold">School</label>
+                    <cfoutput>
+                        <cfinput 
+                            type="text" 
+                            name="EmpBuilding" 
+                            id="EmpBuilding"
+                            class="form-control"
+                            value="#Session.Building#" 
+                            required="yes">
+                    </cfoutput>
+                </div>
+            </div>
+
+            <!--- SECOND ROW --->
+            <div class="row g-3 mb-4 border p-3 rounded">
+                <!-- From Date -->
+                <div class="col-md-4">
+                    <label for="ReqDateFrom" class="form-label fw-bold">Dates Requested: From (use date picker)</label>
+                    <div class="form-text">Select the first day of your leave</div>
+                    <input
+                    type="date"
+                    id="ReqDateFrom"
+                    name="ReqDateFrom"
+                    class="form-control"
+                    <cfif isdefined('Session.ReqDateFrom')>value="<cfoutput>#Session.ReqDateFrom#</cfoutput>"</cfif>
+                    required
+                    />
+                </div>
+
+                <!-- To Date -->
+                <div class="col-md-4">
+                    <label for="ReqDateTo" class="form-label fw-bold">To (use date picker)</label>
+                    <div class="form-text">Select the last day of your leave</div>
+                    <input
+                    type="date"
+                    id="ReqDateTo"
+                    name="ReqDateTo"
+                    class="form-control"
+                    <cfif isdefined('Session.ReqDateTo')>value="<cfoutput>#Session.ReqDateTo#</cfoutput>"</cfif>
+                    required
+                    />
+                </div>
+
+                <!-- Number of Days -->
+                <div class="col-md-4">
+                    <label for="ReqNumDays" class="form-label fw-bold">Number of Days Requested:</label>
+                    <div class="form-text">(If less than 1 day, put hours in comments to HR)</div>
+                    <input
+                    type="text"
+                    id="ReqNumDays"
+                    name="ReqNumDays"
+                    class="form-control"
+                    <cfif isdefined('Session.ReqNumDays')>value="<cfoutput>#Session.ReqNumDays#</cfoutput>"</cfif>
+                    required
+                    />
+                </div>
+            </div>
+
+            
+            <cfif Session.EmpType eq 1>
+                <fieldset role="radiogroup" aria-labelledby="leaveOptions1Label" class="mb-4 border p-3 rounded">
+                    <legend id="leaveOptions1Label" class="form-label fw-bold">Select Leave Type for Certified Employees:</legend>
+                    <div class="row  g-3 mb-4 border p-3 rounded">
+                        <div class="col-md-6">
+                            <!-- Day Leave -->
+                            <div class="form-check mb-2">
+                                <cfset checked_9 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_9" name="LeaveType" value="9" required <cfoutput>#checked_9#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_9">
+                                    <strong>Day Leave Section 9.1</strong><br>
+                                    <em>This leave may not be used for vacation or job interviews. Must provide comments to HR if taking 3 or more consecutive days or a blackout day*</em>
+                                </label>
+                            </div>
+                            <cfif isDefined("Session.dayleavereason")>
+                                <input type="hidden" name="dayleavereason" value="<cfoutput>#htmlEditFormat(Session.dayleavereason)#</cfoutput>">
+                            <cfelse>
+                                <input type="hidden" name="dayleavereason" value="">
+                            </cfif>
+                            
+                            <!-- Military Leave -->
+                            <div class="form-check mb-2">
+                                <cfset checked_14 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required <cfoutput>#checked_14#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_14">
+                                    <strong>Military Leave 8.4</strong><br>
+                                    <em>(documentation required)</em>
+                                </label>
+                            </div>
+
+                            <!-- Leave without Pay -->
+                            <div class="form-check mb-2">
+                                <cfset checked_6 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_6" name="LeaveType" value="6" required <cfoutput>#checked_6#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_6">
+                                    <strong>Leave without Pay</strong>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 p-3 rounded">
+                            <!-- Bereavement Section -->
+                            <div class="form-check mb-2">
+                                <cfset checked_1 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required <cfoutput>#checked_1#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_1">
+                                    <strong>Bereavement Section</strong>
+                                </label>
+                                <em class="form-text ms-4">Immediate family members**</em>
+
+                                <!-- Hidden Label for Accessibility -->
+                                <label for="bereavementrelationship" class="visually-hidden">Relationship of deceased</label>
+
+                                <cfif isDefined("Session.bereavementrelationship")>
+                                    <input
+                                        type="text"
+                                        id="bereavementrelationship"
+                                        name="bereavementrelationship"
+                                        class="form-control mt-1 ms-4"
+                                        size="20"
+                                        maxlength="50"
+                                        value="<cfoutput>#htmlEditFormat(Session.bereavementrelationship)#</cfoutput>">
+                                <cfelse>
+                                    <input
+                                        type="text"
+                                        id="bereavementrelationship"
+                                        name="bereavementrelationship"
+                                        class="form-control mt-1 ms-4"
+                                        size="20"
+                                        maxlength="50">
+                                </cfif>
+                            </div>
+
+
+                            <!-- Community Service Section -->
+                            <div class="form-check mb-2">
+                                <cfset checked_4 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required <cfoutput>#checked_4#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_4">
+                                    <strong>Community Service Section 9.4</strong>
+                                </label>
+                                <em class="form-text ms-4">(preapproval and documentation required)</em>
+                            </div>
+
+                            <!-- Officiating/Judging Section -->
+                            <div class="form-check mb-2">
+                                <cfset checked_3 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required <cfoutput>#checked_3#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_3">
+                                    <strong>Officiating/Judging Section 9.5</strong>
+                                </label>
+                                <em class="form-text ms-4">(documentation required)</em>
+                            </div>
+
+                            <!-- Jury/Witness Section -->
+                            <div class="form-check mb-2">
+                                <cfset checked_2 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required <cfoutput>#checked_2#</cfoutput>>
+                                <label class="form-check-label" for="LeaveType_2">
+                                    <strong>Jury/Witness Section 9.7-8</strong>
+                                </label>
+                                <em class="form-text ms-4">(documentation required)</em>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row g-3 mb-4 border p-3 rounded">
+                    <div class="col-12 d-flex align-items-center">
+                        <label for="subfindernum" class="form-label fw-bold me-2 mb-0">
+                            Reported Aesop/Frontline Job #:
+                        </label>
+                        <cfif isDefined("Session.subfinderid")>
+                            <input
+                                type="text"
+                                id="subfindernum"
+                                name="subfindernum"
+                                class="form-control w-auto"
+                                required
+                                validate="integer"
+                                message="Aesop/Frontline Job number must be entered and it must be numeric"
+                                value="<cfoutput>#htmlEditFormat(Session.subfinderid)#</cfoutput>"
+                                aria-describedby="subfinderHelp"
+                            >
+                        <cfelse>
+                            <input
+                                type="text"
+                                id="subfindernum"
+                                name="subfindernum"
+                                class="form-control w-auto"
+                                required
+                                validate="integer"
+                                message="Aesop/Frontline Job number must be entered and it must be numeric"
+                                aria-describedby="subfinderHelp"
+                            >
+                        </cfif>
+                        <span id="subfinderHelp" class="visually-hidden">
+                            Must be a numeric job number from Aesop/Frontline.
+                        </span>
+                    </div>
+                </div>
+
+
+            <cfelse>
+                <fieldset role="radiogroup" aria-labelledby="leaveOptions2Label" class="mb-4 border p-3 rounded">
+                    <legend id="leaveOptions2Label" class="form-label fw-bold">Select Leave Type for Classified Employees:</legend>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <strong>Personal</strong>***<br />
+                            <div class="form-check mb-2">
+                                
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'checked' : ''>
+                                <input 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_9" 
+                                    name="LeaveType" 
+                                    value="9" 
+                                    required 
+                                    #checked#
+                                >
+                                <label class="form-check-label" for="LeaveType_9">
+                                    <strong>Personal Leave</strong>***
+                                </label>
+                                <em class="form-text ms-4">
+                                    This leave may not be used for vacation or job interviews. Must provide reason in comments to HR if taking 3 or more consecutive days or a blackout day*
+                                </em>
+                                <cfif isDefined("Session.dayleavereason")>
+                                    <cfinput type="hidden" name="dayleavereason" value="<cfoutput>#Session.dayleavereason#</cfoutput>">
+                                <cfelse>
+                                    <cfinput type="hidden" name="dayleavereason">
+                                </cfif>
+                            </div>
+
+                            <!-- Sick Leave -->
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 13) ? 'checked' : ''>
+                                <input 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_13" 
+                                    name="LeaveType" 
+                                    value="13" 
+                                    required 
+                                    #checked#
+                                >
+                                <label class="form-check-label" for="LeaveType_13">
+                                    <strong>Sick Leave</strong>
+                                </label>
+                                <em class="form-text ms-4">(If applicable FMLA will be followed)</em>
+                            </div>
+
+                            <!-- Leave without Pay -->
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'checked' : ''>
+                                <input 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_6" 
+                                    name="LeaveType" 
+                                    value="6" 
+                                    required 
+                                    #checked#
+                                >
+                                <label class="form-check-label" for="LeaveType_6">
+                                    <strong>Leave without Pay</strong>
+                                </label>
+                            </div>
+                            
+                            <!-- Vacation -->
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 10) ? 'checked' : ''>
+                                <input 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_10" 
+                                    name="LeaveType" 
+                                    value="10" 
+                                    required 
+                                    #checked#
+                                >
+                                <label class="form-check-label" for="LeaveType_10">
+                                    <strong>Vacation (YEAR-ROUND EMPLOYEES ONLY)</strong>
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required #checked#>
+                                <label class="form-check-label" for="LeaveType_2">
+                                    <strong>Jury/Witness</strong>
+                                </label>
+                                <em class="form-text ms-4">(Documentation required)</em>
+                            </div>
+                            <!-- FMLA - Own Serious Health Condition -->
+                            <!--- <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 7) ? 'checked' : ''>
+                                <input 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_7" 
+                                    name="LeaveType" 
+                                    value="7" 
+                                    required 
+                                    #checked#
+                                >
+                                <label class="form-check-label" for="LeaveType_7">
+                                    <strong>FMLA - Own Serious Health Condition</strong>
+                                </label>
+                                <em class="form-text ms-4">(if more than 11 consecutive days)</em>
+                            </div>
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_8" name="LeaveType" value="8" required #checked#>
+                                <label class="form-check-label" for="LeaveType_8">
+                                    <strong>FMLA - Care for Immediate Family Member</strong>
+                                </label>
+                                <em class="form-text ms-4">(serious health condition, if more than 11 consecutive days)</em>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_8" name="LeaveType" value="8" required #checked#>
+                                <label class="form-check-label" for="LeaveType_8">
+                                    <strong>FMLA - Care for Immediate Family Member</strong>
+                                </label>
+                                <em class="form-text ms-4">(serious health condition, if more than 11 consecutive days)</em>
+                            </div>
+                            
+                            <!-- FMLA Military Exigency Leave -->
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 11) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_11" name="LeaveType" value="11" required #checked#>
+                                <label class="form-check-label" for="LeaveType_11">
+                                    <strong>FMLA - Military Exigency Leave</strong>
+                                </label>
+                            </div>
+
+                            <!-- FMLA Military Caregiver Leave -->
+                            <div class="form-check mb-2">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 12) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_12" name="LeaveType" value="12" required #checked#>
+                                <label class="form-check-label" for="LeaveType_12">
+                                    <strong>FMLA - Military Caregiver Leave</strong>
+                                </label>
+                            </div> --->
+
+                        
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check mb-3">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required #checked#>
+                                <label class="form-check-label" for="LeaveType_1">
+                                    <strong>Bereavement</strong>
+                                </label>
+                                <div class="ms-4">
+                                    <em>(Immediate Family Members**)</em>
+                                    <div class="mt-1">
+                                        <label for="bereavementrelationship" class="form-label visually-hidden">Relationship</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control form-control-sm w-auto d-inline-block" 
+                                            id="bereavementrelationship" 
+                                            name="bereavementrelationship" 
+                                            size="20" 
+                                            maxlength="50"
+                                            <cfif isDefined("Session.bereavementrelationship")>
+                                                value="#Session.bereavementrelationship#"
+                                            </cfif>
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check mb-3">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required #checked#>
+                                <label class="form-check-label" for="LeaveType_4">
+                                    <strong>Community Service</strong>
+                                </label>
+                                <em class="form-text ms-4">(Preapproval &amp; documentation required)</em>
+                            </div>
+                            <div class="form-check mb-3">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required #checked#>
+                                <label class="form-check-label" for="LeaveType_3">
+                                    <strong>Officiating/Judging</strong>
+                                </label>
+                                <em class="form-text ms-4">(Documentation required)</em>
+                            </div>
+                            <div class="form-check mb-3">
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'checked' : ''>
+                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required #checked#>
+                                <label class="form-check-label" for="LeaveType_14">
+                                    <strong>Military Leave</strong> (Documentation Required)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </cfif>
+
+            <div class="row g-3 mb-4 border p-3 rounded">
+                <div class="mb-3">
+                    <label for="comments" class="form-label fw-bold">Comments to HR:</label>
+                    <cfif isdefined('Session.CommentsTo')>
+                        <cftextarea 
+                        id="comments" 
+                        name="comments" 
+                        class="form-control" 
+                        rows="4"><cfoutput>#htmlEditFormat(Session.CommentsTo)#</cfoutput></cftextarea>
                     <cfelse>
-                    	<!---Comments to HR or explanation if day before or after a vacation period--->
-                        <td colspan="4">Comments to HR:<br /><cftextarea cols="50" rows="4" name="comments" value="#SEssion.CommentsTo#"></cftextarea></td>
+                        <textarea id="comments" name="comments" class="form-control" rows="4"></textarea>
                     </cfif>
-                <cfelse>
-                	<cfif #Session.EmpType# eq 2>
-                        <td colspan="4">Comments to HR:<br /><cftextarea cols="50" rows="4" name="comments"></cftextarea></td>
+                </div>
+            </div>
+
+
+            <div class="row g-3 mb-4 border p-3 rounded align-items-center">
+                <!-- Signature Input -->
+                <div class="col-md-6">
+                    <label for="EmpSig" class="form-label fw-bold">Employee Signature (type in name):</label>
+                    <cfif isdefined('Session.EmpSig')>
+                        <input
+                            type="text"
+                            id="EmpSig"
+                            name="EmpSig"
+                            class="form-control"
+                            required
+                            maxlength="50"
+                            aria-describedby="EmpSigHelp"
+                            value="<cfoutput>#htmlEditFormat(Session.EmpSig)#</cfoutput>"
+                            placeholder="Enter your name as you would sign ex: John Q. Smith"
+                        >
                     <cfelse>
-                        <td colspan="4">Comments to HR:<br /><cftextarea cols="50" rows="4" name="comments"></cftextarea></td>
+                        <input
+                            type="text"
+                            id="EmpSig"
+                            name="EmpSig"
+                            class="form-control"
+                            required
+                            maxlength="50"
+                            aria-describedby="EmpSigHelp"
+                            placeholder="Enter your name as you would sign ex: John Q. Smith"
+                        >
                     </cfif>
-                </cfif>
-            </tr>
-            <tr>
-            	<td colspan="3">Employee Signature (type in name):<cfif isdefined('Session.EmpSig')><cfinput type="text" name="EmpSig" size="50" required="yes" message="Enter your name as you would sign ex: John Q. Smith" value="#Session.EmpSig#"><cfelse><cfinput type="text" name="EmpSig" size="50" required="yes" message="Enter your name as you would sign ex: John Q. Smith" maxlength="50"></cfif></td>
-                <td>Date: <cfoutput>#LSDateFormat(NOW(),'mm/dd/yyyy')#</cfoutput></td>
-            </tr>
-            <tr>
-            	<td colspan="4">Enter Supervisor's Email address <strong>(you must search for email address)</strong>:
-       	      <cfif isdefined('Session.SupEmail')><cfinput type="text" name="SupEmail" size="50" value="#Session.SupEmail#" readonly="yes"><cfelse><cfinput type="text" name="SupEmail" size="50" readonly="yes"></cfif>
-       				<cfinput type="submit" name="SearchSup" value="Search for Email">
-                </td>
-            </tr>
-            <tr>
-            	<td colspan="4">
-                	Enter Secretary or Secondary Supervisor's Email address <strong>(you must search for email address)</strong>:
-       	      <cfif isdefined('Session.SupEmail2') ><cfinput type="text" name="SupEmail2" size="50" value="#Session.SupEmail2#" readonly="yes"><cfelse><cfinput type="text" name="SupEmail2" size="50" readonly="yes"></cfif>
-       				<cfinput type="submit" name="SearchSup2" value="Search for Email">	
-                </td>
-            </tr>
-            <!---<tr>
-            	<td colspan="4">&nbsp;</td>
-            </tr>--->
-            <tr align="center">
-            	<td colspan="4"><cfinput type="submit" name="Submit" value="Submit"></td>
-            </tr>
-            <tr>
-            	<td colspan="4">
-                    <strong><u>Definitions:</u></strong><br />
-                    <strong>*Blackout day:</strong> The day immediately preceding and/or follwoing a vacation period as defined on the adopted District Calendar or the first or last student contact days.<br /><br />
+                    <div id="EmpSigHelp" class="form-text">Required</div>
+                </div>
+
+                <!-- Display-Only Date -->
+               <div class="col-md-6 d-flex flex-column justify-content-end mt-0">
+                    <p id="signedDateLabel" class="fw-bold mb-1">Date Signed:</p>
+                    <p class="form-control-plaintext mb-0" aria-labelledby="signedDateLabel">
+                        <cfoutput>#LSDateFormat(NOW(), 'mm/dd/yyyy')#</cfoutput>
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="row g-3 mb-4 border p-3 rounded">
+                <div class="mb-3">
+                    <label for="SupEmail" class="form-label fw-bold">
+                        Enter Supervisor's Email address <strong>(you must search for email address)</strong>:
+                    </label>
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-9">
+                        <cfif isdefined('Session.SupEmail')>
+                            <input type="text" id="SupEmail" name="SupEmail" class="form-control" value="<cfoutput>#htmlEditFormat(Session.SupEmail)#</cfoutput>" readonly>
+                        <cfelse>
+                            <input type="text" id="SupEmail" name="SupEmail" class="form-control" readonly>
+                        </cfif>
+                        </div>
+                        <div class="col-md-3">
+                        <button type="submit" name="SearchSup" class="btn btn-primary w-100">Search for Email</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="SupEmail2" class="form-label fw-bold">
+                        Enter Secretary or Secondary Supervisor's Email address <strong>(you must search for email address)</strong>:
+                    </label>
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-9">
+                        <cfif isdefined('Session.SupEmail2')>
+                            <input type="text" id="SupEmail2" name="SupEmail2" class="form-control" value="<cfoutput>#htmlEditFormat(Session.SupEmail2)#</cfoutput>" readonly>
+                        <cfelse>
+                            <input type="text" id="SupEmail2" name="SupEmail2" class="form-control" readonly>
+                        </cfif>
+                        </div>
+                        <div class="col-md-3">
+                        <button type="submit" name="SearchSup2" class="btn btn-primary w-100">Search for Email</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 mb-5">
+                <div class="text-center mb-3">
+                    <button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                <div>
+                    <strong><span class="fw-bold">Definitions:</span></strong><br />
+                    <strong>*Blackout day:</strong> The day immediately preceding and/or following a vacation period as defined on the adopted District Calendar or the first or last student contact days.<br /><br />
                     <strong>**Immediate Family Member:</strong> father, father-in-law, step-father, mother, mother-in-law, step-mother, grandparents, grandchild, sister, sister-in-law, step-sister, brother, brother-in-law, step-brother, son-in-law, daughter-in-law, husband, wife, child, stepchild, or individual living in household.<br /><br />
+
                     <cfif Session.EmpType eq 2>
                         <strong>***Personal Leave:</strong> Full-time employees may be granted personal leave as follows:
                         <ul>
                             <li>Year-Round employees may use three (3) days of sick leave per fiscal year, beginning July 1st, for the purpose of conducting personal business.</li>
                             <li>Employees who are not year-round may use six (6) days of sick leave per fiscal year, beginning July 1st, for the purpose of conducting personal business.</li>
                             <li>Personal leave is charged against accrued sick leave, and is not accumulative from contract year-to-year.</li>
-                        </ul> <br /><br />
+                        </ul>
+                        <br /><br />
                         Click on the following to view the full Leaves and Absences Policies:<br />
                         <ul>
-                            <li><a href="https://www.mesa.k12.co.us/board/policies/documents/gdc.pdf" target="_blank">Support Staff</a></li>
-                            <li><a href="https://www.mesa.k12.co.us/board/policies/documents/gcd.pdf" target="_blank">Adminstrators</a></li>
+                            <li><a href="https://www.mesa.k12.co.us/board/policies/documents/gdc.pdf" target="_blank" rel="noopener noreferrer">Support Staff</a></li>
+                            <li><a href="https://www.mesa.k12.co.us/board/policies/documents/gcd.pdf" target="_blank" rel="noopener noreferrer">Administrators</a></li>
                         </ul>
-                   </cfif>            
-                </td>
-            </tr>
-            <cfif Session.EmpType eq 1>
-            <tr>
-            	<td colspan="4"><p><strong>Employees covered under MVEA</strong><br />
-            	  Day leave may be used for sick leave of the employee, to attend to the illness of immediate family, emergency, and personal business for the employee.  In the event an employee is requesting 3 consecutive days or more of leave, he/she must submit a &quot;Request and approval for Leave&quot; form as soon as possible to his/her administrator(s).  The form will contain an affirmation that the leave will not be used for vacation or job interviews. <strong>Days immediately preceding and/or following vacation periods and the first and last student contact days are not usable for day leave excepting in case of illness or if there are extenuating circumstances.</strong></p>
-            	  <p>For more information on available leave options please see joint MVEA Agreement section 9</p>
-            	  <p>In the event an Employee  Leave Request is denied, the Covered Employee may file an appeal.&nbsp; The  appeal must be submitted in writing to the Human Resources Department no later  than 30 calendar days after the date of the leave and shall include a statement  as to why the leave should be approved. &nbsp;The Employee Leave Request  Appeals Panel shall consist of representation from MVEA, Human Resources and  administration.&nbsp; The following criteria will be reviewed and taken into  consideration by the Employee Leave Request Appeal Panel:</p>
-                  <ol>
-                    <li>Day Leave Usage History </li>
-                    <li>Reason for the Request</li>
-                    <li>Covered Employee Provided Statement</li>
-                    <li>Any additional information as requested  by the panel</li>
-                </ol></td>
-            </tr>
-            </cfif>
-        </table>
-        <table width="100%">
-            <tr><td><input type="submit" name="logout" value="Logout" /></td></tr>
-        </table>
-    </cfform>
+                    </cfif>
+                </div>
+
+                <cfif Session.EmpType eq 1>
+                    <div class="mt-4">
+                        <p><strong>Employees covered under MVEA</strong><br />
+                        Day leave may be used for sick leave of the employee, to attend to the illness of immediate family, emergency, and personal business for the employee. In the event an employee is requesting 3 consecutive days or more of leave, he/she must submit a &quot;Request and approval for Leave&quot; form as soon as possible to his/her administrator(s). The form will contain an affirmation that the leave will not be used for vacation or job interviews. <strong>Days immediately preceding and/or following vacation periods and the first and last student contact days are not usable for day leave excepting in case of illness or if there are extenuating circumstances.</strong></p>
+
+                        <p>For more information on available leave options please see joint MVEA Agreement section 9</p>
+
+                        <p>In the event an Employee Leave Request is denied, the Covered Employee may file an appeal.&nbsp; The appeal must be submitted in writing to the Human Resources Department no later than 30 calendar days after the date of the leave and shall include a statement as to why the leave should be approved. The Employee Leave Request Appeals Panel shall consist of representation from MVEA, Human Resources and administration. The following criteria will be reviewed and taken into consideration by the Employee Leave Request Appeal Panel:</p>
+
+                        <ol>
+                            <li>Day Leave Usage History</li>
+                            <li>Reason for the Request</li>
+                            <li>Covered Employee Provided Statement</li>
+                            <li>Any additional information as requested by the panel</li>
+                        </ol>
+                    </div>
+                </cfif>
+            </div>
+
+        <div class="mt-4">
+            <button type="submit" name="logout" class="btn btn-secondary">Logout</button>
+        </div>
+    </cfform>   
 
 <!--- View Specific Request --->
 <cfelseif StepNum eq 5>    
-    <!--- Get Request Data --->
-    <cfquery name="GetRequestData"  datasource="mesa_web">
-    	SELECT *
-        FROM	LeaveReq_tblRequest
-        WHERE	RequestID = #RequestID# and userid = '#Session.Username#'
+    <cfquery name="GetRequestData" datasource="mesa_web">
+        SELECT *
+        FROM LeaveReq_tblRequest
+        WHERE RequestID = <cfqueryparam value="#RequestID#" cfsqltype="cf_sql_integer">
+        AND userid = <cfqueryparam value="#Session.Username#" cfsqltype="cf_sql_varchar">
     </cfquery>
-    
+
     <cfoutput query="GetRequestData">
-        <table width="100%" border="1">
-            <tr>
-                <td align="center" colspan="6">Leave Request ##: #RequestID#</td>
-            </tr>
-            <tr>
-            	<td>Dates of Requested</td>
-                <td>Type of Leave Request</td>
-                <td>Sub Needed/Aesop/Frontline ##</td>
-                <td>Supervisor</td>
-                <td>Viewed By Supervisor</td>
-                <td>Approved by Human Resources</td>
-            </tr>
-            <tr>
-            	<td>#LSDateFormat(dtFrom,'mm/dd/yyyy')#-#LSDateFormat(dtTo,'mm/dd/yyyy')#</td>
-                <cfif #GetRequestData.requesttype# eq 1>
-                	<td>Bereavement</td>
-                <cfelseif #GetRequestData.requesttype# eq 2>
-                	<td>Jury/Witness</td>
-                <cfelseif #GetRequestData.requesttype# eq 3>
-                	<td>Officiating/Judging</td>
-                <cfelseif #GetRequestData.requesttype# eq 4>
-                	<td>Community Service</td>
-                <cfelseif #GetRequestData.requesttype# eq 5>
-                	<!---<td>Emergency</td>--->
-                <cfelseif #GetRequestData.requesttype# eq 6>
-                	<td>Leave without Pay</td>
-                <cfelseif #GetRequestData.requesttype# eq 7>
-                	<td>FMLA own serious health condition</td>
-                <cfelseif #GetRequestData.requesttype# eq 8>
-                	<td>FMLA care ofr immediate family member with a serious health condition</td>
-                <cfelseif #GetRequestData.requesttype# eq 9>
-                	<td>Day or Personal Leave</td>
-               	<cfelseif #GetRequestData.requesttype# eq 10>
-                	<td>Vacation</td>
-                <cfelseif #GetRequestData.requesttype# eq 11>
-                	<td>FMLA Military Exigency Leave</td>
-                <cfelseif #GetRequestData.requesttype# eq 12>
-                	<td>FMLA Military Caregiver Leave</td>
-                <cfelseif #GetRequestData.requesttype# eq 13>
-                	<td>Sick Leave</td>
-                <cfelseif #GetRequestData.requesttype# eq 14>
-                	<td>Military Leave</td>
-                </cfif>
-                <td>#subrequested#/#subfindernum#</td>
-                <td>#supervisor#</td>
-                <td>#supviewed#</td>
-                <td>#approved#</td>
-            </tr>
+        <cfset leaveTypes = [
+            "", "Bereavement", "Jury/Witness", "Officiating/Judging", "Community Service",
+            "", "Leave without Pay", "FMLA own serious health condition",
+            "FMLA care for immediate family member with a serious health condition", "Day or Personal Leave",
+            "Vacation", "FMLA Military Exigency Leave", "FMLA Military Caregiver Leave",
+            "Sick Leave", "Military Leave"
+        ]>
+
+        <table class="table table-bordered table-striped" width="100%" summary="Details of Leave Request ID #RequestID#">
+            <caption class="visually-hidden">Details of Leave Request ID #RequestID#</caption>
+            <thead class="table-success">
+                <tr>
+                    <th colspan="6" scope="colgroup" class="text-center">Leave Request ##: #RequestID#</th>
+                </tr>
+                <tr>
+                    <th scope="col">Dates of Request</th>
+                    <th scope="col">Type of Leave</th>
+                    <th scope="col">Sub Needed / Aesop</th>
+                    <th scope="col">Supervisor</th>
+                    <th scope="col">Viewed by Supervisor</th>
+                    <th scope="col">HR Approval Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#LSDateFormat(dtFrom, 'mm/dd/yyyy')# - #LSDateFormat(dtTo, 'mm/dd/yyyy')#</td>
+                    <td>#leaveTypes[Val(requesttype)]#</td>
+                    <td>#subrequested# / #subfindernum#</td>
+                    <td>#supervisor#</td>
+                    <td>#supviewed#</td>
+                    <td>
+                        <cfif approved eq "A">
+                            Approved
+                        <cfelseif approved eq "D">
+                            Denied
+                        <cfelse>
+                            Pending
+                        </cfif>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </cfoutput>
+
 <!--- 6 = Attach file if Jury Duty or Community Service Selected --->
 <cfelseif StepNum eq 6>
-<cfif isDefined("fileUpload")>
-	<cfif #form.uploadfile# neq 'mail'>
-    	<cffile action="upload"
-       		fileField="fileUpload"
-            nameconflict="makeunique"
-         	destination="\\BSWEBS11\distweb$\apps\LeaveRequest\Attachments\">
-         	<p>Thank you, your file has been uploaded.</p>
-     </cfif>
-     
-	 <cfif #form.uploadfile# eq 'mail'>
-        <cfset Session.FileName= 'mailing'>
-     <cfelse>
-        <cfset Session.FileName = '#cffile.serverFileName#.#cffile.serverFileExt#'>
-     </cfif>
-     <cflocation url="index.cfm?StepNum=998">
-</cfif>
-<form enctype="multipart/form-data" method="post">
-<input type="radio" name="uploadfile" value="mail" />Mail Form to Human Resources Office<br />
-<input type="radio" name="uploadfile" value="attach" />Upload File<br />
-<input type="file" name="fileUpload" /><br />
-<input type="submit" value="Upload File or Continue" />
-</form>
+    <cfoutput>
+        <cfif isDefined("fileUpload")>
+            <cfif form.uploadfile neq 'mail'>
+                <cffile action="upload"
+                    fileField="fileUpload"
+                    nameconflict="makeunique"
+                    destination="C:\ColdFusion2021\cfusion\wwwroot\LeaveRequest\Attachments\">
+                <div class="alert alert-success">Thank you, your file has been uploaded.</div>
+            </cfif>
+
+            <cfif form.uploadfile eq 'mail'>
+                <cfset Session.FileName = 'mailing'>
+            <cfelse>
+                <cfset Session.FileName = "#cffile.serverFileName#.#cffile.serverFileExt#">
+            </cfif>
+
+            <cflocation url="index.cfm?StepNum=998">
+        </cfif>
+    </cfoutput>
+
+    <form enctype="multipart/form-data" method="post" class="mt-4" aria-labelledby="uploadSection">
+        <fieldset>
+            <legend id="uploadSection" class="h5 mb-3">Submit Form</legend>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="uploadfile" id="uploadOptionMail" value="mail" required>
+                <label class="form-check-label" for="uploadOptionMail">Mail Form to Human Resources Office</label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="uploadfile" id="uploadOptionAttach" value="attach" required>
+                <label class="form-check-label" for="uploadOptionAttach">Upload File</label>
+            </div>
+
+            <div class="mb-3">
+                <label for="fileUpload" class="form-label">Choose File to Upload</label>
+                <input class="form-control" type="file" id="fileUpload" name="fileUpload" aria-describedby="fileHelp">
+                <div id="fileHelp" class="form-text">Accepted formats: PDF, DOCX, etc.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload File or Continue</button>
+        </fieldset>
+    </form>
 <!--- 7 = Search for Supervisor --->
 <cfelseif StepNum eq 7>
 
@@ -1082,12 +1232,13 @@ Your Request for Leave has been entered into the system.  This page will automat
     
 <!--- Logout of system ---> 
 <cfelseif StepNum eq 999>
-	<cfcookie name="CFID" expires="now">
-	<cfcookie name="CFTOKEN" expires="now">
 	<cfscript>
-   		StructClear(Session);
-	</cfscript>
-	<cflocation url="index.cfm">
+        // Invalidate the session
+        StructClear(Session);
+        SessionInvalidate(); // Ends the session
+    </cfscript>
+
+    <cflocation url="index.cfm">
 <!--- End Steps --->
 </cfif>
 

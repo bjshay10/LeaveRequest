@@ -13,7 +13,7 @@
 	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 	
 	<!-- InstanceBeginEditable name="doctitle" -->
-		<title></title>
+		<title>Leave Request Page - Admin</title>
 	<!-- InstanceEndEditable -->
 	<!-- InstanceBeginEditable name="head" -->
 	<!-- InstanceEndEditable -->
