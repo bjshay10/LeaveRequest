@@ -1,4 +1,4 @@
-<cfapplication name="EmployeeLeaveRequest_supervisor" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,0,10,0)#">
+<!--- <cfapplication name="EmployeeLeaveRequest_supervisor" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,0,10,0)#"> --->
 <!DOCTYPE html><html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
