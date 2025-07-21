@@ -1136,14 +1136,14 @@
 
 <cfmail from="hr@d51schools.org" to="#Session.SupEmail#" subject="Leave Request Form" type="html">
     #Session.EmpName# has made a Leave Request.  Click on the following link to review the request.<br />
-    <a href="http://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
+    <a href="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
 </cfmail>
 
 <cfif isdefined('Session.SupEmail2')>
 <cfif #SEssion.SupEmail2# gt ''>
     <cfmail from="hr@d51schools.org" to="#Session.SupEmail2#" subject="Leave Request Form" type="html">
         #Session.EmpName# has made a Leave Request.  Click on the following link to review the request.<br />
-        <a href="http://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
+        <a href="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
     </cfmail>
 </cfif>
 </cfif>
