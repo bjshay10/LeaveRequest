@@ -171,7 +171,7 @@
     <cfquery name="GetRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved IS NULL and yearofrequest = '2024-2025'
+        WHERE	Approved IS NULL and yearofrequest = '2025-2026'
         <cfif #Session.Username# eq 'kubersox'>
         	AND emptype = 2
         <cfelseif #Session.Username# eq 'oldmwilcox'>
@@ -308,7 +308,7 @@
     <cfquery name="GetDaysApp" datasource="mesa_web">
     	SELECT	SUM(numdaysapproved) as DaysApp
         FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
+        WHERE	userid = '#Session.userid#' and yearofrequest = '2025-2026' and Approved = 'A'
     </cfquery>
     <table border="1" width="100%">
     	<tr>
@@ -728,7 +728,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetAppRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'A' and yearofrequest = '2024-2025'  and EmpType = #a#
+        WHERE	Approved = 'A' and yearofrequest = '2025-2026'  and EmpType = #a#
         ORDER BY userid, dateentered
     </cfquery>
     
@@ -741,7 +741,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetAppRequests.requestid, GetAppRequests.dateentered, GetAppRequests.requesteddates, GetAppRequests.requesttype, GetAppRequests.supviewed, GetAppRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetAppRequests.UserID, GetID.fname, GetID.lname, GetAppRequests.dtFrom, GetAppRequests.dtTo
         FROM	GetAppRequests, GetID
-        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
+        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetAppRequests.dateentered, GetAppRequests.requesteddates
     </cfquery>
     
@@ -788,7 +788,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetPenRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'P' and yearofrequest = '2024-2025' and EmpType = #a#
+        WHERE	Approved = 'P' and yearofrequest = '2025-2026' and EmpType = #a#
     </cfquery>
     
     <cfquery name="GetID" datasource="accounts">
@@ -800,7 +800,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetPenRequests.requestid, GetPenRequests.dateentered, GetPenRequests.requesteddates, GetPenRequests.requesttype, GetPenRequests.supviewed, GetPenRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetPenRequests.UserID, GetID.fname, GetID.lname, GetPenRequests.dtFrom, getPenRequests.dtTo
         FROM	GetPenRequests, GetID
-        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
+        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetPenRequests.dateentered, GetPenRequests.requesteddates
     </cfquery>
     
@@ -846,7 +846,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetDenRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'D' and yearofrequest = '2024-2025' and EmpType = #a#
+        WHERE	Approved = 'D' and yearofrequest = '2025-2026' and EmpType = #a#
     </cfquery>
     
     <cfquery name="GetID" datasource="accounts">
@@ -859,7 +859,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetDenRequests.requestid, GetDenRequests.dateentered, GetDenRequests.requesteddates, GetDenRequests.requesttype, GetDenRequests.supviewed, GetDenRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetDenRequests.UserID, GetID.fname, GetID.lname, GetDenRequests.dtFrom, GetDenRequests.dtTo
         FROM	GetDenRequests, GetID
-        WHERE	GetDenRequests.UserID = GetID.Username and yearofrequest = '2024-2025'
+        WHERE	GetDenRequests.UserID = GetID.Username and yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetDenRequests.dateentered, GetDenRequests.requesteddates
     </cfquery>
     
@@ -928,7 +928,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetDaysApp" datasource="mesa_web">
     	SELECT	SUM(numdaysapproved) as DaysApp
         FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
+        WHERE	userid = '#Session.userid#' and yearofrequest = '2025-2026' and Approved = 'A'
     </cfquery>
     <table border="1" width="100%">
     	<tr>
@@ -1039,7 +1039,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetAppRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'A' and yearofrequest = '2024-2025'  and EmpType = #a#
+        WHERE	Approved = 'A' and yearofrequest = '2025-2026'  and EmpType = #a#
         ORDER BY userid, dateentered
     </cfquery>
     
@@ -1052,7 +1052,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetAppRequests.requestid, GetAppRequests.dateentered, GetAppRequests.requesteddates, GetAppRequests.requesttype, GetAppRequests.supviewed, GetAppRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetAppRequests.UserID, GetID.fname, GetID.lname, GetAppRequests.dtFrom, GetAppRequests.dtTo
         FROM	GetAppRequests, GetID
-        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
+        WHERE	GetAppRequests.UserID = GetID.Username AND yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetAppRequests.dateentered, GetAppRequests.requesteddates
     </cfquery>
     
@@ -1099,7 +1099,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetPenRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'P' and yearofrequest = '2024-2025' and EmpType = #a#
+        WHERE	Approved = 'P' and yearofrequest = '2025-2026' and EmpType = #a#
     </cfquery>
     
     <cfquery name="GetID" datasource="accounts">
@@ -1111,7 +1111,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetPenRequests.requestid, GetPenRequests.dateentered, GetPenRequests.requesteddates, GetPenRequests.requesttype, GetPenRequests.supviewed, GetPenRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetPenRequests.UserID, GetID.fname, GetID.lname, GetPenRequests.dtFrom, getPenRequests.dtTo
         FROM	GetPenRequests, GetID
-        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2024-2025'
+        WHERE	GetPenRequests.UserID = GetID.Username AND yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetPenRequests.dateentered, GetPenRequests.requesteddates
     </cfquery>
     
@@ -1157,7 +1157,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetDenRequests" datasource="mesa_web">
     	SELECT	*
         FROM	LeaveReq_tblRequest
-        WHERE	Approved = 'D' and yearofrequest = '2024-2025' and EmpType = #a#
+        WHERE	Approved = 'D' and yearofrequest = '2025-2026' and EmpType = #a#
     </cfquery>
     
     <cfquery name="GetID" datasource="accounts">
@@ -1170,7 +1170,7 @@ Comments: #GetReqInfo.Comments#
     	SELECT	GetDenRequests.requestid, GetDenRequests.dateentered, GetDenRequests.requesteddates, GetDenRequests.requesttype, GetDenRequests.supviewed, GetDenRequests.supvieweddate,
         		GetID.EmpID, GetID.Full_Name, GetID.Username, GetDenRequests.UserID, GetID.fname, GetID.lname, GetDenRequests.dtFrom, GetDenRequests.dtTo
         FROM	GetDenRequests, GetID
-        WHERE	GetDenRequests.UserID = GetID.Username and yearofrequest = '2024-2025'
+        WHERE	GetDenRequests.UserID = GetID.Username and yearofrequest = '2025-2026'
         ORDER BY	GetID.Lname, GetID.fname, GetDenRequests.dateentered, GetDenRequests.requesteddates
     </cfquery>
     
@@ -1239,7 +1239,7 @@ Comments: #GetReqInfo.Comments#
     <cfquery name="GetDaysApp" datasource="mesa_web">
     	SELECT	SUM(numdaysapproved) as DaysApp
         FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.userid#' and yearofrequest = '2024-2025' and Approved = 'A'
+        WHERE	userid = '#Session.userid#' and yearofrequest = '2025-2026' and Approved = 'A'
     </cfquery>
     <table border="1" width="100%">
     	<tr>

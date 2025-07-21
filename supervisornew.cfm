@@ -120,9 +120,9 @@
     <cfquery name="GetRequests" datasource="mesa_web">
     	SELECT *
         FROM	LeaveReq_tblRequest
-        WHERE	(((supervisor = '#Session.email#') OR (supervisor = '#session.username#@d51schools.org')) AND (supviewed IS NULL) AND yearofrequest >= '2024-2025')
+        WHERE	(((supervisor = '#Session.email#') OR (supervisor = '#session.username#@d51schools.org')) AND (supviewed IS NULL) AND yearofrequest >= '2025-2026')
         or 
-        (((supervisor2 = '#Session.email#') OR (supervisor2 = '#session.username#@d51schools.org')) AND (sup2viewed IS NULL) AND yearofrequest >= '2024-2025')
+        (((supervisor2 = '#Session.email#') OR (supervisor2 = '#session.username#@d51schools.org')) AND (sup2viewed IS NULL) AND yearofrequest >= '2025-2026')
         ORDER BY DateEntered, userid
     </cfquery>
     <!---<cfif #GetRequests.Supervisor# eq '#Session.email#'>
@@ -159,9 +159,9 @@
     <cfquery name="GetRequests" datasource="mesa_web">
     	SELECT *
         FROM	LeaveReq_tblRequest
-        WHERE	(((supervisor = '#Session.email#') OR (supervisor = '#session.username#@d51schools.org')) AND (supviewed = 'Yes' or supviewed = 'No') AND yearofrequest >= '2024-2025')
+        WHERE	(((supervisor = '#Session.email#') OR (supervisor = '#session.username#@d51schools.org')) AND (supviewed = 'Yes' or supviewed = 'No') AND yearofrequest >= '2025-2026')
         or 
-        (((supervisor2 = '#Session.email#') OR (supervisor2 = '#session.username#@d51schools.org')) AND (sup2viewed = 'Yes' or supviewed = 'No') AND yearofrequest >= '2024-2025')
+        (((supervisor2 = '#Session.email#') OR (supervisor2 = '#session.username#@d51schools.org')) AND (sup2viewed = 'Yes' or supviewed = 'No') AND yearofrequest >= '2025-2026')
         ORDER BY DateEntered, userid
     </cfquery>
     

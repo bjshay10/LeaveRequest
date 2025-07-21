@@ -238,11 +238,11 @@
     <cfquery name="GetRequests" datasource="mesa_web">
         SELECT	RequestID, userid, requesteddates, requesttype, approved, dtFrom, dtTo
         FROM	LeaveReq_tblRequest
-        WHERE	userid = '#Session.Username#' AND yearofrequest = '2024-2025'
+        WHERE	userid = '#Session.Username#' AND yearofrequest = '2025-2026'
         ORDER BY approved, requesteddates
     </cfquery>
 
-    <table class="table table-bordered table-striped table-hover" style="width: 100%;" summary="Table listing submitted leave requests for the 2024-2025 school year.">
+    <table class="table table-bordered table-striped table-hover" style="width: 100%;" summary="Table listing submitted leave requests for the 2025-2026 school year.">
         <caption class="visually-hidden">Leave Requests Entered Into the System</caption>
         <thead class="table-success">
             <tr>
@@ -1195,7 +1195,7 @@ Your Request for Leave has been entered into the system.  This page will automat
     <cfset Session.RequestID = #GetMaxReqID.MaxID# + 1>
     
     <cfset Session.DateEntered = '#NOW()#'>
-    <cfset Session.yearofrequest = '2024-2025'>
+    <cfset Session.yearofrequest = '2025-2026'>
     <cfset Session.FileName = ''>
     <cfif isdefined('form.SearchSup')>
     	<cflocation url="index.cfm?StepNum=7">
