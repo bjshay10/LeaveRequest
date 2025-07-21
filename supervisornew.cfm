@@ -1,4 +1,4 @@
-<cfapplication name="EmployeeLeaveRequest_supervisor" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,0,20,0)#">
+<!--- <cfapplication name="EmployeeLeaveRequest_supervisor" sessionmanagement="yes" sessiontimeout="#CreateTimeSpan(0,0,20,0)#"> --->
 <!DOCTYPE html><html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
@@ -44,11 +44,11 @@
 	<cfset StepNum = 0>
 </cfif>
 
-<cfif (cgi.https eq "off") and 
+<!--- <cfif (cgi.https eq "off") and 
 	(cgi.SERVER_NAME does not contain "intranet")>
 	<cflocation url="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm" addtoken="no">
 	<cfabort>
-</cfif>
+</cfif> --->
 
 <cfif StepNum eq 0>
 	<cfif not isdefined ('username')>
