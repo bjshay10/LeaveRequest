@@ -264,7 +264,7 @@
                     <td>#LSDateFormat(dtFrom,'mm/dd/yyyy')# - #LSDateFormat(dtTo,'mm/dd/yyyy')#</td>
                     <td>
                         <cfset leaveTypes = [
-                            "", "Bereavement", "Jury/Witness", "Officiating/Judging", "Community Service",
+                            "Bereavement", "Jury/Witness", "Officiating/Judging", "Community Service",
                             "", "Leave without Pay", "FMLA own serious health condition",
                             "FMLA care for immediate family member", "Day or Personal Leave",
                             "Vacation", "FMLA Military Exigency Leave",
@@ -577,7 +577,7 @@
                                     name="LeaveType" 
                                     value="9" 
                                     required 
-                                    #checked#
+                                    <cfoutput>#checked#</cfoutput>
                                 >
                                 <label class="form-check-label" for="LeaveType_9">
                                     <strong>Personal Leave</strong>***
@@ -602,7 +602,7 @@
                                     name="LeaveType" 
                                     value="13" 
                                     required 
-                                    #checked#
+                                    <cfoutput>#checked#</cfoutput>
                                 >
                                 <label class="form-check-label" for="LeaveType_13">
                                     <strong>Sick Leave</strong>
@@ -620,7 +620,7 @@
                                     name="LeaveType" 
                                     value="6" 
                                     required 
-                                    #checked#
+                                    <cfoutput>#checked#</cfoutput>
                                 >
                                 <label class="form-check-label" for="LeaveType_6">
                                     <strong>Leave without Pay</strong>
@@ -637,7 +637,7 @@
                                     name="LeaveType" 
                                     value="10" 
                                     required 
-                                    #checked#
+                                    <cfoutput>#checked#</cfoutput>
                                 >
                                 <label class="form-check-label" for="LeaveType_10">
                                     <strong>Vacation (YEAR-ROUND EMPLOYEES ONLY)</strong>
@@ -645,7 +645,7 @@
                             </div>
                             <div class="form-check mb-3">
                                 <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required #checked#>
+                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required <cfoutput>#checked#</cfoutput>>
                                 <label class="form-check-label" for="LeaveType_2">
                                     <strong>Jury/Witness</strong>
                                 </label>
@@ -710,7 +710,7 @@
                         <div class="col-md-6">
                             <div class="form-check mb-3">
                                 <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required #checked#>
+                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required <cfoutput>#checked#</cfoutput>>
                                 <label class="form-check-label" for="LeaveType_1">
                                     <strong>Bereavement</strong>
                                 </label>
@@ -726,7 +726,7 @@
                                             size="20" 
                                             maxlength="50"
                                             <cfif isDefined("Session.bereavementrelationship")>
-                                                value="#Session.bereavementrelationship#"
+                                                value="<cfoutput>#Session.bereavementrelationship#</cfoutput>"
                                             </cfif>
                                         >
                                     </div>
@@ -734,7 +734,7 @@
                             </div>
                             <div class="form-check mb-3">
                                 <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required #checked#>
+                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required <cfoutput>#checked#</cfoutput>>
                                 <label class="form-check-label" for="LeaveType_4">
                                     <strong>Community Service</strong>
                                 </label>
@@ -742,7 +742,7 @@
                             </div>
                             <div class="form-check mb-3">
                                 <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required #checked#>
+                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required <cfoutput>#checked#</cfoutput>>
                                 <label class="form-check-label" for="LeaveType_3">
                                     <strong>Officiating/Judging</strong>
                                 </label>
@@ -750,7 +750,7 @@
                             </div>
                             <div class="form-check mb-3">
                                 <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required #checked#>
+                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required <cfoutput>#checked#</cfoutput>>
                                 <label class="form-check-label" for="LeaveType_14">
                                     <strong>Military Leave</strong> (Documentation Required)
                                 </label>

@@ -2,7 +2,7 @@
 <!DOCTYPE html><html lang="en"><!-- InstanceBegin template="/Templates/fullpage.dwt.cfm" codeOutsideHTMLIsLocked="false" -->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-  <link rel="shortcut icon" href="/favicon.ico" />
+  <!--- <link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="stylesheet" type="text/css"  href="/css/text.css" />
    <link rel="stylesheet" type="text/css"  href="/css/main.css" />
    <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/css/olderIESupport.css" />
@@ -10,28 +10,35 @@
 	<link rel="stylesheet" type="text/css"  href="/css/print.css" media="print" />
  <script src="/scripts/main.js" type="text/javascript"></script>
 	<script src="/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
-	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
+	<link href="/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" /> --->
 	
 	<!-- InstanceBeginEditable name="doctitle" -->
 		<title>Leave Request Page - Admin</title>
 	<!-- InstanceEndEditable -->
 	<!-- InstanceBeginEditable name="head" -->
 	<!-- InstanceEndEditable -->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.css">
 </head>
 
 <body>
 <div id="wrapper">
-	<div id="headercontainer">
-  	<div id="headerimages"><a href="http://www.mesa.k12.co.us"><img src="/images/logo.jpg" align="left" alt="Mesa County Valley School District 51" /></a>
-		</div>
-		<div id="headersprybar">
-  		<!---<cfinclude template="/templates/components/sprybar.cfm" />--->
-		</div> 
-	</div>
-	<div id="headersearchbar">
-   </div>
+    <div id="headercontainer" class="container-fluid p-3">
+        <div id="headerimages" class="d-flex align-items-center">
+            <a href="http://www.mesa.k12.co.us">
+                <img src="images/logo.jpg" alt="Mesa County Valley School District 51 logo" class="img-fluid" style="max-height: 80px;">
+            </a>
+        </div>
+
+        <div id="headersprybar">
+            <!--- <cfinclude template="/templates/components/sprybar.cfm" /> --->
+        </div>
+    </div>
+
+    <!-- Green bar at bottom -->
+    <div class="bg-success" style="height: 10px;"></div>
+
 	<div id="maincontainer">
-    <div id="maincontentfull">
+        <div id="maincontentfull">
     <main>
   	
     		<span class="heading">
@@ -54,78 +61,104 @@
 		20 = View Approved and Denied Requests
 		999 = Logout --->
         
-<cfif (cgi.https eq "off") and 
+<!--- <cfif (cgi.https eq "off") and 
 	(cgi.SERVER_NAME does not contain "intranet")>
 	<cflocation url="https://www.mesa.k12.co.us/apps/LeaveRequest/Admin.cfm" addtoken="no">
 	<cfabort>
-</cfif>
+</cfif> --->
 
 <cfif not isdefined('StepNum')>
 	<cfset StepNum=0>
 </cfif>
 
-<cfif StepNum eq 0>
+<cfif url.StepNum eq 0>
 	<cfif not isdefined ('username')>
 	You are not logged in or the program has been inactive for 20 minutes.<br />	
 	</cfif>
 
 <!--- User Login --->
 <cfif not isdefined ('username') and not isdefined ('submitform')>
-	<p>&nbsp; </p>
-	<cfif isdefined('tryagain')>
-		<pan class="red">Invalid Username or Password or you are unauthorized- - Try again</span>
-	    </div>
-	</cfif>
-	<cfform name="form2" method="post" action="" width="500" height="550">
-		<!---<cfformgroup type="panel" label="Leave Request Form">--->
-		<table align="center"><tr><td align="center">
-        Username: <cfinput name="username" type="text" size="20" label="Username:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
+	<cfif isDefined('tryagain')>
+  <div class="alert alert-danger text-center" role="alert">
+    Invalid Username or Password or you are unauthorized – Try again.
+  </div>
+</cfif>
 
- 	 	Password: <cfinput name="password" type="password" size="20" label="Password:" onkeydown="if(Key.isDown(Key.ENTER)) Submituser.dispatchEvent({type:'click'});"><br />
-    	<cfinput type="submit" name="Submituser" value="Submit">
-        </td></tr></table>
-   	</cfform>
+
+<script>
+  document.getElementById('username').setAttribute('aria-describedby', 'usernameHelp');
+</script>
+
+<cfform name="form2" method="post" action="">
+  <div class="container mt-4" style="max-width: 400px;">
+    <h2 class="h5 text-center mb-3">Please Log In</h2>
+
+    <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+        <cfinput 
+            name="username" 
+            id="username" 
+            type="text" 
+            class="form-control">
+    </div>
+
+
+    <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <cfinput 
+        type="password" 
+        id="password" 
+        name="password" 
+        class="form-control">
+    </div>
+
+    <div class="d-grid">
+      <cfinput type="submit" name="Submituser" value="Submit" class="btn btn-primary">
+    </div>
+  </div>
+</cfform>
+
 </cfif>
 
 <!--- Check Username and Password --->
 	<cfif isdefined ("submituser")>
-        <cfquery name="getaccounts" datasource="accounts">
-            SELECT     
-                Accounts.Username, Accounts.Building, Building.building_number, Accounts.Full_Name, Accounts.Groups, Accounts.SocSecNum
-            FROM         
-                Accounts INNER JOIN
-                          Building ON Accounts.Building = Building.Building
-            WHERE
-                (ACCOUNTS.USERNAME = '#username#') and 
-                (Accounts.password = '#password#')
-        </cfquery>
-        
-        <!--- valid username and password --->
+        <cftry>
+        <cfldap action="query" 
+           server="chief.mesa.k12.co.us"
+           name="GetAccounts" 
+           start="DC=mesa,DC=k12,DC=co,DC=us"
+           filter="(&(objectclass=user)(SamAccountName=#form.username#))"
+           username="mesa\#form.username#" 
+           password="#form.password#"
+           attributes = "cn,o,l,st,sn,c,mail,telephonenumber, givenname,homephone, streetaddress, postalcode, SamAccountname, physicalDeliveryOfficeName, department, memberof">
+        <cfcatch>
+        	<cfset getaccounts.recordcount = 0>
+        </cfcatch>
+        </cftry>
         <cfif getaccounts.recordcount eq 0>
-            <cflocation url="Admin.cfm?tryagain" addtoken="no">
+            <cflocation url="supervisornew.cfm?tryagain" addtoken="no">
         <cfelse>
-        	<!--- Check to see if log in is in HR --->
-            <cfquery name="GetHR" datasource="mesa_web">
-            	SELECT Username
-                FROM	LeaveReq_HRStaff
-                WHERE	Username = '#username#'
-            </cfquery>
-            <cfif GetHR.RecordCount gt 0>
-                <!--- Set Session Variable username, building ect. --->
-                <cfset Session.Username = '#getaccounts.Username#'>
-                <cfset Session.Building = '#getaccounts.Building#'>
-                <cfset Session.BuildingNum = '#getaccounts.building_number#'>
-                <cfset Session.FullName = '#getaccounts.Full_Name#'>
-                <cfset Session.Groups = '#getaccounts.Groups#'>
-                <cfset Session.SSN = '#getaccounts.SocSecNum#'>
-                <cflocation url="Admin.cfm?StepNum=1&#urlencodedformat(NOW())#" addtoken="no">
-            <cfelse>
-            	<cflocation url="Admin.cfm?tryagain" addtoken="no">
-            </cfif>
-        </cfif>
+			<cfset Session.Username = '#GetAccounts.cn#'>
+            <cfset Session.Building = '#GetAccounts.physicaldeliveryofficename#'>
+            <cfset Session.email = '#GetAccounts.mail#'>
+            <cfquery name="GetUserinfo" datasource="accounts">
+                SELECT     
+                    Accounts.Username, Accounts.Building, Building.building_number, Accounts.Full_Name, Accounts.Groups, Accounts.SocSecNum
+                FROM         
+                    Accounts INNER JOIN
+                              Building ON Accounts.Building = Building.Building
+                WHERE
+                    (ACCOUNTS.USERNAME = '#session.username#')
+        	</cfquery>
+            <cfset Session.BuildingNum = '#GetUserInfo.Building_number#'>
+           	<cfset Session.FullName = '#GetUserInfo.Full_Name#'>
+            <cfset Session.Groups = '#GetUserInfo.Groups#'>
+            <cfset Session.SSN = '#GetUserInfo.SocSecNum#'>
+            <cflocation url="admin.cfm?StepNum=1&#urlencodedformat(NOW())#" addtoken="no">
+        </cfif>   
     
     </cfif>
-<cfelseif StepNum eq 1>
+<cfelseif url.StepNum eq 1>
 	<!--- Logged in Select View Approved / Denied Requests or View Pending --->
     <cfform name="viewaction" method="post" action="admin.cfm?StepNum=2" >
         <table border="0" width="100%">
