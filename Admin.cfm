@@ -67,8 +67,8 @@
 	<cfabort>
 </cfif> --->
 
-<cfif not isdefined('StepNum')>
-	<cfset StepNum=0>
+<cfif not structKeyExists(url, "StepNum")>
+    <cfset url.StepNum = 0>
 </cfif>
 
 <cfif url.StepNum eq 0>
@@ -1388,8 +1388,8 @@ Comments: #GetReqInfo.Comments#
 <cflocation url="Admin.cfm?StepNum=10">
 <!--- Logout --->
 <cfelseif StepNum eq 999>
-	<cfcookie name="CFID" expires="now">
-	<cfcookie name="CFTOKEN" expires="now">
+	<!--- <cfcookie name="CFID" expires="now">
+	<cfcookie name="CFTOKEN" expires="now"> --->
 	<cfscript>
    		StructClear(Session);
 	</cfscript>
