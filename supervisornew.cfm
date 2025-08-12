@@ -48,8 +48,8 @@
 			<!-- InstanceEndEditable --></h1>
    	  	</span><br />
 				 <!-- InstanceBeginEditable name="Content" -->
-<cfif not isdefined('StepNum')>
-	<cfset StepNum = 0>
+<cfif not structKeyExists(url, "StepNum")>
+    <cfset url.StepNum = 0>
 </cfif>
 
 <!--- <cfif (cgi.https eq "off") and 
@@ -400,8 +400,8 @@
     <cflocation url="supervisornew.cfm?Stepnum=1">
 <cfelseif url.Stepnum eq 4>
 	You have viewed the request.
-    <cfcookie name="CFID" expires="now">
-	<cfcookie name="CFTOKEN" expires="now">
+    <!--- <cfcookie name="CFID" expires="now">
+	<cfcookie name="CFTOKEN" expires="now"> --->
 	<cfscript>
    		StructClear(Session);
 	</cfscript>
