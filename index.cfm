@@ -73,7 +73,7 @@
 	<cfset StepNum=0>
 </cfif>
 
-<cfif StepNum eq 0>
+<cfif stepnum eq 0>
 	<cfif not isdefined ('username')>
 	Welcome to the Leave Request Form.  Please Log in.<br />	
 	</cfif>
@@ -156,7 +156,7 @@
         </cfif>    
     </cfif>
 <!--- Staff Member is Logged in and Can choose to see existing or Enter New Request --->
-<cfelseif StepNum eq 1>
+<cfelseif url.stepnum eq 1>
 	<cfform name="form2" method="post" action="index.cfm?StepNum=2">
         <fieldset class="container p-4 border rounded shadow-sm" style="max-width: 500px; margin: auto;">
             <legend class="h5 mb-3 text-center">Select Action</legend>
@@ -184,7 +184,7 @@
     </cfform>
     
 <!--- Redirect to Appropriate Selection --->
-<cfelseif StepNum eq 2>
+<cfelseif url.stepnum eq 2>
 	<cfinclude template="logout.cfm">
 
     <cfif #Form.Action# eq "New">
@@ -231,7 +231,7 @@
         <cflocation url="index.cfm?StepNum=3&#urlencodedformat(NOW())#">
     </cfif>
 <!--- View Existing Requests --->
-<cfelseif StepNum eq 3>
+<cfelseif url.stepnum eq 3>
 	<cfinclude template="logout.cfm">
 
     <!--- Get a list of Requests the user has entered --->
@@ -287,7 +287,7 @@
     </table>
 
 <!--- Enter New Request --->
-<cfelseif StepNum eq 4>
+<cfelseif url.stepnum eq 4>
 	<cfinclude template="logout.cfm">
 	
     <cfif isdefined('form.submitemptype')>
@@ -374,45 +374,79 @@
             <!--- SECOND ROW --->
             <div class="row g-3 mb-4 border p-3 rounded">
                 <!-- From Date -->
-                <div class="col-md-4">
-                    <label for="ReqDateFrom" class="form-label fw-bold">Dates Requested: From (use date picker)</label>
+                 <div class="col-md-4">
+                    <label for="ReqDateFrom" class="form-label fw-bold">
+                        Dates Requested: From (use date picker)
+                    </label>
                     <div class="form-text">Select the first day of your leave</div>
-                    <input
-                    type="date"
-                    id="ReqDateFrom"
-                    name="ReqDateFrom"
-                    class="form-control"
-                    <cfif isdefined('Session.ReqDateFrom')>value="<cfoutput>#Session.ReqDateFrom#</cfoutput>"</cfif>
-                    required
-                    />
+                    <cfif structKeyExists(Session, "ReqDateFrom")>
+                        <cfinput 
+                            type="date" 
+                            id="ReqDateFrom" 
+                            name="ReqDateFrom" 
+                            class="form-control"
+                            value="#Session.ReqDateFrom#" 
+                            required="yes">
+                    <cfelse>
+                        <cfinput 
+                            type="date" 
+                            id="ReqDateFrom" 
+                            name="ReqDateFrom" 
+                            class="form-control"
+                            value="" 
+                            required="yes">
+                    </cfif>
                 </div>
 
                 <!-- To Date -->
                 <div class="col-md-4">
-                    <label for="ReqDateTo" class="form-label fw-bold">To (use date picker)</label>
+                    <label for="ReqDateTo" class="form-label fw-bold">
+                        To (use date picker)
+                    </label>
                     <div class="form-text">Select the last day of your leave</div>
-                    <input
-                    type="date"
-                    id="ReqDateTo"
-                    name="ReqDateTo"
-                    class="form-control"
-                    <cfif isdefined('Session.ReqDateTo')>value="<cfoutput>#Session.ReqDateTo#</cfoutput>"</cfif>
-                    required
-                    />
+                    <cfif structKeyExists(Session, "ReqDateTo")>
+                        <cfinput 
+                            type="date" 
+                            id="ReqDateTo" 
+                            name="ReqDateTo" 
+                            class="form-control"
+                            value="#Session.ReqDateFrom#" 
+                            required="yes">
+                    <cfelse>
+                        <cfinput 
+                            type="date" 
+                            id="ReqDateTo" 
+                            name="ReqDateTo" 
+                            class="form-control"
+                            value="" 
+                            required="yes">
+                    </cfif>
                 </div>
 
                 <!-- Number of Days -->
                 <div class="col-md-4">
-                    <label for="ReqNumDays" class="form-label fw-bold">Number of Days Requested:</label>
-                    <div class="form-text">(If less than 1 day, put hours in comments to HR)</div>
-                    <input
-                    type="text"
-                    id="ReqNumDays"
-                    name="ReqNumDays"
-                    class="form-control"
-                    <cfif isdefined('Session.ReqNumDays')>value="<cfoutput>#Session.ReqNumDays#</cfoutput>"</cfif>
-                    required
-                    />
+                    <label for="ReqNumDays" class="form-label fw-bold">
+                        Number of Days Requested:
+                    </label>
+                    <div class="form-text">(If less than 1 day, enter 0 and put hours in comments to HR. Numbers only)</div>
+                    <cfif structKeyExists(Session, "ReqNumDays")>
+                        <cfinput 
+                            type="text" 
+                            id="ReqNumDays" 
+                            name="ReqNumDays" 
+                            class="form-control"
+                            value="#Session.ReqNumDays#" 
+                            required="yes"
+                            Message="Please enter the number of days you are requesting.">
+                    <cfelse>
+                        <cfinput 
+                            type="text" 
+                            id="ReqNumDays" 
+                            name="ReqNumDays" 
+                            class="form-control"
+                            required="yes"
+                            Message="Please enter the number of days you are requesting.">
+                    </cfif>
                 </div>
             </div>
 
@@ -424,8 +458,17 @@
                         <div class="col-md-6">
                             <!-- Day Leave -->
                             <div class="form-check mb-2">
-                                <cfset checked_9 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_9" name="LeaveType" value="9" required <cfoutput>#checked_9#</cfoutput>>
+                                <cfset checked_9 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_9" 
+                                    name="LeaveType" 
+                                    value="9" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_9#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_9" name="LeaveType" value="9" required <cfoutput>#checked_9#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_9">
                                     <strong>Day Leave Section 9.1</strong><br>
                                     <em>This leave may not be used for vacation or job interviews. Must provide comments to HR if taking 3 or more consecutive days or a blackout day*</em>
@@ -439,8 +482,17 @@
                             
                             <!-- Military Leave -->
                             <div class="form-check mb-2">
-                                <cfset checked_14 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required <cfoutput>#checked_14#</cfoutput>>
+                                <cfset checked_14 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_14" 
+                                    name="LeaveType" 
+                                    value="14" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_14#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required <cfoutput>#checked_14#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_14">
                                     <strong>Military Leave 8.4</strong><br>
                                     <em>(documentation required)</em>
@@ -449,8 +501,17 @@
 
                             <!-- Leave without Pay -->
                             <div class="form-check mb-2">
-                                <cfset checked_6 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_6" name="LeaveType" value="6" required <cfoutput>#checked_6#</cfoutput>>
+                                <cfset checked_6 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_6" 
+                                    name="LeaveType" 
+                                    value="6" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_6#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_6" name="LeaveType" value="6" required <cfoutput>#checked_6#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_6">
                                     <strong>Leave without Pay</strong>
                                 </label>
@@ -460,8 +521,17 @@
                         <div class="col-md-6 p-3 rounded">
                             <!-- Bereavement Section -->
                             <div class="form-check mb-2">
-                                <cfset checked_1 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required <cfoutput>#checked_1#</cfoutput>>
+                                <cfset checked_1 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_1" 
+                                    name="LeaveType" 
+                                    value="1" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_1#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required <cfoutput>#checked_1#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_1">
                                     <strong>Bereavement Section</strong>
                                 </label>
@@ -493,8 +563,17 @@
 
                             <!-- Community Service Section -->
                             <div class="form-check mb-2">
-                                <cfset checked_4 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required <cfoutput>#checked_4#</cfoutput>>
+                                <cfset checked_4 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_4" 
+                                    name="LeaveType" 
+                                    value="4" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_4#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required <cfoutput>#checked_4#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_4">
                                     <strong>Community Service Section 9.4</strong>
                                 </label>
@@ -503,8 +582,17 @@
 
                             <!-- Officiating/Judging Section -->
                             <div class="form-check mb-2">
-                                <cfset checked_3 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required <cfoutput>#checked_3#</cfoutput>>
+                                <cfset checked_3 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_3" 
+                                    name="LeaveType" 
+                                    value="3" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_3#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required <cfoutput>#checked_3#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_3">
                                     <strong>Officiating/Judging Section 9.5</strong>
                                 </label>
@@ -513,8 +601,17 @@
 
                             <!-- Jury/Witness Section -->
                             <div class="form-check mb-2">
-                                <cfset checked_2 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required <cfoutput>#checked_2#</cfoutput>>
+                                <cfset checked_2 = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_2" 
+                                    name="LeaveType" 
+                                    value="2" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked_2#">
+                                <!--- <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required <cfoutput>#checked_2#</cfoutput>> --->
                                 <label class="form-check-label" for="LeaveType_2">
                                     <strong>Jury/Witness Section 9.7-8</strong>
                                 </label>
@@ -527,32 +624,38 @@
                 <div class="row g-3 mb-4 border p-3 rounded">
                     <div class="col-12 d-flex align-items-center">
                         <label for="subfindernum" class="form-label fw-bold me-2 mb-0">
-                            Reported Aesop/Frontline Job #:
+                            Reported Aesop/Frontline Job # :
                         </label>
+                        (<span class="text-danger">One job number only, 0 for Sub is not Needed</span>)
                         <cfif isDefined("Session.subfinderid")>
-                            <input
+                            <cfinput 
                                 type="text"
                                 id="subfindernum"
                                 name="subfindernum"
                                 class="form-control w-auto"
-                                required
-                                validate="integer"
-                                message="Aesop/Frontline Job number must be entered and it must be numeric"
-                                value="<cfoutput>#htmlEditFormat(Session.subfinderid)#</cfoutput>"
+                                required="yes"
+                                pattern="[0-9]*"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Numeric ONLY. Use Comment field for additional job numbers 0 when not sub needed"
+                                value="#htmlEditFormat(Session.subfinderid)#"
                                 aria-describedby="subfinderHelp"
-                            >
+                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric. 0 when not sub needed">
                         <cfelse>
-                            <input
+                            <cfinput 
                                 type="text"
                                 id="subfindernum"
                                 name="subfindernum"
                                 class="form-control w-auto"
-                                required
-                                validate="integer"
-                                message="Aesop/Frontline Job number must be entered and it must be numeric"
+                                required="yes"
+                                pattern="[0-9]*"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Numeric ONLY. Use Comment field for additional job numbers0 when not sub needed"
                                 aria-describedby="subfinderHelp"
-                            >
+                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric.0 when not sub needed">
                         </cfif>
+
                         <span id="subfinderHelp" class="visually-hidden">
                             Must be a numeric job number from Aesop/Frontline.
                         </span>
@@ -569,16 +672,16 @@
                             <strong>Personal</strong>***<br />
                             <div class="form-check mb-2">
                                 
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'checked' : ''>
-                                <input 
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 9) ? 'yes' : 'no'>
+                                <cfinput 
                                     type="radio" 
                                     class="form-check-input" 
                                     id="LeaveType_9" 
                                     name="LeaveType" 
                                     value="9" 
-                                    required 
-                                    <cfoutput>#checked#</cfoutput>
-                                >
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked#">
                                 <label class="form-check-label" for="LeaveType_9">
                                     <strong>Personal Leave</strong>***
                                 </label>
@@ -594,8 +697,17 @@
 
                             <!-- Sick Leave -->
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 13) ? 'checked' : ''>
-                                <input 
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 13) ? 'yes' : 'no'>
+                                <cfinput 
+                                    type="radio" 
+                                    class="form-check-input" 
+                                    id="LeaveType_13" 
+                                    name="LeaveType" 
+                                    value="13" 
+                                    required="yes"
+                                    message="Select Leave Type"
+                                    checked="#checked#">
+                                <!--- <input 
                                     type="radio" 
                                     class="form-check-input" 
                                     id="LeaveType_13" 
@@ -603,7 +715,7 @@
                                     value="13" 
                                     required 
                                     <cfoutput>#checked#</cfoutput>
-                                >
+                                > --->
                                 <label class="form-check-label" for="LeaveType_13">
                                     <strong>Sick Leave</strong>
                                 </label>
@@ -612,15 +724,16 @@
 
                             <!-- Leave without Pay -->
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'checked' : ''>
-                                <input 
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 6) ? 'yes' : 'no'>
+                                <cfinput 
                                     type="radio" 
                                     class="form-check-input" 
                                     id="LeaveType_6" 
                                     name="LeaveType" 
                                     value="6" 
-                                    required 
-                                    <cfoutput>#checked#</cfoutput>
+                                    required ="yes"
+                                    checked=#checked#
+                                    message="Select Leave Type"
                                 >
                                 <label class="form-check-label" for="LeaveType_6">
                                     <strong>Leave without Pay</strong>
@@ -629,23 +742,24 @@
                             
                             <!-- Vacation -->
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 10) ? 'checked' : ''>
-                                <input 
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 10) ? 'yes' : 'no'>
+                                <cfinput 
                                     type="radio" 
                                     class="form-check-input" 
                                     id="LeaveType_10" 
                                     name="LeaveType" 
                                     value="10" 
-                                    required 
-                                    <cfoutput>#checked#</cfoutput>
+                                    required="yes"
+                                    checked=#checked#
+                                    message="Select Leave Type"
                                 >
                                 <label class="form-check-label" for="LeaveType_10">
                                     <strong>Vacation (YEAR-ROUND EMPLOYEES ONLY)</strong>
                                 </label>
                             </div>
                             <div class="form-check mb-3">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required <cfoutput>#checked#</cfoutput>>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 2) ? 'yes' : 'no'>
+                                <cfinput type="radio" class="form-check-input" id="LeaveType_2" name="LeaveType" value="2" required="yes" checked=#checked#>
                                 <label class="form-check-label" for="LeaveType_2">
                                     <strong>Jury/Witness</strong>
                                 </label>
@@ -653,7 +767,7 @@
                             </div>
                             <!-- FMLA - Own Serious Health Condition -->
                             <!--- <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 7) ? 'checked' : ''>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 7) ? 'yes' : 'no'>
                                 <input 
                                     type="radio" 
                                     class="form-check-input" 
@@ -669,7 +783,7 @@
                                 <em class="form-text ms-4">(if more than 11 consecutive days)</em>
                             </div>
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'checked' : ''>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'yes' : 'no'>
                                 <input type="radio" class="form-check-input" id="LeaveType_8" name="LeaveType" value="8" required #checked#>
                                 <label class="form-check-label" for="LeaveType_8">
                                     <strong>FMLA - Care for Immediate Family Member</strong>
@@ -678,7 +792,7 @@
                             </div>
 
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'checked' : ''>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 8) ? 'yes' : 'no'>
                                 <input type="radio" class="form-check-input" id="LeaveType_8" name="LeaveType" value="8" required #checked#>
                                 <label class="form-check-label" for="LeaveType_8">
                                     <strong>FMLA - Care for Immediate Family Member</strong>
@@ -688,7 +802,7 @@
                             
                             <!-- FMLA Military Exigency Leave -->
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 11) ? 'checked' : ''>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 11) ? 'yes' : 'no'>
                                 <input type="radio" class="form-check-input" id="LeaveType_11" name="LeaveType" value="11" required #checked#>
                                 <label class="form-check-label" for="LeaveType_11">
                                     <strong>FMLA - Military Exigency Leave</strong>
@@ -697,7 +811,7 @@
 
                             <!-- FMLA Military Caregiver Leave -->
                             <div class="form-check mb-2">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 12) ? 'checked' : ''>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 12) ? 'yes' : 'no'>
                                 <input type="radio" class="form-check-input" id="LeaveType_12" name="LeaveType" value="12" required #checked#>
                                 <label class="form-check-label" for="LeaveType_12">
                                     <strong>FMLA - Military Caregiver Leave</strong>
@@ -709,8 +823,8 @@
 
                         <div class="col-md-6">
                             <div class="form-check mb-3">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required <cfoutput>#checked#</cfoutput>>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 1) ? 'yes' : 'no'>
+                                <cfinput type="radio" class="form-check-input" id="LeaveType_1" name="LeaveType" value="1" required="yes" checked=#checked#>
                                 <label class="form-check-label" for="LeaveType_1">
                                     <strong>Bereavement</strong>
                                 </label>
@@ -733,24 +847,24 @@
                                 </div>
                             </div>
                             <div class="form-check mb-3">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required <cfoutput>#checked#</cfoutput>>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 4) ? 'yes' : 'no'>
+                                <cfinput type="radio" class="form-check-input" id="LeaveType_4" name="LeaveType" value="4" required="yes" checked=#checked#>
                                 <label class="form-check-label" for="LeaveType_4">
                                     <strong>Community Service</strong>
                                 </label>
                                 <em class="form-text ms-4">(Preapproval &amp; documentation required)</em>
                             </div>
                             <div class="form-check mb-3">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required <cfoutput>#checked#</cfoutput>>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 3) ? 'yes' : 'no'>
+                                <cfinput type="radio" class="form-check-input" id="LeaveType_3" name="LeaveType" value="3" required="yes" checked=#checked#>
                                 <label class="form-check-label" for="LeaveType_3">
                                     <strong>Officiating/Judging</strong>
                                 </label>
                                 <em class="form-text ms-4">(Documentation required)</em>
                             </div>
                             <div class="form-check mb-3">
-                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'checked' : ''>
-                                <input type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required <cfoutput>#checked#</cfoutput>>
+                                <cfset checked = (isDefined("Session.LeaveType") AND Session.LeaveType EQ 14) ? 'yes' : 'no'>
+                                <cfinput type="radio" class="form-check-input" id="LeaveType_14" name="LeaveType" value="14" required="yes" checked=#checked#>
                                 <label class="form-check-label" for="LeaveType_14">
                                     <strong>Military Leave</strong> (Documentation Required)
                                 </label>
@@ -781,27 +895,29 @@
                 <div class="col-md-6">
                     <label for="EmpSig" class="form-label fw-bold">Employee Signature (type in name):</label>
                     <cfif isdefined('Session.EmpSig')>
-                        <input
+                        <cfinput
                             type="text"
                             id="EmpSig"
                             name="EmpSig"
                             class="form-control"
-                            required
+                            required="yes"
                             maxlength="50"
                             aria-describedby="EmpSigHelp"
-                            value="<cfoutput>#htmlEditFormat(Session.EmpSig)#</cfoutput>"
+                            value="#htmlEditFormat(Session.EmpSig)#"
                             placeholder="Enter your name as you would sign ex: John Q. Smith"
+                            message="Enter your signature"
                         >
                     <cfelse>
-                        <input
+                        <cfinput
                             type="text"
                             id="EmpSig"
                             name="EmpSig"
                             class="form-control"
-                            required
+                            required="yes"
                             maxlength="50"
                             aria-describedby="EmpSigHelp"
                             placeholder="Enter your name as you would sign ex: John Q. Smith"
+                            message="Enter your signature"
                         >
                     </cfif>
                     <div id="EmpSigHelp" class="form-text">Required</div>
@@ -826,9 +942,9 @@
                     <div class="row g-2 align-items-center">
                         <div class="col-md-9">
                         <cfif isdefined('Session.SupEmail')>
-                            <input type="text" id="SupEmail" name="SupEmail" class="form-control" value="<cfoutput>#htmlEditFormat(Session.SupEmail)#</cfoutput>" readonly>
+                            <cfinput type="text" id="SupEmail" name="SupEmail" class="form-control" value="#htmlEditFormat(Session.SupEmail)#" readonly="yes" >
                         <cfelse>
-                            <input type="text" id="SupEmail" name="SupEmail" class="form-control" readonly>
+                            <cfinput type="text" id="SupEmail" name="SupEmail" class="form-control" readonly="yes" >
                         </cfif>
                         </div>
                         <div class="col-md-3">
@@ -844,9 +960,9 @@
                     <div class="row g-2 align-items-center">
                         <div class="col-md-9">
                         <cfif isdefined('Session.SupEmail2')>
-                            <input type="text" id="SupEmail2" name="SupEmail2" class="form-control" value="<cfoutput>#htmlEditFormat(Session.SupEmail2)#</cfoutput>" readonly>
+                            <cfinput type="text" id="SupEmail2" name="SupEmail2" class="form-control" value="#htmlEditFormat(Session.SupEmail2)#" readonly="yes" >
                         <cfelse>
-                            <input type="text" id="SupEmail2" name="SupEmail2" class="form-control" readonly>
+                            <cfinput type="text" id="SupEmail2" name="SupEmail2" class="form-control" readonly="yes" >
                         </cfif>
                         </div>
                         <div class="col-md-3">
@@ -907,7 +1023,7 @@
     </cfform>   
 
 <!--- View Specific Request --->
-<cfelseif StepNum eq 5>    
+<cfelseif url.stepnum eq 5>    
     <cfquery name="GetRequestData" datasource="mesa_web">
         SELECT *
         FROM LeaveReq_tblRequest
@@ -961,7 +1077,7 @@
     </cfoutput>
 
 <!--- 6 = Attach file if Jury Duty or Community Service Selected --->
-<cfelseif StepNum eq 6>
+<cfelseif url.stepnum eq 6>
     <cfoutput>
         <cfif isDefined("fileUpload")>
             <cfif form.uploadfile neq 'mail'>
@@ -1006,7 +1122,7 @@
         </fieldset>
     </form>
 <!--- 7 = Search for Supervisor --->
-<cfelseif StepNum eq 7>
+<cfelseif url.stepnum eq 7>
 
 <cfif isdefined('form.search')>
 	<cfquery name="SearchSup" datasource="accounts">
@@ -1063,7 +1179,7 @@
         </cfif>
     </cfform>
 <!--- Sup 2 Email --->
-<cfelseif StepNum eq 8>
+<cfelseif url.stepnum eq 8>
 <cfif isdefined('form.search')>
 	<cfquery name="SearchSup" datasource="accounts">
     	SELECT	Full_Name, Username, fname, lname, building, Email
@@ -1120,7 +1236,7 @@
         </cfif>
     </cfform>
 <!---Testing redirect from errors --->
-<cfelseif StepNum eq 9>
+<cfelseif url.stepnum eq 9>
 	<cfif Session.bereavementrelationship eq '' and isdefined('errcode')>
     	<cfif #errcode# eq 1>
     		<cflocation url="index.cfm?StepNum=4&errcode=1">
@@ -1129,7 +1245,7 @@
     	<cflocation url="index.cfm?StepNum=998">
     </cfif>
 <!--- notification of request entry then redirect send email to supervisor--->
-<cfelseif StepNum eq 996>
+<cfelseif url.stepnum eq 996>
 
 <!--- Send Email to Employee Supervisor basied on data entered in SupEmail text box
 		If not a valid email address (contains d51schools.org) give option to print request --->
@@ -1152,7 +1268,7 @@ Your Request for Leave has been entered into the system.  This page will automat
 <meta http-equiv="Refresh" content="5;URL=index.cfm?StepNum=1" />
 
 <!--- Set Session Variables to Insert Request --->
-<cfelseif StepNum eq 997>
+<cfelseif url.stepnum eq 997>
 	<cfinclude template="logout.cfm">
     
     <!--- Set Session Variables --->
@@ -1162,15 +1278,28 @@ Your Request for Leave has been entered into the system.  This page will automat
     <!---<cfset Session.ReqDates = '#Form.ReqDates#'>--->
     <cfset Session.ReqDateFrom = '#Form.ReqDateFrom#'>
     <cfset Session.ReqDateTo = '#Form.ReqDateTo#'>
+
     <cfset Session.ReqNumDays= '#Form.ReqNumDays#'>
-    
+    <cfif NOT isNumeric(Session.ReqNumDays)>
+        <cfset errorMsg = "Number of days must be Numbers only.">
+        <cfoutput>#errorMsg#</cfoutput>
+        <cfabort>
+    </cfif>
+
     <cfset Session.LeaveType = '#Form.LeaveType#'>
     <cfset Session.dayleavereason = '#Form.dayleavereason#'>
     <cfset Session.bereavementrelationship = '#Form.bereavementrelationship#'>
     
     <!--- if Certified --->
     <cfif Session.EmpType eq 1>
-    	<cfset Session.subfinderid = '#Form.subfindernum#'>
+        <cfset Session.subfinderid = '#Form.subfindernum#'>
+        <cfif NOT reFind("^[0-9]+$", Session.subfinderid)>
+            <cfset errorMsg = "Subfinder Job Number must be numeric only. Please enter digits only. Click back to fix">
+            <cfoutput>#errorMsg#</cfoutput>
+            <!--- Optionally redisplay form with previous values --->
+            <cfabort>
+        </cfif>
+    	
     <cfelse>
     	<cfset Session.subfinderid = 0>
     </cfif>
@@ -1213,7 +1342,7 @@ Your Request for Leave has been entered into the system.  This page will automat
         <cflocation url="index.cfm?StepNum=998">
     </cfif>
 <!--- Insert Request Into Database --->
-<cfelseif StepNum eq 998>
+<cfelseif url.stepnum eq 998>
 	
     <!--- Insert Request Data Into Database --->
     <cfquery name="InsertReqData" datasource="mesa_web">
@@ -1231,7 +1360,7 @@ Your Request for Leave has been entered into the system.  This page will automat
     <cflocation url="index.cfm?StepNum=996">
     
 <!--- Logout of system ---> 
-<cfelseif StepNum eq 999>
+<cfelseif url.stepnum eq 999>
 	<cfscript>
         // Invalidate the session
         StructClear(Session);
@@ -1254,5 +1383,25 @@ Your Request for Leave has been entered into the system.  This page will automat
 </footer>
 <!-- end #container -->
 
+
+
+<!--- <!-- InstanceEnd --></html> --->
+
+
+
 </body>
+    <!-- JS dependencies -->
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- InstanceEnd --></html>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    // initialize bootstrap tooltips 
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
+} );
+
+</script>
+<script src="/scripts/leaveForm.js"></script>
