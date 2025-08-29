@@ -301,9 +301,9 @@
         method="post" 
         class="needs-validation" 
         role="form" 
-        novalidate
+        
     >
-
+<!--- if needed move back in to cfform tag     novalidate       --->
             <!--- Name, ID, Building, Requesting Dates is the same for all types of Staff --->
             
             <!--- Display Error Message (if errcode = 1) --->
@@ -1018,7 +1018,8 @@
             </div>
 
         <div class="mt-4">
-            <button type="submit" name="logout" class="btn btn-secondary">Logout</button>
+            <!--- <button type="submit" name="logout" class="btn btn-secondary">Logout</button> --->
+            <a name="logout" href="logout.cfm" class="btn btn-secondary">Logout</a>
         </div>
     </cfform>   
 
