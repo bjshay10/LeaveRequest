@@ -410,7 +410,7 @@
                             id="ReqDateTo" 
                             name="ReqDateTo" 
                             class="form-control"
-                            value="#Session.ReqDateFrom#" 
+                            value="#Session.ReqDateTo#" 
                             required="yes">
                     <cfelse>
                         <cfinput 
