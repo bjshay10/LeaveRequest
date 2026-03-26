@@ -157,6 +157,7 @@
     </cfif>
 <!--- Staff Member is Logged in and Can choose to see existing or Enter New Request --->
 <cfelseif url.stepnum eq 1>
+    
 	<cfform name="form2" method="post" action="index.cfm?StepNum=2">
         <fieldset class="container p-4 border rounded shadow-sm" style="max-width: 500px; margin: auto;">
             <legend class="h5 mb-3 text-center">Select Action</legend>
@@ -177,16 +178,16 @@
                 <input type="submit" name="submitaction" value="Submit" class="btn btn-primary">
             </div>
         </fieldset>
-
+    </cfform>
+    <cfform name="logoutForm" method="post" action="index.cfm?StepNum=999">
         <div class="text-center mt-3">
             <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
         </div>
     </cfform>
     
+    
 <!--- Redirect to Appropriate Selection --->
 <cfelseif url.stepnum eq 2>
-	<cfinclude template="logout.cfm">
-
     <cfif #Form.Action# eq "New">
         <!-- First Select Classified or Certified -->
         <cfform name="SelectEmpType" action="index.cfm?StepNum=4&#urlencodedformat(NOW())#" method="post">
@@ -222,6 +223,11 @@
                 </div>
             </fieldset>
 
+            <!--- <div class="text-center mt-3">
+                <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
+            </div> --->
+        </cfform>
+        <cfform name="logoutForm" method="post" action="index.cfm?StepNum=999">
             <div class="text-center mt-3">
                 <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
             </div>
@@ -232,8 +238,6 @@
     </cfif>
 <!--- View Existing Requests --->
 <cfelseif url.stepnum eq 3>
-	<cfinclude template="logout.cfm">
-
     <!--- Get a list of Requests the user has entered --->
     <cfquery name="GetRequests" datasource="mesa_web">
         SELECT	RequestID, userid, requesteddates, requesttype, approved, dtFrom, dtTo
@@ -288,7 +292,7 @@
 
 <!--- Enter New Request --->
 <cfelseif url.stepnum eq 4>
-	<cfinclude template="logout.cfm">
+	<!--- <cfinclude template="logout.cfm"> --->
 	
     <cfif isdefined('form.submitemptype')>
 		<cfset Session.EmpType = '#Form.EmpType#'>
@@ -332,7 +336,7 @@
                             name="EmpName" 
                             id="EmpName"
                             class="form-control"
-                            value="#Session.FullName#" 
+                            value="#isDefined("Session.FullName") ? Session.FullName : ""#"
                             required="yes">
                     </cfoutput>
                 </div>
@@ -343,7 +347,7 @@
                     <cfquery name="GetID" datasource="accounts">
                         SELECT EmpID
                         FROM accounts
-                        WHERE Username = '#Session.Username#'
+                        WHERE Username = <cfqueryparam value="#Session.Username#" cfsqltype="cf_sql_varchar">
                     </cfquery>
                     <cfoutput>
                         <cfinput 
@@ -634,13 +638,13 @@
                                 name="subfindernum"
                                 class="form-control w-auto"
                                 required="yes"
-                                pattern="[0-9]*"
+                                pattern="[0-9]*\.?[0-9]*"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                title="Numeric ONLY. Use Comment field for additional job numbers 0 when not sub needed"
+                                title="Numeric ONLY. Use Comment field for additional job numbers. 0.0 when not sub needed"
                                 value="#htmlEditFormat(Session.subfinderid)#"
                                 aria-describedby="subfinderHelp"
-                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric. 0 when not sub needed">
+                                Message="Enter One Subfinder Job Number. Additional in comments to HR. Must be numeric. 0.0 when not sub needed">
                         <cfelse>
                             <cfinput 
                                 type="text"
@@ -648,12 +652,13 @@
                                 name="subfindernum"
                                 class="form-control w-auto"
                                 required="yes"
-                                pattern="[0-9]*"
+                                pattern="[0-9]*\.?[0-9]*"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                title="Numeric ONLY. Use Comment field for additional job numbers0 when not sub needed"
+                                title="Numeric ONLY. Use Comment field for additional job numbers. 0.0 when not sub needed"
+                                value="0.0"
                                 aria-describedby="subfinderHelp"
-                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric.0 when not sub needed">
+                                Message="Enter One Subfinder Job Number. Additional in comments to HR. Must be numeric. 0.0 when not sub needed">
                         </cfif>
 
                         <span id="subfinderHelp" class="visually-hidden">
@@ -1017,9 +1022,14 @@
                 </cfif>
             </div>
 
-        <div class="mt-4">
+        <!--- <div class="mt-4">
             <!--- <button type="submit" name="logout" class="btn btn-secondary">Logout</button> --->
             <a name="logout" href="logout.cfm" class="btn btn-secondary">Logout</a>
+        </div> --->
+    </cfform>
+    <cfform name="logoutForm" method="post" action="index.cfm?StepNum=999">
+        <div class="text-center mt-3">
+            <input type="submit" name="logout" value="Logout" class="btn btn-secondary">
         </div>
     </cfform>   
 

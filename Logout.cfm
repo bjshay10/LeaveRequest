@@ -1,3 +1,7 @@
-<cfif isdefined('form.logout')>
-  	<cflocation url="index.cfm?StepNum=999">
-</cfif> 
+<cfscript>
+	// Invalidate the session
+	StructClear(Session);
+	SessionInvalidate(); // Ends the session
+</cfscript>
+
+<cflocation url="index.cfm">
