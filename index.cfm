@@ -1279,7 +1279,7 @@ Your Request for Leave has been entered into the system.  This page will automat
 
 <!--- Set Session Variables to Insert Request --->
 <cfelseif url.stepnum eq 997>
-	<cfinclude template="logout.cfm">
+	<!--- <cfinclude template="logout.cfm"> --->
     
     <!--- Set Session Variables --->
     <cfset Session.EmpName = '#Form.EmpName#'>
