@@ -638,13 +638,13 @@
                                 name="subfindernum"
                                 class="form-control w-auto"
                                 required="yes"
-                                pattern="[0-9]*\.?[0-9]*"
+                                pattern="[0-9]*"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                title="Numeric ONLY. Use Comment field for additional job numbers. 0.0 when not sub needed"
+                                title="Numeric ONLY. Use Comment field for additional job numbers 0 when not sub needed"
                                 value="#htmlEditFormat(Session.subfinderid)#"
                                 aria-describedby="subfinderHelp"
-                                Message="Enter One Subfinder Job Number. Additional in comments to HR. Must be numeric. 0.0 when not sub needed">
+                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric. 0 when not sub needed">
                         <cfelse>
                             <cfinput 
                                 type="text"
@@ -652,13 +652,12 @@
                                 name="subfindernum"
                                 class="form-control w-auto"
                                 required="yes"
-                                pattern="[0-9]*\.?[0-9]*"
+                                pattern="[0-9]*"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                title="Numeric ONLY. Use Comment field for additional job numbers. 0.0 when not sub needed"
-                                value="0.0"
+                                title="Numeric ONLY. Use Comment field for additional job numbers0 when not sub needed"
                                 aria-describedby="subfinderHelp"
-                                Message="Enter One Subfinder Job Number. Additional in comments to HR. Must be numeric. 0.0 when not sub needed">
+                                Message="Enter One Subfinder Job Number.  Additional in comments to HR. Must be numeric. 0 when not sub needed">
                         </cfif>
 
                         <span id="subfinderHelp" class="visually-hidden">
