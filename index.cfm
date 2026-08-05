@@ -432,7 +432,7 @@
                     <label for="ReqNumDays" class="form-label fw-bold">
                         Number of Days Requested:
                     </label>
-                    <div class="form-text">(If less than 1 day, enter 0 and put hours in comments to HR. Numbers only)</div>
+                    <div class="form-text">(0.5, 1.0, 1.5, etc. Numbers only)</div>
                     <cfif structKeyExists(Session, "ReqNumDays")>
                         <cfinput 
                             type="text" 
@@ -1260,18 +1260,18 @@
 <!--- Send Email to Employee Supervisor basied on data entered in SupEmail text box
 		If not a valid email address (contains d51schools.org) give option to print request --->
 
-<cfmail from="hr@d51schools.org" to="#Session.SupEmail#" subject="Leave Request Form" type="html">
-    #Session.EmpName# has made a Leave Request.  Click on the following link to review the request.<br />
-    <a href="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
-</cfmail>
-
-<cfif isdefined('Session.SupEmail2')>
-<cfif #SEssion.SupEmail2# gt ''>
-    <cfmail from="hr@d51schools.org" to="#Session.SupEmail2#" subject="Leave Request Form" type="html">
+    <cfmail from="hr@d51schools.org" to="#Session.SupEmail#" subject="Leave Request Form" type="html">
         #Session.EmpName# has made a Leave Request.  Click on the following link to review the request.<br />
         <a href="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
     </cfmail>
-</cfif>
+
+    <cfif isdefined('Session.SupEmail2')>
+    <cfif #SEssion.SupEmail2# gt ''>
+        <cfmail from="hr@d51schools.org" to="#Session.SupEmail2#" subject="Leave Request Form" type="html">
+            #Session.EmpName# has made a Leave Request.  Click on the following link to review the request.<br />
+            <a href="https://www.mesa.k12.co.us/apps/LeaveRequest/supervisornew.cfm">Click Here to Review Leave Request</a>	
+        </cfmail>
+    </cfif>
 </cfif>
 
 Your Request for Leave has been entered into the system.  This page will automatically refresh.
